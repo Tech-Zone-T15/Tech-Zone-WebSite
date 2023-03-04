@@ -2,12 +2,12 @@ import styled, { css } from 'styled-components';
 import BaseTitle from './components/BaseTitle';
 
 interface IStyledTitleProps {
-  $fontSize: 'one' | 'two' | 'three' | 'four';
+  $fontSize: 'one' | 'two' | 'three' | 'four' | 'five' | 'button';
   textAlign?: 'center' | 'left' | 'right';
 }
 
 interface IStyledParagraphProps {
-  fontColor?: 'gray' | 'red';
+  fontColor?: 'black' | 'red';
   textAlign?: 'center' | 'left' | 'right';
 }
 
@@ -23,24 +23,34 @@ export const StyledTitle = styled(BaseTitle)<IStyledTitleProps>`
     switch ($fontSize) {
       case 'one':
         return css`
-          font-size: 1.55rem;
+          font-size: 1.875rem;
           font-weight: 700;
         `;
       case 'two':
         return css`
-          font-size: 1.35rem;
+          font-size: 1.375rem;
           font-weight: 700;
         `;
 
       case 'three':
         return css`
-          font-size: 1.15rem;
+          font-size: 1rem;
           font-weight: 700;
         `;
 
       case 'four':
         return css`
-          font-size: 1rem;
+          font-size: 0.75rem;
+          font-weight: 700;
+        `;
+      case 'five':
+        return css`
+          font-size: 0.75rem;
+          font-weight: 400;
+        `;
+      case 'button':
+        return css`
+          font-size: 0.75rem;
           font-weight: 400;
         `;
         default:
@@ -62,18 +72,18 @@ export const StyledParagraph = styled.p<IStyledParagraphProps>`
 
   ${({ fontColor, theme }) => {
     switch (fontColor) {
-      case 'gray':
+      case 'black':
         return css`
-          color: ${theme.colors.gray300};
+          color: ${theme.colors.gray4};
         `;
       case 'red':
         return css`
           color: ${theme.colors.feedback.negative};
         `;
-      default:
-        return css`
-          color: ${theme.colors.gray600};
-        `;
+        default:
+          return css`
+            color: ${theme.colors.gray4};
+          `;
     }
   }}
 
