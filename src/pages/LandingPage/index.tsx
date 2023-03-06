@@ -1,8 +1,9 @@
 import React from 'react'
+import { StyledButton } from '../../styles/button'
 
 function LandingPage() {
   return (
-    <div>LandingPage</div>
+    <StyledButton $buttonSize='small' $buttonStyle='blue'>LandingPage</StyledButton>
   )
 }
 
