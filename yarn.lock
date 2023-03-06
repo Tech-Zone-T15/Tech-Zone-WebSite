@@ -592,7 +592,7 @@
   dependencies:
     "@babel/runtime" "^7.21.0"
 
-"@mui/material@^5.11.12":
+"@mui/material@^5.11.11":
   version "5.11.12"
   resolved "https://registry.yarnpkg.com/@mui/material/-/material-5.11.12.tgz#b113c854fb1bb0aa473686a36a92322c6c754121"
   integrity sha512-M6BiIeJjySeEzWeiFJQ9pIjJy6mx5mHPWeMT99wjQdAmA2GxCQhE9A0fh6jQP4jMmYzxhOIhjsGcp0vSdpseXg==
