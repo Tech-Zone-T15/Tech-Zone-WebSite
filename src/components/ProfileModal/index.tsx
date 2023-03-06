@@ -2,6 +2,9 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { ProfileContext } from "../../Providers/ProfileContext";
 import { StyledButton } from "../../styles/button";
+import {AiOutlineCloseCircle} from 'react-icons/ai'
+import { ModalProfile } from "./styles";
+
 
 interface iModalPlaceholders{
    name: string;
@@ -16,11 +19,10 @@ export const ProfileModal = ({name, email, city, bio}: iModalPlaceholders) => {
    const { register, handleSubmit} = useForm()
 
    return (
-      <dialog>
+      <ModalProfile>
          <form onSubmit={handleSubmit(updateProfile)}>
             <header>
-               <h1>Editar perfil</h1>
-               <span onClick={() => setUpdateProfileModal(false)}>X</span>
+               <h1>Editar perfil <AiOutlineCloseCircle onClick={() => setUpdateProfileModal(false)} /></h1>
             </header>
             <label htmlFor="">Nome</label>
             <input placeholder={name} type="text" {...register('name')}/>
@@ -32,6 +34,6 @@ export const ProfileModal = ({name, email, city, bio}: iModalPlaceholders) => {
             <input placeholder={bio} type="text" {...register('bio')}/>
             <StyledButton $buttonSize="small" $buttonStyle="blue">Atualizar</StyledButton>
          </form>
-      </dialog>
+      </ModalProfile>
    );
 };
