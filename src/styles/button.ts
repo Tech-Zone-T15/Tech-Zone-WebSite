@@ -35,7 +35,7 @@ export const StyledButtonCSS = css<IStyledButtonProps>`
         `;
       case 'large':
         return css`
-        width: 130px;
+        width: 320px;
         `;
       default:
         return css`
@@ -58,7 +58,7 @@ export const StyledButtonCSS = css<IStyledButtonProps>`
         return css`
           color: ${theme.colors.primary2};
           background: ${theme.colors.gray1};
-          border: 1 px solid ${theme.colors.primary2};
+          border: 1px solid ${theme.colors.primary2};
           &:hover {
             color: ${theme.colors.gray1};
             background: ${theme.colors.primary};
