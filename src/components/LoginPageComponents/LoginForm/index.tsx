@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { UserContext } from '../../../Providers/UserContext'
-//import { ErrorMessage } from "@hookform/error-message";
+import { ErrorMessage } from "@hookform/error-message";
 import { Loginschema } from './schema'
 import { useForm } from 'react-hook-form';
 import { ILoginFormValues } from '../../../Providers/UserContext/@types';
@@ -28,10 +28,10 @@ const LoginForm = () => {
       <h2>Login</h2>
    <label htmlFor="email">Email</label>
    <StyledInput id='email'  {...register("email")} placeholder="   Digite seu Email aqui" />
-   {/* <ErrorMessage errors={errors} name="email" as="span" /> */}
+   <ErrorMessage errors={errors} name="email" as="span" />
    <label htmlFor="password">Senha</label>
    <StyledInput id='password' type="password"   {...register("password") } placeholder="   Digite sua Senha aqui"  />
-   {/* <ErrorMessage errors={errors} name="password" as="span" /> */}
+   <ErrorMessage errors={errors} name="password" as="span" />
    <StyledButton id='btn' type='submit' $buttonSize='large' $buttonStyle='blue'> 
      Login
    </StyledButton>
