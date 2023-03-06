@@ -21,7 +21,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       navigate('/dashboard')
     }
   }
-
+  
   const userRegister = async (formData: IRegisterFormValues) => {
     try {
       setLoading(true)

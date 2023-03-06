@@ -4,7 +4,34 @@ import styled from 'styled-components';
 export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 20px;
+  padding: 20px;
+  background-color: #FCFEFF;
+  width: 400px;
+  height: 500px;
+  border-radius: 4px;
+   
+  label{
+   font-weight: 600;
+   font-size: 16px;
+   text-align: left;
+   width: 90%;
+   
+}
+
+  span{
+   color: red;
+   font-weight: bold;
+   font-size: small;
+  }
+
+  p{
+   align-self: center;
+   font-weight: 600;
+   font-size: 16px;
+  } 
 `;
 
 export const StyledTextField = styled(TextField)`
