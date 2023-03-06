@@ -1,12 +1,16 @@
 import Post from "../../components/Posts";
 
+
 const DashboardPage = () => {
-   
+
+
    return(
       <>
+
       <header></header>
       
       <main>
+
          <div> <p>Input Para enviar os post </p></div>
 
          <Post/>
@@ -14,7 +18,9 @@ const DashboardPage = () => {
       </main>
 
       <aside></aside>
+
       </>
+
    )
 
 };
