@@ -4,9 +4,10 @@ import {IDefaultProviderProps,IDashboardContext,Ipost,IComments,IsendPost,IsendC
 
 export const DashboardContext = createContext({} as IDashboardContext);
 
-const [post,setPost] = useState<Ipost[]>([])
 
 export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
+
+   const [post,setPost] = useState<Ipost[]>([])
 
    const token = localStorage.getItem(""); // Esta faltando o localStorage do token
 
