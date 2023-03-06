@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { mainTheme } from '../../styles/theme';
 
+
+
 export const StyledRegisterPage = styled.main`
   display: flex;
   align-items: center;
@@ -9,11 +11,12 @@ export const StyledRegisterPage = styled.main`
   height: fit-content;
   background-color: ${mainTheme.colors.gray2};
   padding: 100px;
+  margin-top: 80px;
  
-
+   
   section{
    min-width: 300px;
-   width: 80%;
+   width: 50%;
    max-width: 480px;
    height: auto;
    min-height: 600px;
