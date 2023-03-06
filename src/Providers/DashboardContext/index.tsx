@@ -4,7 +4,7 @@ import {IDefaultProviderProps,IDashboardContext,Ipost,IComments,IsendPost,IsendC
 
 export const DashboardContext = createContext({} as IDashboardContext);
 
-const [post,setPost] = useState<Ipost[]>([])
+// const [post,setPost] = useState<Ipost[]>([])
 
 export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
@@ -71,7 +71,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    }
 
    return (
-      <DashboardContext.Provider value={{sendComments,sendPost,getComments,getPosts,post}}>
+      <DashboardContext.Provider value={{sendComments,sendPost,getComments,getPosts}}>
          {children}
       </DashboardContext.Provider>
    );
