@@ -22,6 +22,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       navigate('/dashboard')
     }
   }
+<<<<<<< HEAD
 
   useEffect(() => {
    if (token) {
@@ -44,6 +45,9 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
    }
   })
 
+=======
+  
+>>>>>>> b5ee0f4f50ec35acbfc4a99d849874c07e94bfad
   const userRegister = async (formData: IRegisterFormValues) => {
     try {
       setLoading(true)
