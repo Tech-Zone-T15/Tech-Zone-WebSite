@@ -7,34 +7,29 @@ export const StyledForm = styled.form`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  gap: 10px;
   padding: 20px;
+  gap: 25px;
   background-color: ${mainTheme.colors.gray1};
-  width: 400px;
-  height: fit-content;
-  min-height: 500px;
+  width: 90%;
+  min-width: 300px;
+  height: auto;
   border-radius: 4px;
-   
-  label{
-   font-weight: 600;
-   font-size: 16px;
-   text-align: left;
-   width: 90%;
-   
-}
-
-  span{
+  box-sizing: border-box;
+ 
+  p{
    color: ${mainTheme.colors.red};
-   text-align: left;
-   width: 90%;
+   align-self: flex-start;
+   margin-bottom: 5px;
+   margin-top: 5px;
+   
    
   }
-  span::before {
+  p::before {
     display: inline;
     content: "⚠ ";
   }
 
-  p{
+  span{
    align-self: center;
    font-weight: 600;
    font-size: 16px;
