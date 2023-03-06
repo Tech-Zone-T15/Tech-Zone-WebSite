@@ -2,7 +2,7 @@ import React from 'react'
 
 function DashboardPage() {
   return (
-    <div>index</div>
+    <h1>DASHBOARD</h1>
   )
 }
 
