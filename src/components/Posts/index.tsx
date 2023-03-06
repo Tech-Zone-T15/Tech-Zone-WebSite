@@ -1,34 +1,18 @@
-
+import { ListPost } from "./ListPosts";
+import { useContext} from "react";
+import { DashboardContext } from "../../Providers/DashboardContext";
 
 
 const Post = () => {
 
+   const {posts} = useContext(DashboardContext)
+
    return (
-
-      <div>
-
-         <div>
-            <div>
-               <img src="" alt="" />
-               <h2>Usuario</h2>
-            </div>
-
-            <div>
-               <p>icone</p>
-               <p>icone</p>
-            </div>
-         </div>
-
-         <div>
-            <p>Area de texto</p>
-         </div>
-
-         <div>
-            <p>Curti</p>
-            <p>Comentar</p>
-         </div>
-
-      </div>
+      <>
+         {
+            posts.map(post => <ListPost key={post.id} post={post}/>)
+         }
+      </>
 
    );
 };
