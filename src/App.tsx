@@ -1,4 +1,3 @@
-import React from "react";
 import Router from "./routes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,12 +7,12 @@ import { UserProvider } from "./Providers/UserContext";
 import { GlobalStyles } from "./styles/global";
 
 const App =() => (
-    <UserProvider>
+      <UserProvider>
       <DashboardProvider>
-        <ProfileProvider>
-          <GlobalStyles />
-          <Router />
-          <ToastContainer
+         <ProfileProvider>
+            <GlobalStyles />
+            <Router />
+            <ToastContainer
             position="top-right"
             autoClose={5000}
             hideProgressBar={false}
@@ -24,10 +23,10 @@ const App =() => (
             draggable
             pauseOnHover
             theme="light"
-          />
-        </ProfileProvider>
+            />
+         </ProfileProvider>
       </DashboardProvider>
-    </UserProvider>
+   </UserProvider>
 );
 
 
