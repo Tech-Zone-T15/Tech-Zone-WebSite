@@ -1,9 +1,22 @@
+import Post from "../../components/Posts";
 
+const DashboardPage = () => {
+   
+   return(
+      <>
+      <header></header>
+      
+      <main>
+         <div> <p>Input Para enviar os post </p></div>
 
-function DashboardPage() {
-  return (
-    <div>index</div>
-  )
-}
+         <Post/>
 
-export default DashboardPage
+      </main>
+
+      <aside></aside>
+      </>
+   )
+
+};
+
+export default DashboardPage ;

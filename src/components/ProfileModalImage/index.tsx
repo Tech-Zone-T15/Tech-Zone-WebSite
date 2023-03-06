@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { ProfileContext } from "../../Providers/ProfileContext";
 import { StyledButton } from "../../styles/button";
 
-export const ProfileImageModal = () => {
+export const ProfileModalImage = () => {
    const { updateProfile, setUpdateProfileImage } = useContext(ProfileContext);
    const { register, handleSubmit} = useForm()
 
@@ -16,7 +16,7 @@ export const ProfileImageModal = () => {
             </header>
             <label htmlFor="">URL da imagem</label>
             <input type="text" {...register('profile_img')}/>
-            <button type="submit">Atualizar</button>
+            <StyledButton type="submit" $buttonSize="small" $buttonStyle="blue" >Atualizar</StyledButton>
          </form>
       </dialog>
    );

@@ -7,14 +7,14 @@ import { UserProvider } from "./Providers/UserContext";
 import { GlobalStyles } from "./styles/global";
 
 const App =() => (
-    <UserProvider>
+      <UserProvider>
       <DashboardProvider>
-        <ProfileProvider>
-          <GlobalStyles />
-          <Router />
-          <ToastContainer
+         <ProfileProvider>
+            <GlobalStyles />
+            <Router />
+            <ToastContainer
             position="top-right"
-            autoClose={5000}
+            autoClose={2000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -23,10 +23,10 @@ const App =() => (
             draggable
             pauseOnHover
             theme="light"
-          />
-        </ProfileProvider>
+            />
+         </ProfileProvider>
       </DashboardProvider>
-    </UserProvider>
+   </UserProvider>
 );
 
 

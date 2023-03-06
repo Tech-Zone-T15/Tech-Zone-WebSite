@@ -34,5 +34,4 @@ export interface IDashboardContext {
    sendPost: (data: IsendPost) => Promise<void>
    getComments: () => Promise<void>
    getPosts: () => Promise<void>
-   post: Ipost[]
 }

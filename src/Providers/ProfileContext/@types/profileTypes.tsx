@@ -11,4 +11,5 @@ export interface iProfileContext{
    setUpdateProfileModal: React.Dispatch<React.SetStateAction<boolean>>
    updateProfileImage: boolean
    setUpdateProfileImage: React.Dispatch<React.SetStateAction<boolean>>
+   deleteProfile: ()=> Promise<void>
 }

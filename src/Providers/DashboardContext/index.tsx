@@ -72,7 +72,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    }
 
    return (
-      <DashboardContext.Provider value={{sendComments,sendPost,getComments,getPosts,post}}>
+      <DashboardContext.Provider value={{sendComments,sendPost,getComments,getPosts}}>
          {children}
       </DashboardContext.Provider>
    );
