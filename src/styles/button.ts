@@ -35,7 +35,8 @@ export const StyledButtonCSS = css<IStyledButtonProps>`
         `;
       case 'large':
         return css`
-        width: 320px;
+        min-width: 250px;
+        width: 100%;
         `;
       default:
         return css`

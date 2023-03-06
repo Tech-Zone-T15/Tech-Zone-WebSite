@@ -6,8 +6,8 @@ function LoginPage() {
   return (
    <StyledLoginPage>
       <section>
-         <h1>Junte-se a nossa comunidade agora mesmo e mostre para o mundo todo o seu potencial.</h1>
          <img src="../../src/assets/ImgLoginPage.png" alt="" />
+         <h1>Junte-se a nossa comunidade agora mesmo e mostre para o mundo todo o seu potencial!</h1>
       </section>
       <section><LoginForm/></section>
       
