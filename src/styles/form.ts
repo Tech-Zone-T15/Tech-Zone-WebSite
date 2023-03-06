@@ -8,25 +8,19 @@ export const StyledForm = styled.form`
   justify-content: space-around;
   align-items: center;
   padding: 20px;
+  gap: 25px;
   background-color: ${mainTheme.colors.gray1};
   width: 90%;
   min-width: 300px;
-  height: fit-content;
-  min-height: 500px;
+  height: auto;
   border-radius: 4px;
-
-   
-  label{
-   font-weight: 600;
-   font-size: 16px;
-   text-align: left;
-   width: 90%;
-   
-}
-
+  box-sizing: border-box;
+ 
   p{
    color: ${mainTheme.colors.red};
    align-self: flex-start;
+   margin-bottom: 5px;
+   margin-top: 5px;
    
    
   }

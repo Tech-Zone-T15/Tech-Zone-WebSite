@@ -17,6 +17,7 @@ export const StyledButtonCSS = css<IStyledButtonProps>`
   font-size: 1rem;
 
   height: 48px;
+  min-height: 48px;
   padding: 0 20px;
 
   border-radius: 8px;

@@ -4,20 +4,25 @@ import { mainTheme } from '../../styles/theme';
 export const StyledRegisterPage = styled.main`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   min-height: 100vh;
+  height: fit-content;
   background-color: ${mainTheme.colors.gray2};
-  padding: 50px;
+  padding: 100px;
  
 
   section{
-   width: 49%;
-   height: 600px;
+   min-width: 300px;
+   width: 80%;
+   max-width: 480px;
+   height: auto;
+   min-height: 600px;
    gap: 80px;
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
+   
    h1{
       width: 80%;
       font-weight: 600;
@@ -30,4 +35,11 @@ export const StyledRegisterPage = styled.main`
       min-width: 320px;
    }
   }
+
+  @media (max-width: 955px)  {
+         flex-direction: column;
+         padding: 20px;     
+   
+  }
+  
   `
