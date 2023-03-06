@@ -25,6 +25,11 @@ export interface IUser{
 	}
 }
 
+export interface IUserID{
+   token: string;
+   sub: string;
+}
+
 export interface IRegisterFormValues{
 	name: string;
   email: string;

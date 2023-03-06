@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { IDefaultProviderProps, ILoginFormValues, IRegisterFormValues, IUser, IUserContext } from './@types';
+import { IDefaultProviderProps, ILoginFormValues, IRegisterFormValues, IUser, IUserContext, IUserID } from './@types';
 import { api } from "../../services/api";
+import jwt_decode from "jwt-decode";
 
 
 export const UserContext = createContext({} as IUserContext);
@@ -12,15 +13,36 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState<IUser | null>(null)
   const navigate = useNavigate()
+  const token = localStorage.getItem('@TOKEN')
 
   const userLoad = () =>{
-    const token = localStorage.getItem('@TOKEN')
     if(!token){
       /*navigate('/')*/
     }else{
       navigate('/dashboard')
     }
   }
+
+  useEffect(() => {
+   if (token) {
+      const autoLogin = async () => {
+         const userID = jwt_decode<IUserID>(token);
+         try {
+            const response = await api.get(`users/${userID.sub}`, {
+               headers: {
+                  Authorization: `Bearer ${token}`
+
+               }
+            });
+            navigate('/dashboard')
+            setUser(response.data)
+         } catch (error) {
+            console.error(error);
+         }
+      };
+      autoLogin();
+   }
+  })
 
   const userRegister = async (formData: IRegisterFormValues) => {
     try {
