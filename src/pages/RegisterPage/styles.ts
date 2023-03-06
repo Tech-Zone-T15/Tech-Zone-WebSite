@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { mainTheme } from '../../styles/theme';
 
-export const StyledLoginPage = styled.main`
+export const StyledRegisterPage = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;

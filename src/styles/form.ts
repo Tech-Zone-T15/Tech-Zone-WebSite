@@ -1,16 +1,18 @@
 import { TextField } from '@mui/material';
 import styled from 'styled-components';
+import { mainTheme } from './theme';
 
 export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   padding: 20px;
-  background-color: #FCFEFF;
+  background-color: ${mainTheme.colors.gray1};
   width: 400px;
-  height: 500px;
+  height: fit-content;
+  min-height: 500px;
   border-radius: 4px;
    
   label{
@@ -22,9 +24,14 @@ export const StyledForm = styled.form`
 }
 
   span{
-   color: red;
-   font-weight: bold;
-   font-size: small;
+   color: ${mainTheme.colors.red};
+   text-align: left;
+   width: 90%;
+   
+  }
+  span::before {
+    display: inline;
+    content: "⚠ ";
   }
 
   p{

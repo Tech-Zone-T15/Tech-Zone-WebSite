@@ -5,6 +5,9 @@ import { UserContext } from '../../../Providers/UserContext'
 import { Registerschema } from './schema'
 import { useForm } from 'react-hook-form';
 import { IRegisterFormValues } from '../../../Providers/UserContext/@types';
+import { StyledInput } from '../../../styles/input';
+import { StyledButton } from '../../../styles/button';
+import { StyledForm } from '../../../styles/form';
 
 const RegisterForm = () => {
 
@@ -19,18 +22,26 @@ const RegisterForm = () => {
       userRegister(formData)
      }
 
-     return(<form onSubmit={handleSubmit(onSubmit)} noValidate>
-     <input type='name' {...register("name")} />
-     <input type='email' {...register("email")} />
-     <input type='password' {...register("password")} />
-     <input type='text'{...register("profile_img")} />
-     <input type='number'{...register("age")} />
-     <input type='text'{...register("city")} />
-     <input type="text" {...register("bio")} />
-     <button type='submit' >
+     return(<StyledForm onSubmit={handleSubmit(onSubmit)} noValidate>
+      <h2>Cadastre-se</h2>
+      <label htmlFor="name">Nome completo</label>
+     <StyledInput id='name' {...register("name")} placeholder="  Nome" />
+     <label htmlFor="email">Seu Email</label>
+     <StyledInput type='email' id='email' {...register("email")} placeholder="  Email" />
+     <label htmlFor="password">Sua senha</label>
+     <StyledInput type='password' id='password' {...register("password")} placeholder="  Senha"/>
+     <label htmlFor="profile_img">Sua foto de perfil</label>
+     <StyledInput type='text' id='profile_img'{...register("profile_img")} placeholder="  Link da imagem (opcional)" />
+     <label htmlFor="age">Sua idade</label>
+     <StyledInput type='number'id='age'  {...register("age")} placeholder="  Idade"/>
+     <label htmlFor="city">Sua cidade</label>
+     <StyledInput type='text' id='city' {...register("city")} placeholder="  Cidade"/>
+     <label htmlFor="bio">Conte um pouco sobre você</label>
+     <StyledInput type="text" id='bio' {...register("bio")} placeholder="  Sua bio (mín. 20 caracteres"/>
+     <StyledButton type='submit' $buttonSize='large' $buttonStyle='blue' >
        Cadastrar
-     </button>
-   </form>)
+     </StyledButton>
+   </StyledForm>)
    
    };
 
