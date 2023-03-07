@@ -1,19 +1,19 @@
 export interface IUserContext {
-  loading: boolean;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  user: IUser | null;
-  userRegister: (formData: IRegisterFormValues) => Promise<void>
-  userLogOut: () => void;
-  userLogin: (formData: ILoginFormValues) => Promise<void>;
-  setUser: React.Dispatch<React.SetStateAction<IUser | null>>
-//   userLoad: () => void;
+   loading: boolean;
+   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+   user: IUser | null;
+   userRegister: (formData: IRegisterFormValues) => Promise<void>;
+   userLogOut: () => void;
+   userLogin: (formData: ILoginFormValues) => Promise<void>;
+   typeWritter: (title: HTMLElement, content: string) => void;
+   setUser: React.Dispatch<React.SetStateAction<IUser | null>>
 }
 
 export interface IDefaultProviderProps {
    children: React.ReactNode;
 }
 
-export interface IUser{
+export interface IUser {
    id: number;
    name: string;
    email: string;
@@ -24,7 +24,7 @@ export interface IUser{
    bio: string;
 }
 
-export interface IUserID{
+export interface IUserID {
    token: string;
    sub: string;
 }
