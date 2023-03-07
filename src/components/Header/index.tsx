@@ -24,7 +24,7 @@ export const DashboarHeader = () => {
                </div>
             </div>
             <div id='header__div-right'>
-               <StyledTextField />
+               <StyledTextField label='search'/>
                <div id='buttons__div'>
                   <StyledButtonLink to='/perfil' $buttonSize='small' $buttonStyle='white' >
                      Perfil
