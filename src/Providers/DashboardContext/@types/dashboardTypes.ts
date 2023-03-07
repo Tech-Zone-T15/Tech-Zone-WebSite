@@ -22,6 +22,7 @@ export interface IsendPost {
    img: string;
    content: string;
 }
+
 export interface IsendComments {
    postId: number;
    userId: number;
@@ -40,10 +41,30 @@ export interface Iusers {
    id: number;
 }
 
+
+export interface IUpdatePost{
+   userId:string
+   img:string
+   content:string
+}
+export interface IsendComments{
+   postId:number
+   userId:number
+   name:string
+   profile_img:string
+   comment:string
+}
+export interface IpostProps{
+   post:Ipost
+}
+
 export interface IDashboardContext {
-   sendComments: (data: IsendComments) => Promise<void>;
-   sendPost: (data: IsendPost) => Promise<void>;
-   getComments: () => Promise<void>;
-   getPosts: () => Promise<void>;
-   followUsers: Iusers[];
+   sendComments: (data: IsendComments) => Promise<void>
+   sendPost: (data: IsendPost) => Promise<void>
+   getComments: () => Promise<void>
+   // getPosts: () => Promise<void>
+   posts: Ipost[]
+   deletePost: (postId: Ipost) => Promise<void>
+   editPost: (data: Ipost[], postId: Ipost) => Promise<void>
+    followUsers: Iusers[];
 }

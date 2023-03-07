@@ -1,6 +1,8 @@
+import { DashboarHeader } from "../../components/Header";
 import Post from "../../components/Posts";
 import UserSuggestion from "../../components/UserSuggestion";
 import { NavBar } from "./style";
+
 
 const DashboardPage = () => {
    return (
@@ -25,12 +27,6 @@ const DashboardPage = () => {
                <p>Input Para enviar os post </p>
             </div>
 
-            <Post />
-         </main>
-
-         <aside></aside>
-      </>
-   );
 };
 
 export default DashboardPage;

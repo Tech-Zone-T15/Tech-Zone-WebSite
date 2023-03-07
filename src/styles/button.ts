@@ -17,6 +17,7 @@ export const StyledButtonCSS = css<IStyledButtonProps>`
   font-size: 1rem;
 
   height: 48px;
+  min-height: 48px;
   padding: 0 20px;
 
   border-radius: 8px;
@@ -35,7 +36,8 @@ export const StyledButtonCSS = css<IStyledButtonProps>`
         `;
       case 'large':
         return css`
-        width: 130px;
+        min-width: 250px;
+        width: 100%;
         `;
       default:
         return css`
@@ -53,12 +55,14 @@ export const StyledButtonCSS = css<IStyledButtonProps>`
           &:hover {
             background: ${theme.colors.primary2};
           }
+          &:disabled{background-color: black; cursor: not-allowed}
+
         `;
       case 'white':
         return css`
           color: ${theme.colors.primary2};
           background: ${theme.colors.gray1};
-          border: 1 px solid ${theme.colors.primary2};
+          border: 1px solid ${theme.colors.primary2};
           &:hover {
             color: ${theme.colors.gray1};
             background: ${theme.colors.primary};
