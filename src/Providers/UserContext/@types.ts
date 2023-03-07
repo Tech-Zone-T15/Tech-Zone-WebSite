@@ -6,6 +6,8 @@ export interface IUserContext {
   userLogOut: () => void;
   userLogin: (formData: ILoginFormValues) => Promise<void>;
   userLoad: () => void;
+  getAllUser: () => Promise<void>
+  allUser: IUser[]
 }
 
 export interface IDefaultProviderProps{
@@ -39,4 +41,5 @@ export interface IRegisterFormValues{
 export interface ILoginFormValues{
   email: string;
   password: string;
+  
 }

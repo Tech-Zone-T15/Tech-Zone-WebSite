@@ -6,11 +6,13 @@ export const DashboardContext = createContext({} as IDashboardContext);
 
 export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
-   const [posts,setPosts] = useState<Ipost[] >([])
+   const [posts,setPosts] = useState<Ipost[]>([])
+   const token = localStorage.getItem("@TOKEN");
    
-   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtlbnppbmhvQG1haWwuY29tIiwiaWF0IjoxNjc4MTU2MTAwLCJleHAiOjE2NzgxNTk3MDAsInN1YiI6IjEifQ.Bv_gYepf6tTSh3y5KeH0T7bI55b9k6jkfEbAhbbiLPo"; // Esta faltando o localStorage do token
-
+   
    const getPosts = async () => { // requisição para renderizar os post 
+
+      const token = localStorage.getItem("@TOKEN");
       
       try {
          const response = await api.get("posts", {
@@ -24,9 +26,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       }
    };
 
-   useEffect(() => { //Renderizar os produtos a cada atualização da pagina 
-      getPosts(); 
-   }, []);
 
    
    const getComments = async () => { // requisição para renderizar os Comentarios
@@ -89,12 +88,12 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       }
    }
 
-   const editPost = async (data:Ipost[],postId:Ipost) => {
-      const id = postId.id
+   const editPost = async (data:IUpdatePost) => {
+      const {id} = data
 
       try {
 
-            const response = await api.post(`post/${id}`,data,{
+            const response = await api.put(`posts/${id}`,data,{
                headers:{
                   Authorization: `Bearer ${token}`,
                }
