@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { StyledButton } from '../../styles/button'
 import { DynamicHeaderButtons, IHeaderButtonsProps } from './DynamicHeaderButtons'
 import { StyledHeader } from './style'
-import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+// import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 
 
 export const DynamicHeader = ({text1, location1, text2, location2}: IHeaderButtonsProps) => {
