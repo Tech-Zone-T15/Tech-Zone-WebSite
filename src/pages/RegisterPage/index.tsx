@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Cube } from '../../components/Cube'
 import { DynamicHeader } from '../../components/DynamicHeader'
 import { StyledHeader } from '../../components/DynamicHeader/style'
 import LoginForm from '../../components/LoginPageComponents/LoginForm'
@@ -16,7 +17,7 @@ function LoginPage() {
       <section><RegisterForm/></section>
       <section >
          <h1>Junte-se a nossa comunidade agora mesmo e mostre para o mundo todo o seu potencial.</h1>
-         <img src="../../src/assets/imgRegisterPage.png" alt="" />
+         <Cube/>
       </section>
       
 
