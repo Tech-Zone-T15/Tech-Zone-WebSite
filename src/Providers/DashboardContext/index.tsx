@@ -123,38 +123,33 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          setPosts(newPostList)
 
       } catch (error) {
-         console.error
-         
+         console.error;
       }
-   }
+   };
 
-   const editPost = async (data:Ipost[],postId:Ipost) => {
-      const id = postId.id
+   const editPost = async (data: Ipost[], postId: Ipost) => {
+      const id = postId.id;
 
       try {
+         const response = await api.post(`post/${id}`, data, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
 
-            const response = await api.post(`post/${id}`,data,{
-               headers:{
-                  Authorization: `Bearer ${token}`,
-               }
-            })
+         const newPostList = posts.map((post) => {
+            if (id == post.id) {
+               return { ...post, ...data };
+            } else {
+               return post;
+            }
+         });
 
-            const newPostList = posts.map(post => {
-
-               if(id == post.id){
-                  return {...post, ...data}
-               } else {
-                  return post
-               }
-            })
-
-            setPosts(newPostList)
-   
-         } catch (error) {
-            console.error(error)
-         }
-
-   }
+         setPosts(newPostList);
+      } catch (error) {
+         console.error(error);
+      }
+   };
 
    return (
 

@@ -26,7 +26,9 @@ const DashboardPage = () => {
                {" "}
                <p>Input Para enviar os post </p>
             </div>
+         </main>
+            </>
 
-};
+)};
 
 export default DashboardPage;
