@@ -8,7 +8,7 @@ const OpenRotes = () => {
   return(
     token
     ?
-    <Navigate to='/shop' />
+    <Navigate to='/dashboard' />
     :
     <Outlet/>
   )

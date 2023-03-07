@@ -6,11 +6,11 @@ const ProtectedRotes = () => {
    const token = localStorage.getItem('@kenziebook:@TOKEN')
 
    return(
-      // token
-      // ?
-      <Outlet/>
-      // :
-      // <Navigate to='/' />
+    token
+    ?
+    <Outlet/>
+    :
+    <Navigate to='/' />
    )
 }
 

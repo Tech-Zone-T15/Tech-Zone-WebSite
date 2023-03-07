@@ -17,12 +17,11 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
 
   const userLoad = () =>{
     if(!token){
-      /*navigate('/')*/
+      navigate('/')
     }else{
       navigate('/dashboard')
     }
   }
-<<<<<<< HEAD
 
   useEffect(() => {
    if (token) {
@@ -35,19 +34,19 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
 
                }
             });
-            navigate('/dashboard')
             setUser(response.data)
+            navigate('/dashboard')
          } catch (error) {
             console.error(error);
+            navigate('/');
          }
       };
       autoLogin();
    }
-  })
+  }, [token])
 
-=======
-  
->>>>>>> b5ee0f4f50ec35acbfc4a99d849874c07e94bfad
+  console.log(user)
+
   const userRegister = async (formData: IRegisterFormValues) => {
     try {
       setLoading(true)
