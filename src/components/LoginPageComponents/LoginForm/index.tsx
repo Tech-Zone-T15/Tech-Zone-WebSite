@@ -7,14 +7,14 @@ import { useForm } from 'react-hook-form';
 import { ILoginFormValues } from '../../../Providers/UserContext/@types';
 import { StyledForm } from '../../../styles/form';
 import { StyledInput } from '../../../styles/input';
-import { StyledButton } from '../../../styles/button';
+import { StyledButton, StyledButtonLink } from '../../../styles/button';
 import { useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
 
 
 
 const LoginForm = () => {
-  const {userLogin} = useContext(UserContext)
+  const {userLogin, loading} = useContext(UserContext)
    const navigate = useNavigate()
   const{
     register, handleSubmit, formState: {errors},
@@ -35,13 +35,13 @@ const LoginForm = () => {
    
    <TextField fullWidth id='password' label="Digite sua Senha aqui" variant='filled'   {...register("password") }   />
    <ErrorMessage errors={errors} name="password" as="p" />
-   <StyledButton  type='submit' $buttonSize='large' $buttonStyle='blue'> 
-     Login
+   <StyledButton disabled={loading} type='submit' $buttonSize='large' $buttonStyle='blue'> 
+     {loading ? `...` : 'Login'}
    </StyledButton>
    <span>Ainda não possui cadastro?</span>
-   <StyledButton  type='button' $buttonSize='large' $buttonStyle='white' onClick={()=> {navigate("/register")}}>
+   <StyledButtonLink to='/register' $buttonSize='large' $buttonStyle='white'>
    Cadastrar
-   </StyledButton>
+   </StyledButtonLink>
    
  </StyledForm>
 )

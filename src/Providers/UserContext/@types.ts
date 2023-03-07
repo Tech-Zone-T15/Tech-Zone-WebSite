@@ -5,7 +5,7 @@ export interface IUserContext {
   userRegister: (formData: IRegisterFormValues) => Promise<void>
   userLogOut: () => void;
   userLogin: (formData: ILoginFormValues) => Promise<void>;
-  userLoad: () => void;
+//   userLoad: () => void;
 }
 
 export interface IDefaultProviderProps{
@@ -13,16 +13,14 @@ export interface IDefaultProviderProps{
 }
 
 export interface IUser{
-  accessToken: string;
-  user: {
-		id: number;
-		name: string;
-		email: string;
-    profile_img: string;
-    age: number;
-    city: string;
-    bio: string;
-	}
+   id: number;
+   name: string;
+   email: string;
+   password: string;
+   profile_img: string;
+   age: number;
+   city: string;
+   bio: string;
 }
 
 export interface IUserID{

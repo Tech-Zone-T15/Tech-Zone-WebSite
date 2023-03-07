@@ -55,6 +55,8 @@ export const StyledButtonCSS = css<IStyledButtonProps>`
           &:hover {
             background: ${theme.colors.primary2};
           }
+          &:disabled{background-color: black; cursor: not-allowed}
+
         `;
       case 'white':
         return css`

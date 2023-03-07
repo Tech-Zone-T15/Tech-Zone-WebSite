@@ -1,3 +1,4 @@
+import { DashboarHeader } from "../../components/Header";
 import Post from "../../components/Posts";
 
 
@@ -7,7 +8,7 @@ const DashboardPage = () => {
    return(
       <>
 
-      <header></header>
+      <DashboarHeader/>
       
       <main>
 
