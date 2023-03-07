@@ -104,6 +104,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
             userLogOut,
             userLogin,
             userRegister,
+            setUser
          }}
       >
          {children}

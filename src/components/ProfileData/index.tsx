@@ -5,7 +5,7 @@ import { UserContext } from "../../Providers/UserContext";
 
 
 export const ProfileData = () => {
-   const { deleteProfile, setUpdateProfileModal } = useContext(ProfileContext);
+   const { deleteProfile, setUpdateProfileModal, setDeleteProfileModal } = useContext(ProfileContext);
    const {user} = useContext(UserContext) 
 
 
@@ -19,7 +19,7 @@ export const ProfileData = () => {
          <h2>Email: {user?.email}</h2>
          <h2>Cidade: {user?.city}</h2>
          {/* bio aqui */}
-         <button onClick={() => deleteProfile()}>Deletar perfil</button>
+         <button onClick={() => setDeleteProfileModal(true)}>Deletar perfil</button>
       </div>
    );
 };

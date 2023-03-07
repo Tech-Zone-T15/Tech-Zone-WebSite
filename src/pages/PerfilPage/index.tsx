@@ -7,9 +7,10 @@ import { ProfileData } from "../../components/ProfileData";
 import { CapaPerfil } from "../../components/Capa";
 import { DynamicHeader } from "../../components/DynamicHeader";
 import { UserContext } from "../../Providers/UserContext";
+import { ModalConfirm } from "../../components/ModalConfirm";
 
 function PerfilPage() {
-   const { updateProfileModal, updateProfileImage } = useContext(ProfileContext);
+   const { updateProfileModal, updateProfileImage, deleteProfileModal } = useContext(ProfileContext);
    const {user} = useContext(UserContext)
 
    return (
@@ -23,6 +24,7 @@ function PerfilPage() {
             />
          )}
          {updateProfileImage && <ProfileModalImage />}
+         {deleteProfileModal && <ModalConfirm />}
          <DynamicHeader text1="Voltar" text2="Início" location1="/dashboard" location2="/dashboard"/>
          <StyledMain>
             <CapaPerfil />

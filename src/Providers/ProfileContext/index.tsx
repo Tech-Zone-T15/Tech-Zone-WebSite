@@ -14,6 +14,7 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
    const navigate = useNavigate();
    const [updateProfileModal, setUpdateProfileModal] = useState(false);
    const [updateProfileImage, setUpdateProfileImage] = useState(false);
+   const [deleteProfileModal, setDeleteProfileModal] = useState(false)
    const { user, setUser } = useContext(UserContext);
 
    async function updateProfile(formData: iUpdateProfile) {
@@ -23,15 +24,10 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         console.log(1)
          setUser(response.data);
-         console.log(2)
          setUpdateProfileModal(false);
-         console.log(3)
          setUpdateProfileImage(false);
-         console.log(4)
          toast.success("Perfil atualizado com sucesso!");
-         console.log(5)
       } catch (error) {
          if (axios.isAxiosError(error)) {
             toast.error(error.response?.data);
@@ -46,6 +42,7 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
+         setDeleteProfileModal(false)
          toast.success("Perfil deletado");
          localStorage.removeItem("@TOKEN");
          navigate("/");
@@ -65,6 +62,8 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
             updateProfileImage,
             setUpdateProfileImage,
             deleteProfile,
+            deleteProfileModal,
+            setDeleteProfileModal
          }}
       >
          {children}
