@@ -37,6 +37,25 @@ body
         transform: rotateX(-30deg) rotateY(360deg);
     }
 }
+@keyframes burst 
+{
+    0%
+    {
+        transform: rotateY(calc(90deg*var(--i))) translateZ(150px);
+    }
+    50%
+    {
+        transform: rotateY(calc(80deg*var(--i))) translateZ(400px) rotateZ(90deg);
+    }
+    100%
+    {
+        transform: rotateY(calc(90deg*var(--i))) translateZ(150px) rotateZ(0deg);
+    }
+}
+
+
+/*animation: burst 5s backwards infinite;*/
+
 .cube div
 {
     position: absolute;
@@ -68,6 +87,7 @@ body
    width: 300px;
    height: 300px;
    background: url(../../src/assets/KenzieLogo.png);
+   object-fit: cover ;
    background-position: center;
    background-repeat: no-repeat;
    background-color: #151515;

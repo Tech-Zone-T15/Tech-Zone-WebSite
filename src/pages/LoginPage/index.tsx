@@ -14,6 +14,7 @@ function LoginPage() {
       </section>
       <section><LoginForm/></section>
       
+      
    </StyledLoginPage>
   )
 }
