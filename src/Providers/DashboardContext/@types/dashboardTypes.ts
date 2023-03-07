@@ -22,6 +22,12 @@ export interface IsendPost{
    img:string
    content:string
 }
+
+export interface IUpdatePost{
+   userId:string
+   img:string
+   content:string
+}
 export interface IsendComments{
    postId:number
    userId:number
@@ -29,9 +35,16 @@ export interface IsendComments{
    profile_img:string
    comment:string
 }
+export interface IpostProps{
+   post:Ipost
+}
+
 export interface IDashboardContext {
    sendComments: (data: IsendComments) => Promise<void>
    sendPost: (data: IsendPost) => Promise<void>
    getComments: () => Promise<void>
    getPosts: () => Promise<void>
+   posts: Ipost[]
+   deletePost: (postId: Ipost) => Promise<void>
+   editPost: (data: Ipost[], postId: Ipost) => Promise<void>
 }
