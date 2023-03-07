@@ -2,9 +2,10 @@ import { CapaStyle } from "./style";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { useContext } from "react";
 import { ProfileContext } from "../../Providers/ProfileContext";
+import { UserContext } from "../../Providers/UserContext";
 
 export const CapaPerfil = () => {
-   const user = JSON.parse(localStorage.getItem("@USER") || "");
+   const {user} = useContext(UserContext)
    const { setUpdateProfileImage } = useContext(ProfileContext);
 
    return (
@@ -17,8 +18,8 @@ export const CapaPerfil = () => {
          <div className="image-box">
             <img
                className="foto-perfil"
-               src={user.profile_img}
-               alt={user.name}
+               src={user?.profile_img}
+               alt={user?.name}
             />
             <button onClick={() => setUpdateProfileImage(true)}><MdOutlineAddAPhoto /></button>
          </div>

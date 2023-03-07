@@ -10,24 +10,28 @@ import { iProfileContext, iUpdateProfile } from "./@types/profileTypes";
 export const ProfileContext = createContext({} as iProfileContext);
 
 export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
-
    const token = localStorage.getItem("@TOKEN");
    const navigate = useNavigate();
    const [updateProfileModal, setUpdateProfileModal] = useState(false);
    const [updateProfileImage, setUpdateProfileImage] = useState(false);
-   const  user  = JSON.parse(localStorage.getItem('@USER') || '');;
+   const { user, setUser } = useContext(UserContext);
 
    async function updateProfile(formData: iUpdateProfile) {
       try {
-         const response = await api.patch(`/users/${user.id}`, formData, {
+         const response = await api.patch(`/users/${user?.id}`, formData, {
             headers: {
                Authorization: `Bearer ${token}`,
             },
          });
-         localStorage.setItem('@USER', JSON.stringify(response.data))
+         console.log(1)
+         setUser(response.data);
+         console.log(2)
+         setUpdateProfileModal(false);
+         console.log(3)
+         setUpdateProfileImage(false);
+         console.log(4)
          toast.success("Perfil atualizado com sucesso!");
-         setUpdateProfileModal(false)
-         setUpdateProfileImage(false)
+         console.log(5)
       } catch (error) {
          if (axios.isAxiosError(error)) {
             toast.error(error.response?.data);
@@ -37,7 +41,7 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
 
    async function deleteProfile() {
       try {
-         await api.delete(`/users/${user.id}`, {
+         await api.delete(`/users/${user?.id}`, {
             headers: {
                Authorization: `Bearer ${token}`,
             },

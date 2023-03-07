@@ -6,19 +6,20 @@ import { StyledMain } from "./style";
 import { ProfileData } from "../../components/ProfileData";
 import { CapaPerfil } from "../../components/Capa";
 import { DynamicHeader } from "../../components/DynamicHeader";
+import { UserContext } from "../../Providers/UserContext";
 
 function PerfilPage() {
    const { updateProfileModal, updateProfileImage } = useContext(ProfileContext);
-   const user = JSON.parse(localStorage.getItem("@USER") || "");
+   const {user} = useContext(UserContext)
 
    return (
       <>
          {updateProfileModal && (
             <ProfileModal
-               name={user.name}
-               email={user.email}
-               city={user.city}
-               bio={user.bio}
+               name={user?.name}
+               email={user?.email}
+               city={user?.city}
+               bio={user?.bio}
             />
          )}
          {updateProfileImage && <ProfileModalImage />}

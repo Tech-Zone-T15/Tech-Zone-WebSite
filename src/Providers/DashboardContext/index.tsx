@@ -12,29 +12,28 @@ import {
 export const DashboardContext = createContext({} as IDashboardContext);
 
 export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
-   const [posts, setPosts] = useState<Ipost[]>([]);
 
-   const token = localStorage.getItem("@TOKEN"); // Esta faltando o localStorage do token
+   const [posts,setPosts] = useState<Ipost[] >([])
+   
+   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtlbnppbmhvQG1haWwuY29tIiwiaWF0IjoxNjc4MTU2MTAwLCJleHAiOjE2NzgxNTk3MDAsInN1YiI6IjEifQ.Bv_gYepf6tTSh3y5KeH0T7bI55b9k6jkfEbAhbbiLPo"; // Esta faltando o localStorage do token
 
-   const getPosts = async () => {
-      // requisição para renderizar os post
+   // const getPosts = async () => { // requisição para renderizar os post 
+      
+   //    try {
+   //       const response = await api.get("posts", {
+   //          headers: {
+   //             Authorization: `Bearer ${token}`,
+   //          },
+   //       });
+   //       setPosts(response.data)
+   //    } catch (error) {
+   //       console.error(error)
+   //    }
+   // };
 
-      try {
-         const response = await api.get("posts", {
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         });
-         setPosts(response.data);
-      } catch (error) {
-         console.error(error);
-      }
-   };
-
-   useEffect(() => {
-      //Renderizar os produtos a cada atualização da pagina
-      getPosts();
-   }, []);
+   // useEffect(() => { //Renderizar os produtos a cada atualização da pagina 
+   //    getPosts(); 
+   // }, []);
 
    const getComments = async () => {
       // requisição para renderizar os Comentarios
@@ -117,17 +116,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    };
 
    return (
-      <DashboardContext.Provider
-         value={{
-            sendComments,
-            sendPost,
-            getComments,
-            getPosts,
-            posts,
-            deletePost,
-            editPost,
-         }}
-      >
+      <DashboardContext.Provider value={{sendComments,sendPost,getComments,
+      // getPosts,
+      posts,deletePost,editPost }}>
          {children}
       </DashboardContext.Provider>
    );

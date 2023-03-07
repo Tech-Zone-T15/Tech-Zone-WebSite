@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const CapaStyle = styled.div`
-   border: 2px solid black;
    .image-box{
       display: inline-flex;
       position: relative;
@@ -16,12 +15,11 @@ export const CapaStyle = styled.div`
       width: 100vw;
    }
    .foto-perfil{
-      width: 200px;
-      height: 200px;
+      margin: 1rem;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
-      left: 0;
-      top: 10;
       object-fit: cover;
-      margin-top: -75px;
+      margin-top: -50%;
    }
 `;
