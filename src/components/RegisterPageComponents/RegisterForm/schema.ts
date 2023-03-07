@@ -12,8 +12,8 @@ export const Registerschema = yup
       .required("Digite uma senha")
       .min(6, "A senha precisa ter pelo menos 6 caracteres"),
    profile_img: yup.string().optional(),
-   age: yup.number().required("Informe sua idade"),
-   city: yup.string().required("Inform a sua cidade"),
+   age: yup.string().required("Informe sua idade"),
+   city: yup.string().required("Informe a sua cidade"),
    bio: yup.string().required("Diga um pouco sobre você").min(20, "Use pelo menos 20 caracteres")
 
   })
