@@ -1,16 +1,19 @@
-import React from 'react';
+import { userInfo } from 'os';
+import React, { useContext } from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
+import { UserContext } from '../../Providers/UserContext';
 
 const ProtectedRotes = () => {
 
-   const token = localStorage.getItem('@kenziebook:@TOKEN')
+   const {user} = useContext(UserContext)
 
+   const token = localStorage.getItem('@TOKEN')
    return(
-      // token
-      // ?
-      <Outlet/>
-      // :
-      // <Navigate to='/' />
+    user
+    ?
+    <Outlet/>
+    :
+    <Navigate to='/' />
    )
 }
 

@@ -3,13 +3,13 @@ import { Outlet, Navigate } from 'react-router-dom';
 
 const OpenRotes = () => {
 
-  const token = localStorage.getItem('@kenziebook:@TOKEN')
+  const token = localStorage.getItem('@TOKEN')
 
   return(
-    token
-    ?
-    <Navigate to='/shop' />
-    :
+   //  token
+   //  ?
+   //  <Navigate to='/dashboard' />
+   //  :
     <Outlet/>
   )
 }

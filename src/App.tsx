@@ -7,7 +7,7 @@ import { UserProvider } from "./Providers/UserContext";
 import { GlobalStyles } from "./styles/global";
 
 const App =() => (
-      <UserProvider>
+   <UserProvider>
       <DashboardProvider>
          <ProfileProvider>
             <GlobalStyles />

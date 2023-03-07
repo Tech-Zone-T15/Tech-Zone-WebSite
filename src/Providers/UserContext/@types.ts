@@ -15,16 +15,19 @@ export interface IDefaultProviderProps{
 }
 
 export interface IUser{
-  accessToken: string;
-  user: {
-		id: number;
-		name: string;
-		email: string;
-    profile_img: string;
-    age: number;
-    city: string;
-    bio: string;
-	}
+   id: number;
+   name: string;
+   email: string;
+   password: string;
+   profile_img: string;
+   age: number;
+   city: string;
+   bio: string;
+}
+
+export interface IUserID{
+   token: string;
+   sub: string;
 }
 
 export interface IRegisterFormValues{

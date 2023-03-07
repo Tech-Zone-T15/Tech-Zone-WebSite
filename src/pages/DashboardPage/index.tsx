@@ -1,3 +1,4 @@
+import { DashboarHeader } from "../../components/Header";
 import Post from "../../components/Posts";
 import { useContext,useEffect } from "react";
 import { DashboardContext } from "../../Providers/DashboardContext";
@@ -20,7 +21,7 @@ const DashboardPage = () => {
    return(
       <>
 
-      <header></header>
+      <DashboarHeader/>
       
       <main>
 

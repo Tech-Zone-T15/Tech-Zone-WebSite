@@ -10,22 +10,34 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const token = localStorage.getItem("@TOKEN");
    
    
+<<<<<<< HEAD
    const getPosts = async () => { // requisição para renderizar os post 
 
       const token = localStorage.getItem("@TOKEN");
-      
-      try {
-         const response = await api.get("posts", {
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         });
-         setPosts(response.data)
-      } catch (error) {
-         console.error(error)
-      }
-   };
+=======
+   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtlbnppbmhvQG1haWwuY29tIiwiaWF0IjoxNjc4MTU2MTAwLCJleHAiOjE2NzgxNTk3MDAsInN1YiI6IjEifQ.Bv_gYepf6tTSh3y5KeH0T7bI55b9k6jkfEbAhbbiLPo"; // Esta faltando o localStorage do token
 
+   // const getPosts = async () => { // requisição para renderizar os post 
+>>>>>>> 2ed2af932e7b3456ea85242d2409f27ed05c99af
+      
+   //    try {
+   //       const response = await api.get("posts", {
+   //          headers: {
+   //             Authorization: `Bearer ${token}`,
+   //          },
+   //       });
+   //       setPosts(response.data)
+   //    } catch (error) {
+   //       console.error(error)
+   //    }
+   // };
+
+<<<<<<< HEAD
+=======
+   // useEffect(() => { //Renderizar os produtos a cada atualização da pagina 
+   //    getPosts(); 
+   // }, []);
+>>>>>>> 2ed2af932e7b3456ea85242d2409f27ed05c99af
 
    
    const getComments = async () => { // requisição para renderizar os Comentarios
@@ -117,7 +129,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    }
 
    return (
-      <DashboardContext.Provider value={{sendComments,sendPost,getComments,getPosts,posts,deletePost,editPost }}>
+      <DashboardContext.Provider value={{sendComments,sendPost,getComments,
+      // getPosts,
+      posts,deletePost,editPost }}>
          {children}
       </DashboardContext.Provider>
    );
