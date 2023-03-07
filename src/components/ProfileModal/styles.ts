@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const ModalProfile = styled.dialog`
-   position: fixed;
-   background: rgba(51, 51, 51, 0.5);
+   max-width: 600px;
+   width: 100%;
    border-radius: 8px;
-   border-top: 8px solid blue;
-   border-bottom: 8px solid blue;
+   border-top: 16px solid blue;
+   border-bottom: 16px solid blue;
    form {
       background-color: white;
       gap: 16px;
@@ -15,3 +15,14 @@ export const ModalProfile = styled.dialog`
       justify-content: center;
    }
 `;
+export const ModalBox = styled.div`
+   background: rgba(51, 51, 51, 0.5);
+   position: fixed;
+   z-index: 3;
+   width: 100%;
+   height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 20px;
+`

@@ -5,6 +5,7 @@ import { ProfileContext } from "../../Providers/ProfileContext";
 import { StyledMain } from "./style";
 import { ProfileData } from "../../components/ProfileData";
 import { CapaPerfil } from "../../components/Capa";
+import { DynamicHeader } from "../../components/DynamicHeader";
 
 function PerfilPage() {
    const { updateProfileModal, updateProfileImage } = useContext(ProfileContext);
@@ -21,7 +22,7 @@ function PerfilPage() {
             />
          )}
          {updateProfileImage && <ProfileModalImage />}
-         <header></header>
+         <DynamicHeader text1="Voltar" text2="Início" location1="/dashboard" location2="/dashboard"/>
          <StyledMain>
             <CapaPerfil />
             <ProfileData />

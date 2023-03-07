@@ -27,6 +27,7 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
          localStorage.setItem('@USER', JSON.stringify(response.data))
          toast.success("Perfil atualizado com sucesso!");
          setUpdateProfileModal(false)
+         setUpdateProfileImage(false)
       } catch (error) {
          if (axios.isAxiosError(error)) {
             toast.error(error.response?.data);
