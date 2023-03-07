@@ -10,7 +10,6 @@ import { StyledHeaderDash } from './style'
 export const DashboarHeader = () => {
 
    const { user, userLogOut } = useContext(UserContext)
-   // console.log(user?.name)
 
   return (
    <StyledHeaderDash>
