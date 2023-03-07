@@ -4,9 +4,12 @@ import { ProfileContext } from "../../Providers/ProfileContext";
 import { StyledButton } from "../../styles/button";
 import { ModalBox, ModalProfile } from "../ProfileModal/styles";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import TextField from "@mui/material/TextField";
+import { UserContext } from "../../Providers/UserContext";
 
 export const ProfileModalImage = () => {
    const { updateProfile, setUpdateProfileImage } = useContext(ProfileContext);
+   const {user} = useContext(UserContext)
    const { register, handleSubmit } = useForm();
 
    return (
@@ -14,15 +17,14 @@ export const ProfileModalImage = () => {
          <ModalProfile>
             <form onSubmit={handleSubmit(updateProfile)}>
                <header>
-                  <h1>
-                     Editar perfil{" "}
+                  <div>
+                     <h1>Editar perfil </h1>
                      <AiOutlineCloseCircle
                         onClick={() => setUpdateProfileImage(false)}
                      />
-                  </h1>
+                  </div>
                </header>
-               <label htmlFor="">URL da imagem</label>
-               <input type="text" {...register("profile_img")} />
+               <TextField defaultValue={user?.profile_img} label="Url da imagem de perfil" {...register("profile_img")}/>
                <StyledButton
                   type="submit"
                   $buttonSize="small"
