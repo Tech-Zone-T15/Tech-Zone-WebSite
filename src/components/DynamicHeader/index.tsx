@@ -25,7 +25,7 @@ export const DynamicHeader = ({text1, location1, text2, location2}: IHeaderButto
          
         <DynamicHeaderButtons text1={text1} text2={text2} location1={location1} location2={location2}/>
          <div className='menu-close' onClick={toggleMenu}>
-            <KeyboardDoubleArrowUpIcon/>
+            {/* <KeyboardDoubleArrowUpIcon/> */}
          </div>
       </div>
    </StyledHeader>

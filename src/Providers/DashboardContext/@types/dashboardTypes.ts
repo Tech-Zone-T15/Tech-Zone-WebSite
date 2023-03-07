@@ -46,5 +46,5 @@ export interface IDashboardContext {
    getPosts: () => Promise<void>
    posts: Ipost[]
    deletePost: (postId: Ipost) => Promise<void>
-   editPost: (data: IsendPost, postId: Ipost) => Promise<void>
+   editPost: (data: Ipost[], postId: Ipost) => Promise<void>
 }

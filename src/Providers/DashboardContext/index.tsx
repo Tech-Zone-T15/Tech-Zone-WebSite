@@ -8,7 +8,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [posts,setPosts] = useState<Ipost[] >([])
    
-   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtlbnppbmhvQG1haWwuY29tIiwiaWF0IjoxNjc4MTQxNTA5LCJleHAiOjE2NzgxNDUxMDksInN1YiI6IjEifQ.T58Y6VFO0X1LkWI-qTLRJuKddaBDfeVmqqyJyyc8cRs"; // Esta faltando o localStorage do token
+   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtlbnppbmhvQG1haWwuY29tIiwiaWF0IjoxNjc4MTU2MTAwLCJleHAiOjE2NzgxNTk3MDAsInN1YiI6IjEifQ.Bv_gYepf6tTSh3y5KeH0T7bI55b9k6jkfEbAhbbiLPo"; // Esta faltando o localStorage do token
 
    const getPosts = async () => { // requisição para renderizar os post 
       
