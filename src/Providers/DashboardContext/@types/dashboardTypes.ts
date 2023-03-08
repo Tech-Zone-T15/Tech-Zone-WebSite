@@ -2,7 +2,6 @@ export interface IDefaultProviderProps {
    children: React.ReactNode;
 }
 
-
 export interface Iusers{
    userId:number
    img:string
@@ -90,5 +89,5 @@ export interface IDashboardContext {
    users: Iusers[]
    deletePost: (postId: Iusers) => Promise<void>
    editPost: (data: IUpdatePost) => Promise<void>
-
+   followUsers: Iusers[]
 }

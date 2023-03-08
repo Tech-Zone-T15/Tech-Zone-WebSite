@@ -19,7 +19,3 @@ const Post = () => {
 export default Post;
 
 
-{/* <div>
-<h2>Usuario</h2>
-<img src="" alt="Foto do usuario" />
-</div> */}
