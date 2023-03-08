@@ -4,8 +4,9 @@ import { mainTheme } from "../../styles/theme";
 export const StyledHeaderDash = styled.header`
    background-color: ${mainTheme.colors.gray1};
 
-   #header {
+   #header__div {
       display: flex;
+      flex-direction: row;
       justify-content: center;
       align-items: center;
       justify-content: space-between;
