@@ -22,24 +22,40 @@ export const ProfileModal = ({
 }: iModalPlaceholders) => {
    const { setUpdateProfileModal, updateProfile } = useContext(ProfileContext);
    const { register, handleSubmit } = useForm();
-   const {user} = useContext(UserContext)
+   const { user } = useContext(UserContext);
 
    return (
       <ModalBox>
          <ModalProfile>
             <form onSubmit={handleSubmit(updateProfile)}>
                <header>
-                  <h1>
-                     Editar perfil{" "}
+                  <div>
+                     <h1>Editar perfil </h1>
                      <AiOutlineCloseCircle
                         onClick={() => setUpdateProfileModal(false)}
                      />
-                  </h1>
+                  </div>
                </header>
-               <TextField defaultValue={user?.name} {...register("name")} label="Nome"/>
-               <TextField defaultValue={user?.email} {...register("email")} label="Email"/>
-               <TextField defaultValue={user?.city} {...register("city")} label="Cidade"/>
-               <TextField defaultValue={user?.bio} {...register("bio")} label="Bio"/>
+               <TextField
+                  defaultValue={user?.name}
+                  {...register("name")}
+                  label="Nome"
+               />
+               <TextField
+                  defaultValue={user?.email}
+                  {...register("email")}
+                  label="Email"
+               />
+               <TextField
+                  defaultValue={user?.city}
+                  {...register("city")}
+                  label="Cidade"
+               />
+               <TextField
+                  defaultValue={user?.bio}
+                  {...register("bio")}
+                  label="Bio"
+               />
                <StyledButton $buttonSize="small" $buttonStyle="blue">
                   Atualizar
                </StyledButton>
