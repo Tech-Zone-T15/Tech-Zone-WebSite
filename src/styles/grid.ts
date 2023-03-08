@@ -15,6 +15,6 @@ export const StyledContainer = styled.div<IStyledContainerProps>`
 export const StyledGridBox = styled.div`
   padding: 20px;
   background: ${({ theme }) => theme.colors.white};
-  border: 2px solid ${({ theme }) => theme.colors.gray0};
+  border: 2px solid ${({ theme }) => theme.colors.gray1};
   border-radius: 5px;
 `;

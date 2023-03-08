@@ -1,9 +1,29 @@
-import React from 'react'
+import { DashboarHeader } from "../../components/Header";
+import Post from "../../components/Posts";
 
-function DashboardPage() {
-  return (
-    <div>index</div>
-  )
-}
 
-export default DashboardPage
+const DashboardPage = () => {
+
+
+   return(
+      <>
+
+      <DashboarHeader/>
+      
+      <main>
+
+         <div> <p>Input Para enviar os post </p></div>
+
+         <Post/>
+
+      </main>
+
+      <aside></aside>
+
+      </>
+
+   )
+
+};
+
+export default DashboardPage ;
