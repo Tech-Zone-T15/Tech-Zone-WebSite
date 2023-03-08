@@ -9,19 +9,22 @@ export const ModalProfile = styled.dialog`
    form {
       padding: 16px;
       background-color: white;
-      gap: 16px;
+      gap: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       header {
-         width: 70%;
+         width: 100%;
          div {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
          }
       }
+   }
+   span{
+      color: red;
    }
 `;
 export const ModalBox = styled.div`

@@ -24,9 +24,7 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         console.log(1)
          setUser(response.data);
-         console.log(2)
          setUpdateProfileModal(false);
          setUpdateProfileImage(false);
          toast.success("Perfil atualizado com sucesso!");
