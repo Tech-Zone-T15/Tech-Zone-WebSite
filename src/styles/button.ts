@@ -97,3 +97,8 @@ export const StyledButton = styled.button<IStyledButtonProps>`
 export const StyledButtonLink = styled(Link)`
   ${StyledButtonCSS}
 `;
+
+export const StyledButtonLink2 = styled(Link)`
+  ${StyledButtonCSS}
+  height: 85px;
+`;

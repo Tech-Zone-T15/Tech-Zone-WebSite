@@ -6,6 +6,7 @@ import OpenRotes from "./pages/OpenRotes";
 import PerfilPage from "./pages/PerfilPage";
 import ProtectedRotes from "./pages/ProtectedRotes";
 import RegisterPage from "./pages/RegisterPage";
+import { DashboardProvider } from "./Providers/DashboardContext";
 
 const Router = () => (
    <Routes>
@@ -17,7 +18,13 @@ const Router = () => (
       </Route>
 
       <Route  element={<ProtectedRotes />}>
-         <Route path="/dashboard" element={<DashboardPage />} />
+         <Route path="/dashboard" element={
+            <DashboardProvider>
+               <DashboardPage />
+            </DashboardProvider>
+
+
+            } />
          <Route path="/perfil" element={<PerfilPage />} />
       </Route>
       

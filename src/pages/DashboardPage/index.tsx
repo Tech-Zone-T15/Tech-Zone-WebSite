@@ -44,7 +44,7 @@ const DashboardPage = () => {
          <aside>
             <UserSuggestion />
          </aside>
-            </>
+      </>
 
 )};
 

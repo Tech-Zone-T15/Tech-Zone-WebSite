@@ -1,51 +1,96 @@
-import React, { useState } from 'react'
+import { useState } from "react";
 import ModalPostDelete from "../../ModalPostDelete";
-import ModalPostEdit from "../../ModalPostEdit"
-import commentsIcon  from "../../../assets/icon/commentsIcon.svg"
-import editIcon  from "../../../assets/icon/editIcon.svg"
-import likeIcon  from "../../../assets/icon/likeIcon.svg"
-import trashIcon  from "../../../assets/icon/trashIcon.svg"
-import { IpostsProps } from '../../../Providers/DashboardContext/@types/dashboardTypes';
-import ModalOpemComment from '../../ModalComment/ModalOpemComment';
+import ModalPostEdit from "../../ModalPostEdit";
+import { IpostsProps } from "../../../Providers/DashboardContext/@types/dashboardTypes";
+import ModalOpemComment from "../../ModalComment/ModalOpemComment";
+import CardMedia from "@mui/material/CardMedia";
+import CardActions from "@mui/material/CardActions";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import CardHeader from "@mui/material/CardHeader";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { red } from "@mui/material/colors";
+import AddComment from "@mui/icons-material/AddComment";
+import DeleteForever from "@mui/icons-material/DeleteForever";
+import  Edit  from "@mui/icons-material/Edit";
 
-const ListPosts = ({post,profile_img,name}:IpostsProps) => {
-   const {img,content} = post
 
-   const [opemModal,setOpemModal] = useState(false)
-   const [opemModalEdit,setOpemModalEdit] = useState(false)
-   const [opemModalComment,setopemModalComment] = useState(false)
+const ListPosts = ({ post, profile_img, name }: IpostsProps) => {
+   const { img, content } = post;
 
+   const [opemModal, setOpemModal] = useState(false);
+   const [opemModalEdit, setOpemModalEdit] = useState(false);
+   const [opemModalComment, setopemModalComment] = useState(false);
 
    return (
-         
-      <div>
+      <>
+         <Card sx={{ maxWidth: 400}}>
+            <CardHeader
+               avatar={
+                  <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                     <img src={profile_img} alt={name} />
+                  </Avatar>
+               }
+               action={
+                  <>
+                     <IconButton aria-label="deletar post" onClick={() =>setOpemModal(!opemModal)}>
+                        <DeleteForever/>
+                     </IconButton>
+                     <IconButton aria-label="editar post"  onClick={() =>setOpemModalEdit(!opemModalEdit)}>
+                        <Edit/>
+                     </IconButton>
+                  </>
+               }
+               title={name}
+            />
+            <CardMedia
+               component="img"
+               height="194"
+               src={img} 
+               alt="Imagem do post" 
+            />
+            <CardContent>
+               <Typography variant="body2" color="text.secondary">
+               {content}
+               </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+               <IconButton aria-label="add to favorites">
+                  <FavoriteIcon />
+               </IconButton>
+               <IconButton aria-label="Abri comentarios " onClick={() =>setopemModalComment(!opemModalComment)}>
+                  <AddComment/>
+               </IconButton>
+            </CardActions>
+         </Card>
 
-         <div>
-            <img src={trashIcon} alt="deletar post" aria-label="Botão para deletar post" onClick={() =>setOpemModal(!opemModal)} />
-            <img src={editIcon} alt="editar post" aria-label="Botão para editar post" onClick={() =>setOpemModalEdit(!opemModalEdit)}/>
-         </div>
-         
-         <div>
-            <h2>{name}</h2>
-            <img src={profile_img} alt={name} />
-         </div>
+         {opemModal && (
+            <ModalPostDelete
+               opemModal={opemModal}
+               setOpemModal={setOpemModal}
+               post={post}
+            />
+         )}
+         {opemModalEdit && (
+            <ModalPostEdit
+               opemModalEdit={opemModalEdit}
+               setOpemModalEdit={setOpemModalEdit}
+               post={post}
+            />
+         )}
+         {opemModalComment && (
+            <ModalOpemComment
+               opemModalComment={opemModalComment}
+               setopemModalComment={setopemModalComment}
+               post={post}
+            />
+         )}
+      </>
+   );
+};
 
-         <div>
-            <img src={img} alt="Imagem do post" />
-            <p>{content}</p>
-         </div>
+export default ListPosts;
 
-         <div>
-            <img src={likeIcon} alt="curtir post" aria-label="Botão para curtir post"/>
-            <img src={commentsIcon} alt="comentario" aria-label="Botão para fazer um comentario" onClick={() =>setopemModalComment(!opemModalComment)} />
-         </div>
-
-         {opemModal && <ModalPostDelete opemModal={opemModal} setOpemModal={setOpemModal} post={post}/>}
-         { opemModalEdit && <ModalPostEdit opemModalEdit={opemModalEdit} setOpemModalEdit={setOpemModalEdit} post={post}/>}
-         { opemModalComment && <ModalOpemComment opemModalComment={opemModalComment} setopemModalComment={setopemModalComment}/>}
-
-      </div>
-   )
-}
-
-export default ListPosts

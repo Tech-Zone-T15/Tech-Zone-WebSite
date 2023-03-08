@@ -5,6 +5,7 @@ import LoginForm from "../../components/LoginPageComponents/LoginForm";
 import { StyledLoginPage } from "./styles";
 
 function LoginPage() {
+
    return (
       <StyledLoginPage>
          <DynamicHeader
