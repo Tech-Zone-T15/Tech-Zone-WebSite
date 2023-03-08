@@ -18,59 +18,65 @@ interface IopemModalEdit {
    post: Ipost;
 }
 interface IdataForm {
-   dataForm:string
-   content:string
+   dataForm: string;
+   content: string;
 }
 
-export default function FormDialog({opemModalEdit,setOpemModalEdit,post}: IopemModalEdit) {
+export default function FormDialog({
+   opemModalEdit,
+   setOpemModalEdit,
+   post,
+}: IopemModalEdit) {
+   const { content } = post;
 
-   const {content} = post
-
-   const {editPost} = useContext(DashboardContext)
+   const { editPost } = useContext(DashboardContext);
 
    const {
       register,
-      handleSubmit,formState: { errors },} = useForm<IdataForm>()
+      handleSubmit,
+      formState: { errors },
+   } = useForm<IdataForm>();
 
-      const handleClose = () => {
+   const handleClose = () => {
       setOpemModalEdit(!opemModalEdit);
    };
 
-   
-   const submit =(dataForm:IdataForm) =>{
+   const submit = (dataForm: IdataForm) => {
+      const data = { ...post, ...dataForm };
 
-      const data = {...post, ...dataForm}
-
-      editPost(data)
+      editPost(data);
 
       setOpemModalEdit(!opemModalEdit);
-
-   }
+   };
 
    return (
-         <Dialog open={opemModalEdit} onClose={handleClose}>
-            <form onSubmit={handleSubmit(submit)}>
-               <DialogTitle>Subscribe</DialogTitle>
-               <DialogContent>
-                  <DialogContentText>
-                     To subscribe to this website, please enter your email address
-                     here. We will send updates occasionally.
-                  </DialogContentText>
-                     <TextField
-                        type="textarea"
-                        id="textarea"
-                        label="Editar"
-                        multiline
-                        defaultValue={content}
-                        variant="filled"
-                        {...register("content")}
-                     />
-               </DialogContent>
-               <DialogActions>
-                  <Button onClick={handleClose}>Cancel</Button>
-                  <Button type="submit">Subscribe</Button>
-               </DialogActions>
-            </form>
+      <Dialog open={opemModalEdit} onClose={handleClose}>
+         <form onSubmit={handleSubmit(submit)}>
+            <DialogTitle>Subscribe</DialogTitle>
+            <DialogContent>
+               <DialogContentText>
+                  To subscribe to this website, please enter your email address
+                  here. We will send updates occasionally.
+               </DialogContentText>
+            </DialogContent>
+
+            <TextField
+               type="textarea"
+               id="textarea"
+               label="Editar"
+               margin="dense"
+               multiline
+               fullWidth
+               defaultValue={content}
+               variant="filled"
+               {...register("content")}
+            />
+
+            <DialogActions>
+               <Button onClick={handleClose}>Cancel</Button>
+               <Button type="submit">Subscribe</Button>
+            </DialogActions>
+         </form>
       </Dialog>
    );
 }

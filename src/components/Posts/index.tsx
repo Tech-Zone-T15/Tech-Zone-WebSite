@@ -7,7 +7,7 @@ import { DashboardContext } from "../../Providers/DashboardContext";
 const Post = () => {
 
    const {users} = useContext(DashboardContext)
-
+    
    return ( 
       <>
          {users.map(user => <UserPost key={user.id} user={user} />)}

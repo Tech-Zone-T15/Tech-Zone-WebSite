@@ -2,12 +2,6 @@ export interface IDefaultProviderProps {
    children: React.ReactNode;
 }
 
-export interface Iusers{
-   userId:number
-   img:string
-   content:string
-   id:number
-}
 
 export interface Ipost{
    userId:number
@@ -17,13 +11,21 @@ export interface Ipost{
 }
 
 export interface IComments {
+   map: any;
    postId: number;
    userId: number;
    name: string;
    profile_img: string;
-   comment: string;
+   comment: [] | string;
    id: number;
 }
+export interface ICommentsProps {
+   comments:ICommentsProps
+   comment:string
+   profile_img:string
+   name:string
+}
+
 export interface IsendPost {
    userId: string;
    img: string;
@@ -36,16 +38,6 @@ export interface IsendComments {
    name: string;
    profile_img: string;
    comment: string;
-}
-
-export interface Iusers {
-   name: string;
-   email: string;
-   profile_img: string;
-   age: number;
-   city: string;
-   bio: string;
-   id: number;
 }
 
 
@@ -77,9 +69,11 @@ export interface IpostsProps{
    post:Ipost
    profile_img:string
    name:string
+   user:Iusers
 }
 export interface IUserProps{
    user:Iusers
+   comments:IComments
 }
 export interface IDashboardContext {
    sendComments: (data: IsendComments) => Promise<void>
