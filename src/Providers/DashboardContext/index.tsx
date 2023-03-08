@@ -50,7 +50,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const sendPost = async (data: IsendPost) => {
       //requisição para enviar os post
       try {
-         const response = await api.post<Ipost>("post", data, {
+         const response = await api.post("post", data, {
             headers: {
                Authorization: `Bearer ${token}`,
             },
@@ -64,7 +64,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       //requisição para enviar os Comentarios
       try {
 
-         const response = await api.post<IComments>("comments", data, {
+         const response = await api.post("comments", data, {
             headers: {
 
                Authorization: `Bearer ${token}`,
