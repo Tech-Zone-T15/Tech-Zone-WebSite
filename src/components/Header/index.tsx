@@ -5,6 +5,7 @@ import { StyledButton, StyledButtonLink } from '../../styles/button'
 import { StyledTextField } from '../../styles/form'
 import { StyledContainer } from '../../styles/grid'
 import { StyledParagraph } from '../../styles/typography'
+import SearchForm from './SearchForm'
 import { StyledHeaderDash } from './style'
 
 export const DashboarHeader = () => {
@@ -24,7 +25,7 @@ export const DashboarHeader = () => {
                </div>
             </div>
             <div id='header__div-right'>
-               <StyledTextField label='search'/>
+               <SearchForm/>
                <div id='buttons__div'>
                   <StyledButtonLink to='/perfil' $buttonSize='small' $buttonStyle='white' >
                      Perfil
