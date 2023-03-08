@@ -122,15 +122,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const editPost = async (data:IUpdatePost) => {
       const {id} = data
 
-
-      try {
-         const response = await api.post(`post/${id}`, data, {
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         });
-
-
             const response = await api.put(`posts/${id}`,data,{
                headers:{
                   Authorization: `Bearer ${token}`,
@@ -148,20 +139,11 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
             //setGetUsers(newPostList)
 
-         } catch (error) {
-            console.error(error)
-         }
-
-
-         setPosts(newPostList);
-      } catch (error) {
-         console.error(error);
-      }
    };
 
    return (
 
-      <DashboardContext.Provider value={{sendComments,sendPost,getComments,getUsers ,users,deletePost,editPost }}>
+      <DashboardContext.Provider value={{sendComments,sendPost,getComments,getUsers ,users,deletePost,editPost,followUsers }}>
 
          {children}
       </DashboardContext.Provider>

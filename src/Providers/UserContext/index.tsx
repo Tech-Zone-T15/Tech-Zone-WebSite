@@ -49,8 +49,6 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       }
    }, [token]);
 
-   console.log(user);
-
    const userRegister = async (formData: IRegisterFormValues) => {
       try {
          setLoading(true);

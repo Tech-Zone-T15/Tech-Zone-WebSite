@@ -1,32 +1,26 @@
+
+import UserSuggestion from "../../components/UserSuggestion";
+import { NavBar } from "./style";
 import { DashboarHeader } from "../../components/Header";
 import Post from "../../components/Posts";
 import { useContext,useEffect } from "react";
 import { DashboardContext } from "../../Providers/DashboardContext";
-import { UserContext } from "../../Providers/UserContext";
+
 
 
 const DashboardPage = () => {
 
    const {getUsers } = useContext(DashboardContext)
 
-   
    useEffect(() => { 
       getUsers (); 
    }, []);
 
-   
 
-   return(
-
-import UserSuggestion from "../../components/UserSuggestion";
-import { NavBar } from "./style";
-
-
-const DashboardPage = () => {
    return (
 
       <>
-         <header></header>
+         <DashboarHeader/>
          <NavBar>
             <div>
                <button>Html</button>
@@ -40,12 +34,16 @@ const DashboardPage = () => {
             </div>
          </NavBar>
          <main>
-            <UserSuggestion />
             <div>
-               {" "}
                <p>Input Para enviar os post </p>
             </div>
+
+            <Post/>
+            
          </main>
+         <aside>
+            <UserSuggestion />
+         </aside>
             </>
 
 )};
