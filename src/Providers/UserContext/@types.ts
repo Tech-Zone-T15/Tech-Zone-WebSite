@@ -1,4 +1,5 @@
 export interface IUserContext {
+
    loading: boolean;
    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
    user: IUser | null;
@@ -43,3 +44,4 @@ export interface ILoginFormValues {
    email: string;
    password: string;
 }
+

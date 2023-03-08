@@ -2,16 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
 
-import {
-   IDefaultProviderProps,
-   IDashboardContext,
-   Ipost,
-   IComments,
-   IsendPost,
-   IsendComments,
-   Iusers,
-  IUpdatePost,
-} from "./@types/dashboardTypes";
+import {IDefaultProviderProps,IDashboardContext,Iusers,IsendPost,IsendComments,IUpdatePost} from "./@types/dashboardTypes";
 
 
 export const DashboardContext = createContext({} as IDashboardContext);
@@ -19,30 +10,31 @@ export const DashboardContext = createContext({} as IDashboardContext);
 export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const [followUsers, setFollowUsers] = useState<Iusers[]>([]);
 
-   const [posts,setPosts] = useState<Ipost[] >([])
+   const [users ,setGetUsers ] = useState<Iusers[]>([])
+
+   const token = localStorage.getItem("@TOKEN");
    
- const token = localStorage.getItem("@TOKEN");
 
-   // const getPosts = async () => { // requisição para renderizar os post 
+   const getUsers = async () => { // requisição para renderizar os post 
+
+
+      const token = localStorage.getItem("@TOKEN");
       
-   //    try {
-   //       const response = await api.get("posts", {
-   //          headers: {
-   //             Authorization: `Bearer ${token}`,
-   //          },
-   //       });
-   //       setPosts(response.data)
-   //    } catch (error) {
-   //       console.error(error)
-   //    }
-   // };
+      try {
+         const response = await api.get("users?_embed=posts&_embed=posts&_embed=comments", {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         setGetUsers(response.data)
+      } catch (error) {
+         console.error(error)
+      }
+   };
 
-   // useEffect(() => { //Renderizar os produtos a cada atualização da pagina 
-   //    getPosts(); 
-   // }, []);
 
-   const getComments = async () => {
-      // requisição para renderizar os Comentarios
+   const getComments = async () => { // requisição para renderizar os Comentarios
+      
 
       try {
          const response = await api.get("comments", {
@@ -109,7 +101,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       AllUsers();
    }, [token]);
 
-   const deletePost = async(postId:Ipost) =>{
+   const deletePost = async(postId:Iusers) =>{
       const id = postId.id
       try {
 
@@ -119,16 +111,17 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             }
          })
 
-         const newPostList = posts.filter(post => post.id !== postId.id)
-         setPosts(newPostList)
+         const newPostList = users.filter(user => user.id !== postId.id)
+         setGetUsers (newPostList)
 
       } catch (error) {
          console.error;
       }
    };
 
-   const editPost = async (data: Ipost[], postId: Ipost) => {
-      const id = postId.id;
+   const editPost = async (data:IUpdatePost) => {
+      const {id} = data
+
 
       try {
          const response = await api.post(`post/${id}`, data, {
@@ -137,13 +130,28 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             },
          });
 
-         const newPostList = posts.map((post) => {
-            if (id == post.id) {
-               return { ...post, ...data };
-            } else {
-               return post;
-            }
-         });
+
+            const response = await api.put(`posts/${id}`,data,{
+               headers:{
+                  Authorization: `Bearer ${token}`,
+               }
+            })
+
+            const newPostList = users.map(user => {
+      
+               if(id == user.id){
+                  return {...user, data}
+               } else {
+                  return user
+               }
+            })
+
+            //setGetUsers(newPostList)
+
+         } catch (error) {
+            console.error(error)
+         }
+
 
          setPosts(newPostList);
       } catch (error) {
@@ -153,9 +161,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    return (
 
-      <DashboardContext.Provider value={{sendComments,sendPost,getComments,
-      // getPosts,
-      posts,deletePost,editPost , followUsers}}>
+      <DashboardContext.Provider value={{sendComments,sendPost,getComments,getUsers ,users,deletePost,editPost }}>
+
          {children}
       </DashboardContext.Provider>
    );
