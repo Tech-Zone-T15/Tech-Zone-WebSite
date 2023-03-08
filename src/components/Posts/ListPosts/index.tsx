@@ -18,7 +18,8 @@ import DeleteForever from "@mui/icons-material/DeleteForever";
 import  Edit  from "@mui/icons-material/Edit";
 
 
-const ListPosts = ({ post, profile_img, name }: IpostsProps) => {
+const ListPosts = ({ post, profile_img,name,user}: IpostsProps) => {
+
    const { img, content } = post;
 
    const [opemModal, setOpemModal] = useState(false);
@@ -85,7 +86,7 @@ const ListPosts = ({ post, profile_img, name }: IpostsProps) => {
             <ModalOpemComment
                opemModalComment={opemModalComment}
                setopemModalComment={setopemModalComment}
-               post={post}
+               user={user}
             />
          )}
       </>
