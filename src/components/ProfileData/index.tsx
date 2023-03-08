@@ -2,24 +2,33 @@ import { useContext } from "react";
 import { ProfileContext } from "../../Providers/ProfileContext";
 import { BiEditAlt } from "react-icons/Bi";
 import { UserContext } from "../../Providers/UserContext";
-
+import { ProfileDataStyle } from "./style";
+import { StyledButton } from "../../styles/button";
+import TextareaAutosize from '@mui/base/TextareaAutosize';
+import { TextField, Typography } from "@mui/material";
 
 export const ProfileData = () => {
-   const { setUpdateProfileModal, setDeleteProfileModal } = useContext(ProfileContext);
-   const {user} = useContext(UserContext) 
-
+   const { setUpdateProfileModal, setDeleteProfileModal } =
+      useContext(ProfileContext);
+   const { user } = useContext(UserContext);
 
    return (
-      <div>
-         <h1>
-            Dados pessoais{" "}
-            <BiEditAlt onClick={() => setUpdateProfileModal(true)} />
-         </h1>
-         <h2>Nome: {user?.name}</h2>
-         <h2>Email: {user?.email}</h2>
-         <h2>Cidade: {user?.city}</h2>
-         {/* bio aqui */}
-         <button onClick={() => setDeleteProfileModal(true)}>Deletar perfil</button>
-      </div>
+      <ProfileDataStyle>
+         <div>
+            <Typography variant="h4">Dados pessoais </Typography>
+            <BiEditAlt onClick={() => setUpdateProfileModal(true)} size='35px'/>
+         </div>
+         <Typography variant="h5">Nome: {user?.name}</Typography>
+         <Typography variant="h5">Email: {user?.email}</Typography>
+         <Typography variant="h5">Cidade: {user?.city}</Typography>
+         <TextField fullWidth multiline={true} minRows={5} defaultValue={user?.bio} disabled={true}/>
+         <StyledButton
+            $buttonSize="small"
+            $buttonStyle="red"
+            onClick={() => setDeleteProfileModal(true)}
+         >
+            Deletar perfil
+         </StyledButton>
+      </ProfileDataStyle>
    );
 };
