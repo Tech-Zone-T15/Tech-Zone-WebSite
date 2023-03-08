@@ -2,28 +2,28 @@ import { useContext } from "react";
 import { ProfileContext } from "../../Providers/ProfileContext";
 import { StyledButton } from "../../styles/button";
 import { ModalBox, ModalProfile } from "../ProfileModal/styles";
-import { AiOutlineCloseCircle } from "react-icons/ai";
+import { Typography } from "@mui/material";
 
 export const ModalConfirm = () => {
    const { deleteProfile, setDeleteProfileModal } = useContext(ProfileContext);
    return (
       <ModalBox>
          <ModalProfile>
-            <h1>Tem certeza que deseja excluir permanentemente seu perfil?</h1>
+            <Typography variant="h5">Tem certeza que deseja excluir sua conta permanentemente?</Typography>
             <div>
                <StyledButton
-                  $buttonSize="small"
+                  $buttonSize="medium"
                   $buttonStyle="red"
                   onClick={() => deleteProfile()}
                >
-                  Excluir
+                  Sim, quero excluir
                </StyledButton>
                <StyledButton
-                  $buttonSize="small"
+                  $buttonSize="medium"
                   $buttonStyle="blue"
                   onClick={() => setDeleteProfileModal(false)}
                >
-                  Voltar
+                  Cancelar
                </StyledButton>
             </div>
          </ModalProfile>

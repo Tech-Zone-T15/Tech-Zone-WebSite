@@ -23,7 +23,7 @@ export const ProfileData = () => {
          <Typography variant="h5">Cidade: {user?.city}</Typography>
          <TextField fullWidth multiline={true} minRows={5} defaultValue={user?.bio} disabled={true}/>
          <StyledButton
-            $buttonSize="small"
+            $buttonSize="large"
             $buttonStyle="red"
             onClick={() => setDeleteProfileModal(true)}
          >

@@ -6,6 +6,8 @@ export const ModalProfile = styled.dialog`
    border-radius: 8px;
    border-top: 16px solid blue;
    border-bottom: 16px solid blue;
+   padding: 8px;
+   gap: 8px;
    form {
       padding: 16px;
       background-color: white;
@@ -25,6 +27,10 @@ export const ModalProfile = styled.dialog`
    }
    span{
       color: red;
+   }
+   div{
+      display: flex;
+      justify-content: space-around;
    }
 `;
 export const ModalBox = styled.div`
