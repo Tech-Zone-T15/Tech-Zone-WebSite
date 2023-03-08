@@ -2,6 +2,7 @@ export interface IDefaultProviderProps {
    children: React.ReactNode;
 }
 
+
 export interface Iusers{
    userId:number
    img:string
@@ -16,19 +17,38 @@ export interface Ipost{
    id:number
 }
 
-export interface IComments{
-   postId:number
-   userId:number
-   name:string
-   profile_img:string
-   comment:string
-   id:number
+export interface IComments {
+   postId: number;
+   userId: number;
+   name: string;
+   profile_img: string;
+   comment: string;
+   id: number;
 }
-export interface IsendPost{
-   userId:string
-   img:string
-   content:string
+export interface IsendPost {
+   userId: string;
+   img: string;
+   content: string;
 }
+
+export interface IsendComments {
+   postId: number;
+   userId: number;
+   name: string;
+   profile_img: string;
+   comment: string;
+}
+
+export interface Iusers {
+   name: string;
+   email: string;
+   profile_img: string;
+   age: number;
+   city: string;
+   bio: string;
+   id: number;
+}
+
 
 export interface IUpdatePost{
    userId:string | number
@@ -70,4 +90,5 @@ export interface IDashboardContext {
    users: Iusers[]
    deletePost: (postId: Iusers) => Promise<void>
    editPost: (data: IUpdatePost) => Promise<void>
+
 }

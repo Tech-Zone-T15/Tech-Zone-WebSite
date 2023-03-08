@@ -49,7 +49,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       }
    }, [token]);
 
-     console.log(user)
+   console.log(user);
 
    const userRegister = async (formData: IRegisterFormValues) => {
       try {
@@ -80,7 +80,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
          // console.log(localStorage);
          toast.success("Usuário Logado!");
          // setTimeout(() => {
-            navigate("/dashboard");
+         navigate("/dashboard");
          // }, 2000);
       } catch (error) {
          toast.error("Verifique os dados e tente novamente");
@@ -94,6 +94,24 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       localStorage.removeItem("@TOKEN");
       navigate("/");
    };
+   const typeWritter = (title: HTMLElement, content: string) => {
+      let currentText = "";
+      const charArray = content.split("");
+      const h1Element = document.querySelector(".main-title") as HTMLElement;
+
+      charArray.forEach((letra: string, i: number) => {
+         setTimeout(() => {
+            currentText += letra;
+            title.textContent = currentText;
+
+            // adiciona a barra logo após a letra atual
+            const bar = document.createElement("span");
+            bar.textContent = "|";
+            bar.classList.add("blink");
+            h1Element.appendChild(bar);
+         }, 40 * i);
+      });
+   };
    return (
       <UserContext.Provider
          value={{
@@ -104,6 +122,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
             userLogOut,
             userLogin,
             userRegister,
+            typeWritter,
          }}
       >
          {children}
