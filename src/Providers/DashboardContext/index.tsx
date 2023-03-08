@@ -17,7 +17,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const getUsers = async () => { // requisição para renderizar os post 
 
-
       const token = localStorage.getItem("@TOKEN");
       
       try {
