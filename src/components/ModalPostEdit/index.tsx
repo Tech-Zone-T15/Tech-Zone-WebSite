@@ -7,6 +7,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Ipost } from "../../Providers/DashboardContext/@types/dashboardTypes";
+import { useForm } from "react-hook-form";
+import { DashboardContext } from "../../Providers/DashboardContext";
+import { useContext } from "react";
 
 
 interface IopemModalEdit {
@@ -14,37 +17,60 @@ interface IopemModalEdit {
    setOpemModalEdit: React.Dispatch<React.SetStateAction<boolean>>;
    post: Ipost;
 }
+interface IdataForm {
+   dataForm:string
+   content:string
+}
 
 export default function FormDialog({opemModalEdit,setOpemModalEdit,post}: IopemModalEdit) {
-   
 
-   const handleClose = () => {
+   const {content} = post
+
+   const {editPost} = useContext(DashboardContext)
+
+   const {
+      register,
+      handleSubmit,formState: { errors },} = useForm<IdataForm>()
+
+      const handleClose = () => {
       setOpemModalEdit(!opemModalEdit);
    };
 
+   
+   const submit =(dataForm:IdataForm) =>{
+
+      const data = {...post, ...dataForm}
+
+      editPost(data)
+
+      setOpemModalEdit(!opemModalEdit);
+
+   }
 
    return (
-      <div>
          <Dialog open={opemModalEdit} onClose={handleClose}>
-            <DialogTitle>Subscribe</DialogTitle>
-            <DialogContent>
-               <DialogContentText>
-                  To subscribe to this website, please enter your email address
-                  here. We will send updates occasionally.
-               </DialogContentText>
-                  <TextField
-                     id="filled-textarea"
-                     label="Editar"
-                     multiline
-                     variant="filled"
-                  />
-            </DialogContent>
-            <DialogActions>
-               <Button onClick={handleClose}>Cancel</Button>
-               <Button onClick={handleClose}>Subscribe</Button>
-            </DialogActions>
-         </Dialog>
-         <input />
-      </div>
+            <form onSubmit={handleSubmit(submit)}>
+               <DialogTitle>Subscribe</DialogTitle>
+               <DialogContent>
+                  <DialogContentText>
+                     To subscribe to this website, please enter your email address
+                     here. We will send updates occasionally.
+                  </DialogContentText>
+                     <TextField
+                        type="textarea"
+                        id="textarea"
+                        label="Editar"
+                        multiline
+                        defaultValue={content}
+                        variant="filled"
+                        {...register("content")}
+                     />
+               </DialogContent>
+               <DialogActions>
+                  <Button onClick={handleClose}>Cancel</Button>
+                  <Button type="submit">Subscribe</Button>
+               </DialogActions>
+            </form>
+      </Dialog>
    );
 }

@@ -1,76 +1,107 @@
-import { createContext,useState,useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
-import {IDefaultProviderProps,IDashboardContext,Ipost,IsendPost,IsendComments,IUpdatePost} from "./@types/dashboardTypes";
+
+import {IDefaultProviderProps,IDashboardContext,Iusers,IsendPost,IsendComments,IUpdatePost} from "./@types/dashboardTypes";
+
 
 export const DashboardContext = createContext({} as IDashboardContext);
 
 export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
+   const [followUsers, setFollowUsers] = useState<Iusers[]>([]);
 
-   const [posts,setPosts] = useState<Ipost[] >([])
+   const [users ,setGetUsers ] = useState<Iusers[]>([])
+
+   const token = localStorage.getItem("@TOKEN");
    
-   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtlbnppbmhvQG1haWwuY29tIiwiaWF0IjoxNjc4MTU2MTAwLCJleHAiOjE2NzgxNTk3MDAsInN1YiI6IjEifQ.Bv_gYepf6tTSh3y5KeH0T7bI55b9k6jkfEbAhbbiLPo"; // Esta faltando o localStorage do token
 
-   // const getPosts = async () => { // requisição para renderizar os post 
+   const getUsers = async () => { // requisição para renderizar os post 
+
+
+      const token = localStorage.getItem("@TOKEN");
       
-   //    try {
-   //       const response = await api.get("posts", {
-   //          headers: {
-   //             Authorization: `Bearer ${token}`,
-   //          },
-   //       });
-   //       setPosts(response.data)
-   //    } catch (error) {
-   //       console.error(error)
-   //    }
-   // };
+      try {
+         const response = await api.get("users?_embed=posts&_embed=posts&_embed=comments", {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         setGetUsers(response.data)
+      } catch (error) {
+         console.error(error)
+      }
+   };
 
-   // useEffect(() => { //Renderizar os produtos a cada atualização da pagina 
-   //    getPosts(); 
-   // }, []);
 
-   
    const getComments = async () => { // requisição para renderizar os Comentarios
       
+
       try {
          const response = await api.get("comments", {
             headers: {
                Authorization: `Bearer ${token}`,
             },
          });
-         
       } catch (error) {
-         console.error(error)
+         console.error(error);
       }
    };
-   
-   
-      const sendPost = async(data:IsendPost) => { //requisição para enviar os post 
-         try {
-            const response = await api.post("post",data,{
-               headers:{
-                  Authorization: `Bearer ${token}`,
-               }
-            })
-   
-         } catch (error) {
-            console.error(error)
-         }
-      }
 
-   const sendComments = async(data:IsendComments) => { //requisição para enviar os Comentarios
+   const sendPost = async (data: IsendPost) => {
+      //requisição para enviar os post
       try {
-         const response = await api.post("comments",data,{
-            headers:{
+         const response = await api.post("post", data, {
+            headers: {
                Authorization: `Bearer ${token}`,
-            }
-         })
-
+            },
+         });
       } catch (error) {
-         console.error(error)
+         console.error(error);
       }
-   }
+   };
 
-   const deletePost = async(postId:Ipost) =>{
+   const sendComments = async (data: IsendComments) => {
+      //requisição para enviar os Comentarios
+      try {
+
+         const response = await api.post("comments", data, {
+            headers: {
+
+               Authorization: `Bearer ${token}`,
+            },
+         });
+      } catch (error) {
+         console.error(error);
+      }
+   };
+
+   const AllUsers = async () => {
+      try {
+         const response = await api.get("/users", {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         const array = response.data;
+         const ArraySize = array.length;
+         const NewArray: Iusers[] = [];
+         while (NewArray.length < 3) {
+            const RandomNumber1 = array[Math.floor(Math.random() * ArraySize)];
+            if (!NewArray.includes(RandomNumber1)) {
+               NewArray.push(RandomNumber1);
+               setFollowUsers(NewArray);
+            }
+         }
+      } catch (error) {
+         console.error(error);
+      }
+   };
+
+   useEffect(() => {
+      AllUsers();
+   }, [token]);
+
+   const deletePost = async(postId:Iusers) =>{
       const id = postId.id
       try {
 
@@ -80,47 +111,40 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             }
          })
 
-         const newPostList = posts.filter(post => post.id !== postId.id)
-         setPosts(newPostList)
+         const newPostList = users.filter(user => user.id !== postId.id)
+         setGetUsers (newPostList)
 
       } catch (error) {
-         console.error
-         
+         console.error;
       }
-   }
+   };
 
-   const editPost = async (data:Ipost[],postId:Ipost) => {
-      const id = postId.id
+   const editPost = async (data:IUpdatePost) => {
+      const {id} = data
 
-      try {
-
-            const response = await api.post(`post/${id}`,data,{
+            const response = await api.put(`posts/${id}`,data,{
                headers:{
                   Authorization: `Bearer ${token}`,
                }
             })
 
-            const newPostList = posts.map(post => {
-
-               if(id == post.id){
-                  return {...post, ...data}
+            const newPostList = users.map(user => {
+      
+               if(id == user.id){
+                  return {...user, data}
                } else {
-                  return post
+                  return user
                }
             })
 
-            setPosts(newPostList)
-   
-         } catch (error) {
-            console.error(error)
-         }
+            //setGetUsers(newPostList)
 
-   }
+   };
 
    return (
-      <DashboardContext.Provider value={{sendComments,sendPost,getComments,
-      // getPosts,
-      posts,deletePost,editPost }}>
+
+      <DashboardContext.Provider value={{sendComments,sendPost,getComments,getUsers ,users,deletePost,editPost,followUsers }}>
+
          {children}
       </DashboardContext.Provider>
    );

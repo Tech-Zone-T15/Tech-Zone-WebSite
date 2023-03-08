@@ -1,3 +1,4 @@
+
 import { Input, TextField } from '@mui/material'
 import React, { useContext } from 'react'
 import { UserContext } from '../../Providers/UserContext'
@@ -9,20 +10,21 @@ import SearchForm from './SearchForm'
 import { StyledHeaderDash } from './style'
 
 export const DashboarHeader = () => {
+   const { user, userLogOut } = useContext(UserContext);
 
-   const { user, userLogOut } = useContext(UserContext)
-
-  return (
-   <StyledHeaderDash>
-      <StyledContainer containerWidth={1300}>
-         <div id='header'>
-            <div id='header__div-left'>
-               <div id='header__perfil'>
-                  <div>
-                     <img src={user?.profile_img}/>
+   return (
+      <StyledHeaderDash>
+         <StyledContainer containerWidth={1300}>
+            <div id="header">
+               <div id="header__div-left">
+                  <div id="header__perfil">
+                     <div>
+                        <img src={user?.profile_img} />
+                     </div>
+                     <StyledParagraph>{user?.name}</StyledParagraph>
                   </div>
-                  <StyledParagraph>{user?.name}</StyledParagraph>
                </div>
+
             </div>
             <div id='header__div-right'>
                <SearchForm/>
@@ -33,10 +35,10 @@ export const DashboarHeader = () => {
                   <StyledButton type='button' $buttonSize='small' $buttonStyle='blue' onClick={() => userLogOut()}>
                      Sair
                   </StyledButton>
+
                </div>
             </div>
-         </div>
-      </StyledContainer>
-   </StyledHeaderDash>
-  )
-}
+         </StyledContainer>
+      </StyledHeaderDash>
+   );
+};

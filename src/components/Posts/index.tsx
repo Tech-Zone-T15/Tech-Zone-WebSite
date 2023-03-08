@@ -1,20 +1,21 @@
-import { ListPost } from "./ListPosts";
+import { UserPost} from "./UserPost";
 import { useContext} from "react";
 import { DashboardContext } from "../../Providers/DashboardContext";
 
 
+
 const Post = () => {
 
-   const {posts} = useContext(DashboardContext)
+   const {users} = useContext(DashboardContext)
 
-   return (
+   return ( 
       <>
-         {
-            posts.map(post => <ListPost key={post.id} post={post}/>)
-         }
+         {users.map(user => <UserPost key={user.id} user={user} />)}
       </>
 
    );
 };
 
 export default Post;
+
+
