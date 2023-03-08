@@ -1,11 +1,13 @@
-import { Input, TextField } from "@mui/material";
-import React, { useContext } from "react";
-import { UserContext } from "../../Providers/UserContext";
-import { StyledButton, StyledButtonLink } from "../../styles/button";
-import { StyledTextField } from "../../styles/form";
-import { StyledContainer } from "../../styles/grid";
-import { StyledParagraph } from "../../styles/typography";
-import { StyledHeaderDash } from "./style";
+
+import { Input, TextField } from '@mui/material'
+import React, { useContext } from 'react'
+import { UserContext } from '../../Providers/UserContext'
+import { StyledButton, StyledButtonLink } from '../../styles/button'
+import { StyledTextField } from '../../styles/form'
+import { StyledContainer } from '../../styles/grid'
+import { StyledParagraph } from '../../styles/typography'
+import SearchForm from './SearchForm'
+import { StyledHeaderDash } from './style'
 
 export const DashboarHeader = () => {
    const { user, userLogOut } = useContext(UserContext);
@@ -22,25 +24,18 @@ export const DashboarHeader = () => {
                      <StyledParagraph>{user?.name}</StyledParagraph>
                   </div>
                </div>
-               <div id="header__div-right">
-                  <StyledTextField label="search" />
-                  <div id="buttons__div">
-                     <StyledButtonLink
-                        to="/perfil"
-                        $buttonSize="small"
-                        $buttonStyle="white"
-                     >
-                        Perfil
-                     </StyledButtonLink>
-                     <StyledButton
-                        type="button"
-                        $buttonSize="small"
-                        $buttonStyle="blue"
-                        onClick={() => userLogOut()}
-                     >
-                        Sair
-                     </StyledButton>
-                  </div>
+
+            </div>
+            <div id='header__div-right'>
+               <SearchForm/>
+               <div id='buttons__div'>
+                  <StyledButtonLink to='/perfil' $buttonSize='small' $buttonStyle='white' >
+                     Perfil
+                  </StyledButtonLink>
+                  <StyledButton type='button' $buttonSize='small' $buttonStyle='blue' onClick={() => userLogOut()}>
+                     Sair
+                  </StyledButton>
+
                </div>
             </div>
          </StyledContainer>
