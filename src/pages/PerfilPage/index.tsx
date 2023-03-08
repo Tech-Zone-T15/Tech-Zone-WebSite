@@ -16,12 +16,7 @@ function PerfilPage() {
    return (
       <>
          {updateProfileModal && (
-            <ProfileModal
-               name={user?.name}
-               email={user?.email}
-               city={user?.city}
-               bio={user?.bio}
-            />
+            <ProfileModal/>
          )}
          {updateProfileImage && <ProfileModalImage />}
          {deleteProfileModal && <ModalConfirm />}
