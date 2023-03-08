@@ -7,12 +7,21 @@ export const ModalProfile = styled.dialog`
    border-top: 16px solid blue;
    border-bottom: 16px solid blue;
    form {
+      padding: 16px;
       background-color: white;
       gap: 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      header {
+         width: 70%;
+         div {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+         }
+      }
    }
 `;
 export const ModalBox = styled.div`
@@ -25,4 +34,4 @@ export const ModalBox = styled.div`
    align-items: center;
    justify-content: center;
    padding: 20px;
-`
+`;

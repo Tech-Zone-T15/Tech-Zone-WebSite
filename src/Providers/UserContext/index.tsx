@@ -123,6 +123,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
             userLogin,
             userRegister,
             typeWritter,
+            setUser
          }}
       >
          {children}
