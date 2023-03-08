@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -8,9 +8,6 @@ import {
    IRegisterFormValues,
    IUser,
    IUserContext,
-} from "./@types";
-import { api } from "../../services/api";
-   IUserID,
 } from "./@types";
 import { api } from "../../services/api";
 import jwt_decode from "jwt-decode";

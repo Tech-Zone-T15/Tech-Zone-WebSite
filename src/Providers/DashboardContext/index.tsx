@@ -1,45 +1,33 @@
 import { createContext,useState,useEffect } from "react";
 import { api } from "../../services/api";
-import {IDefaultProviderProps,IDashboardContext,Ipost,IsendPost,IsendComments,IUpdatePost} from "./@types/dashboardTypes";
+import {IDefaultProviderProps,IDashboardContext,Iusers,IsendPost,IsendComments,IUpdatePost} from "./@types/dashboardTypes";
 
 export const DashboardContext = createContext({} as IDashboardContext);
 
 export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
-   const [posts,setPosts] = useState<Ipost[]>([])
+   const [users ,setGetUsers ] = useState<Iusers[]>([])
+
    const token = localStorage.getItem("@TOKEN");
    
    
-<<<<<<< HEAD
-   const getPosts = async () => { // requisição para renderizar os post 
+   const getUsers = async () => { // requisição para renderizar os post 
 
       const token = localStorage.getItem("@TOKEN");
-=======
-   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtlbnppbmhvQG1haWwuY29tIiwiaWF0IjoxNjc4MTU2MTAwLCJleHAiOjE2NzgxNTk3MDAsInN1YiI6IjEifQ.Bv_gYepf6tTSh3y5KeH0T7bI55b9k6jkfEbAhbbiLPo"; // Esta faltando o localStorage do token
-
-   // const getPosts = async () => { // requisição para renderizar os post 
->>>>>>> 2ed2af932e7b3456ea85242d2409f27ed05c99af
       
-   //    try {
-   //       const response = await api.get("posts", {
-   //          headers: {
-   //             Authorization: `Bearer ${token}`,
-   //          },
-   //       });
-   //       setPosts(response.data)
-   //    } catch (error) {
-   //       console.error(error)
-   //    }
-   // };
+      try {
+         const response = await api.get("users?_embed=posts&_embed=posts&_embed=comments", {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         setGetUsers(response.data)
+      } catch (error) {
+         console.error(error)
+      }
+   };
 
-<<<<<<< HEAD
-=======
-   // useEffect(() => { //Renderizar os produtos a cada atualização da pagina 
-   //    getPosts(); 
-   // }, []);
->>>>>>> 2ed2af932e7b3456ea85242d2409f27ed05c99af
 
-   
    const getComments = async () => { // requisição para renderizar os Comentarios
       
       try {
@@ -81,7 +69,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       }
    }
 
-   const deletePost = async(postId:Ipost) =>{
+   const deletePost = async(postId:Iusers) =>{
       const id = postId.id
       try {
 
@@ -91,8 +79,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             }
          })
 
-         const newPostList = posts.filter(post => post.id !== postId.id)
-         setPosts(newPostList)
+         const newPostList = users.filter(user => user.id !== postId.id)
+         setGetUsers (newPostList)
 
       } catch (error) {
          console.error
@@ -111,17 +99,17 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                }
             })
 
-            const newPostList = posts.map(post => {
-
-               if(id == post.id){
-                  return {...post, ...data}
+            const newPostList = users.map(user => {
+      
+               if(id == user.id){
+                  return {...user, data}
                } else {
-                  return post
+                  return user
                }
             })
 
-            setPosts(newPostList)
-   
+            //setGetUsers(newPostList)
+
          } catch (error) {
             console.error(error)
          }
@@ -129,9 +117,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    }
 
    return (
-      <DashboardContext.Provider value={{sendComments,sendPost,getComments,
-      // getPosts,
-      posts,deletePost,editPost }}>
+      <DashboardContext.Provider value={{sendComments,sendPost,getComments,getUsers ,users,deletePost,editPost }}>
          {children}
       </DashboardContext.Provider>
    );

@@ -1,18 +1,16 @@
-import { ListPost } from "./ListPosts";
-import { useContext,useState} from "react";
+import { UserPost} from "./UserPost";
+import { useContext} from "react";
 import { DashboardContext } from "../../Providers/DashboardContext";
-import { UserContext } from "../../Providers/UserContext";
+
 
 
 const Post = () => {
 
-   const {posts} = useContext(DashboardContext)
-   const {allUser} = useContext(UserContext)
-
+   const {users} = useContext(DashboardContext)
 
    return ( 
       <>
-            {posts.map(post => <ListPost key={post.id} post={post} />)}
+         {users.map(user => <UserPost key={user.id} user={user} />)}
       </>
 
    );

@@ -7,13 +7,11 @@ import { UserContext } from "../../Providers/UserContext";
 
 const DashboardPage = () => {
 
-   const {getPosts} = useContext(DashboardContext)
-   const {getAllUser} = useContext(UserContext)
+   const {getUsers } = useContext(DashboardContext)
 
    
    useEffect(() => { 
-      getPosts(); 
-      getAllUser()
+      getUsers (); 
    }, []);
 
    
