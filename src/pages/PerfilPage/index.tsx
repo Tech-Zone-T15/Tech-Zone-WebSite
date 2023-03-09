@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProfileModalImage } from "../../components/ProfileModalImage";
 import { ProfileModal } from "../../components/ProfileModal";
 import { ProfileContext } from "../../Providers/ProfileContext";
@@ -12,44 +12,77 @@ import { UserContext } from "../../Providers/UserContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { MyPostsList } from "../../components/MyPosts";
-
+import { UserFollowing } from "../../components/UserFollowing";
+import { Typography } from "@mui/material";
 
 function PerfilPage() {
-   const { updateProfileModal, updateProfileImage, deleteProfileModal } = useContext(ProfileContext);
-   const { setMyPosts, myPosts} = useContext(ProfileContext)
-   const {user} = useContext(UserContext)
-   const token = localStorage.getItem("@TOKEN")
+   const { updateProfileModal, updateProfileImage, deleteProfileModal } =
+      useContext(ProfileContext);
+   const { setMyPosts, myPosts } = useContext(ProfileContext);
+   const [followingList, setFollowingList] = useState([]);
+   const { user } = useContext(UserContext);
+   const token = localStorage.getItem("@TOKEN");
 
    useEffect(() => {
-      async function getMyPosts(){
+      async function getMyPosts() {
          try {
-            const response = await api.get(`users/${user?.id}/posts`,{
+            const response = await api.get(`users/${user?.id}/posts`, {
                headers: {
-                  Authorization: `Bearer ${token}`
-               }
-            })
-            setMyPosts(response.data)
+                  Authorization: `Bearer ${token}`,
+               },
+            });
+            setMyPosts(response.data);
          } catch (error) {
-            if(axios.isAxiosError(error)){
-               toast.error(error.response?.data)
+            if (axios.isAxiosError(error)) {
+               toast.error(error.response?.data);
             }
          }
       }
-      getMyPosts()
-   },[myPosts])
-   
+      async function getUsers() {
+         try {
+            const response = await api.get(`/users/${user?.id}/follow`, {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            });
+            setFollowingList(response.data);
+         } catch (error) {
+            if (axios.isAxiosError(error)) {
+               toast.error(error.response?.data);
+            }
+         }
+      }
+      getMyPosts();
+      getUsers();
+   }, [myPosts]);
+
    return (
       <>
-         {updateProfileModal && (
-            <ProfileModal/>
-         )}
+         {updateProfileModal && <ProfileModal />}
          {updateProfileImage && <ProfileModalImage />}
          {deleteProfileModal && <ModalConfirm />}
-         <DynamicHeader text1="Voltar" text2="Início" location1="/dashboard" location2="/dashboard"/>
+         <DynamicHeader
+            text1="Voltar"
+            text2="Início"
+            location1="/dashboard"
+            location2="/dashboard"
+         />
          <StyledMain>
             <CapaPerfil />
             <ProfileData />
-            <MyPostsList/>
+            <div>
+               <Typography variant="h6">Seguindo</Typography>
+               <div className="seguindo">
+                  {followingList.length > 0 ? (
+                     <ul>
+                        {followingList.map((user2) => (
+                           <UserFollowing key={user2.id} id={user2.follows} />
+                        ))}
+                     </ul>
+                  ) : null}
+               </div>
+            </div>
+            <MyPostsList />
          </StyledMain>
       </>
    );
