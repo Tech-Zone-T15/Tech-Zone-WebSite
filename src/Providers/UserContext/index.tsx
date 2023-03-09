@@ -78,7 +78,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
          setLoading(true);
          const response = await api.post("/login", formData);
          localStorage.setItem("@TOKEN", response.data.accessToken);
-         // console.log(localStorage);
+         console.log(localStorage);
          toast.success("Usuário Logado!");
          // setTimeout(() => {
          navigate("/dashboard");

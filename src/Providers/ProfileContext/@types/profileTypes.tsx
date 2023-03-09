@@ -5,6 +5,12 @@ export interface iUpdateProfile {
    city: string;
    bio: string
 }
+export interface iMyPost{
+   userId: number;
+   img: string;
+   content: string;
+   id: number
+}
 export interface iProfileContext{
    updateProfile: (formData: iUpdateProfile)=> Promise<void>
    updateProfileModal: boolean;
@@ -14,4 +20,6 @@ export interface iProfileContext{
    deleteProfile: ()=> Promise<void>
    deleteProfileModal: boolean
    setDeleteProfileModal: React.Dispatch<React.SetStateAction<boolean>>
+   myPosts: iMyPost[]
+   setMyPosts: React.Dispatch<React.SetStateAction<iMyPost[]>>
 }
