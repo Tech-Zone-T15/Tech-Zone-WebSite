@@ -15,6 +15,12 @@ import { MyPostsList } from "../../components/MyPosts";
 import { UserFollowing } from "../../components/UserFollowing";
 import { Typography } from "@mui/material";
 
+interface ifollowObject{
+   userId: number;
+   follows: number;
+   id: number;
+}
+
 function PerfilPage() {
    const { updateProfileModal, updateProfileImage, deleteProfileModal } =
       useContext(ProfileContext);
@@ -46,6 +52,7 @@ function PerfilPage() {
                },
             });
             setFollowingList(response.data);
+            console.log(response.data)
          } catch (error) {
             if (axios.isAxiosError(error)) {
                toast.error(error.response?.data);
@@ -54,7 +61,7 @@ function PerfilPage() {
       }
       getMyPosts();
       getUsers();
-   }, [myPosts]);
+   }, []);
 
    return (
       <>
@@ -75,11 +82,18 @@ function PerfilPage() {
                <div className="seguindo">
                   {followingList.length > 0 ? (
                      <ul>
-                        {followingList.map((user2) => (
-                           <UserFollowing key={user2.id} id={user2.follows} />
+                        {followingList.map((followObject: ifollowObject) => (
+                           <UserFollowing
+                              id={followObject.follows}
+                              followId={followObject.id}
+                           />
                         ))}
                      </ul>
-                  ) : null}
+                  ) : (
+                     <li key={crypto.randomUUID()}>
+                        <Typography variant="subtitle1">Você não está seguindo ninguém</Typography>
+                     </li>
+                  )}
                </div>
             </div>
             <MyPostsList />

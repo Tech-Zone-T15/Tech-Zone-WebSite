@@ -62,7 +62,20 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
       }
    }
 
+   async function unfollow(id: number) {
+      try {
+         await api.delete(`/follow/${id}`,{
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
 
+      } catch (error) {
+         if(axios.isAxiosError(error)){
+            toast.error(error.response?.data)
+         }
+      }
+   }
 
    return (
       <ProfileContext.Provider
@@ -76,7 +89,8 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
             deleteProfileModal,
             setDeleteProfileModal,
             myPosts,
-            setMyPosts
+            setMyPosts,
+            unfollow
          }}
       >
          {children}
