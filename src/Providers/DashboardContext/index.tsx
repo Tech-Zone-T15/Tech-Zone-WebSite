@@ -12,18 +12,26 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [users ,setGetUsers ] = useState<Iusers[]>([])
 
+   const [getPosts ,setGetPost ] = useState<Iposts[]>([])
+
    //-------------------------- Vitor -----------------------------//
 
   const [searchValue, setSearchValue] = useState('');
 
-
+   const [filteredPosts, setFilteredPosts] = useState('')
 
 
    //-------------------------------------------------------//
 
-   const [getPosts ,setGetPost ] = useState<Iposts[]>([])
-
    const token = localStorage.getItem("@TOKEN");
+
+   const searchPostsList = getPosts.filter((post) => 
+      filteredPosts === ''
+      ?
+      true
+      :
+      post.content.toLowerCase().includes(filteredPosts.toLowerCase())
+   );
    
 
    const getUsers = async () => { 
@@ -44,7 +52,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       }
    };
 
-      const getAllPosts = async () => { // requisição para renderizar os post 
+   const getAllPosts = async () => { // requisição para renderizar os post 
 
       try {
          const response = await api.get("posts?_embed=users&_embed=comments", {
@@ -52,7 +60,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         
+
          setGetPost(response.data)
       } catch (error) {
          console.error(error)
@@ -188,7 +196,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             getPosts, 
             getAllPosts,
             searchValue,
-            setSearchValue 
+            setSearchValue,
+            setFilteredPosts,
+            searchPostsList
          }}>
 
       {/* <DashboardContext.Provider value={{sendComments,sendPost,getComments,getUsers ,users,deletePost,editPost,followUsers,setGetPost,getPosts, getAllPosts }}> */}

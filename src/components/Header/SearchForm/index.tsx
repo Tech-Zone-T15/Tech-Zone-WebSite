@@ -5,10 +5,16 @@ import { DashboardContext } from '../../../Providers/DashboardContext';
 import { StyledSearchForm } from './style'
 
 function SearchForm() {
-   const { searchValue, setSearchValue } = useContext(DashboardContext)
+   const { searchValue, setSearchValue, setFilteredPosts } = useContext(DashboardContext)
+
+   const submit = (event: { preventDefault: () => void}) => {
+      event.preventDefault();
+      setFilteredPosts(searchValue);
+      setSearchValue('');
+   };
 
   return (
-   <StyledSearchForm>
+   <StyledSearchForm onSubmit={submit}>
    <button>
      <MdSearch size={18} />
    </button>

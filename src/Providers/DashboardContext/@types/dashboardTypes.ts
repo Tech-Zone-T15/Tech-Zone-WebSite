@@ -92,9 +92,10 @@ export interface IDashboardContext {
    editPost: (data: IUpdatePost) => Promise<void>
    setGetPost: React.Dispatch<React.SetStateAction<Iposts[]>>
    followUsers: Iusers[]
-   searchValue: string
-   setSearchValue: React.Dispatch<React.SetStateAction<string>>
    getPosts: Iposts[]
    getAllPosts: () => Promise<void>
-
+   searchValue: string
+   setSearchValue: React.Dispatch<React.SetStateAction<string>>
+   setFilteredPosts: React.Dispatch<React.SetStateAction<string>>
+   searchPostsList: Iposts[]
 }
