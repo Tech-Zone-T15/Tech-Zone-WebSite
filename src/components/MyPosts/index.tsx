@@ -40,7 +40,7 @@ export const MyPostsList = () => {
          ) : (
             <ul>
                {myPosts.map((post) => (
-                  <li>
+                  <li key={post.id}>
                      <CardHeader
                         avatar={
                            <Avatar>

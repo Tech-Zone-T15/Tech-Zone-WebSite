@@ -7,8 +7,6 @@ export const StyledMain = styled.main`
   .seguindo{
    display: flex;
    flex-direction: column;
-   align-items: center;
-   max-width: 100%;
    overflow-x: scroll;
    margin: 8px;
    ul{

@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import { Typography } from "@mui/material";
+import { ProfileContext } from "../../Providers/ProfileContext";
 
 interface iUser {
    email: string;
@@ -17,13 +18,18 @@ interface iUser {
    bio: string;
    id: number;
 }
+interface iUserFollowing{
+   id: number;
+   followId: number;
+}
 
-export const UserFollowing = ({ id }) => {
+export const UserFollowing = ({ id, followId }: iUserFollowing) => {
    const token = localStorage.getItem("@TOKEN");
    const [user, setUser] = useState<Omit<iUser, "password">>();
+   const {unfollow} = useContext(ProfileContext)
 
    useEffect(() => {
-      async function getUser(id) {
+      async function getUser(id: number) {
          try {
             const response = await api.get(`/users/${id}`, {
                headers: {
@@ -38,10 +44,10 @@ export const UserFollowing = ({ id }) => {
          }
       }
       getUser(id);
-   }, []);
-
+   }, [0]);
+   
    return (
-      <li>
+      <li key={crypto.randomUUID()}>
          <Card sx={{ maxWidth: 200, minWidth: 150 }}>
             <CardHeader
                avatar={
@@ -51,7 +57,9 @@ export const UserFollowing = ({ id }) => {
                }
                title={user?.name}
             />
-            <Typography variant="caption">Deixar de seguir</Typography>
+            <button type="button" onClick={() => unfollow(followId)}>
+               <Typography variant="caption">Deixar de seguir</Typography>
+            </button>
          </Card>
       </li>
    );
