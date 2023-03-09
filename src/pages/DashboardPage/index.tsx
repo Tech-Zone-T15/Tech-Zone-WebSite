@@ -10,10 +10,11 @@ import { DashboardContext } from "../../Providers/DashboardContext";
 
 const DashboardPage = () => {
 
-   const {getUsers } = useContext(DashboardContext)
+   const {getUsers,getAllPosts} = useContext(DashboardContext)
 
    useEffect(() => { 
-      getUsers (); 
+      getUsers()
+      getAllPosts()
    }, []);
 
 

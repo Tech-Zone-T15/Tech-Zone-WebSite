@@ -6,22 +6,31 @@ export const ModalProfile = styled.dialog`
    border-radius: 8px;
    border-top: 16px solid blue;
    border-bottom: 16px solid blue;
+   padding: 8px;
+   gap: 8px;
    form {
       padding: 16px;
       background-color: white;
-      gap: 16px;
+      gap: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       header {
-         width: 70%;
+         width: 100%;
          div {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
          }
       }
+   }
+   span{
+      color: red;
+   }
+   div{
+      display: flex;
+      justify-content: space-around;
    }
 `;
 export const ModalBox = styled.div`

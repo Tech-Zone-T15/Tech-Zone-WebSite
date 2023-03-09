@@ -11,7 +11,7 @@ import { ICommentsProps } from "../../Providers/DashboardContext/@types/dashboar
 import DeleteForever from "@mui/icons-material/DeleteForever";
 import Edit from "@mui/icons-material/Edit";
 
-export default function Comments({comments,profile_img,name,}: ICommentsProps) {
+export default function Comments({comments}: ICommentsProps) {
 
    const {comment} = comments
 
@@ -21,7 +21,7 @@ export default function Comments({comments,profile_img,name,}: ICommentsProps) {
             <CardHeader
                avatar={
                   <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                     <img src={profile_img} alt={name} />
+                     {/* <img src={profile_img} alt={name} /> */}
                   </Avatar>
                }
                action={
@@ -40,7 +40,7 @@ export default function Comments({comments,profile_img,name,}: ICommentsProps) {
                      </IconButton>
                   </>
                }
-               title={name}
+               // title={name}
             />
             <CardContent>
                <Typography variant="body2" color="text.secondary">

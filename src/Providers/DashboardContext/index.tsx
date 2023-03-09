@@ -1,13 +1,13 @@
 import { createContext, useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
 
-import {IDefaultProviderProps,IDashboardContext,Iusers,IsendPost,IsendComments,IUpdatePost} from "./@types/dashboardTypes";
+import {IDefaultProviderProps,IDashboardContext,Iusers,IsendPost,IsendComments,IUpdatePost,Iposts} from "./@types/dashboardTypes";
 
 
 export const DashboardContext = createContext({} as IDashboardContext);
 
 export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
+
    const [followUsers, setFollowUsers] = useState<Iusers[]>([]);
 
    const [users ,setGetUsers ] = useState<Iusers[]>([])
@@ -21,11 +21,12 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    //-------------------------------------------------------//
 
+   const [getPosts ,setGetPost ] = useState<Iposts[]>([])
 
    const token = localStorage.getItem("@TOKEN");
    
 
-   const getUsers = async () => { // requisição para renderizar os post 
+   const getUsers = async () => { 
 
       const token = localStorage.getItem("@TOKEN");
       
@@ -35,12 +36,28 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
+
          setGetUsers(response.data)
+
       } catch (error) {
          console.error(error)
       }
    };
 
+      const getAllPosts = async () => { // requisição para renderizar os post 
+
+      try {
+         const response = await api.get("posts?_embed=users&_embed=comments", {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         
+         setGetPost(response.data)
+      } catch (error) {
+         console.error(error)
+      }
+   };
 
 
 
@@ -122,8 +139,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             }
          })
 
-         const newPostList = users.filter(user => user.id !== postId.id)
-         setGetUsers (newPostList)
+         const newPostList = getPosts.filter(post => post.id !== id)
+
+         setGetPost(newPostList)
 
       } catch (error) {
          console.error;
@@ -131,24 +149,26 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    };
 
    const editPost = async (data:IUpdatePost) => {
+
       const {id} = data
 
-            const response = await api.put(`posts/${id}`,data,{
-               headers:{
-                  Authorization: `Bearer ${token}`,
-               }
-            })
-
-            const newPostList = users.map(user => {
+         const response = await api.put(`posts/${id}`,data,{
+            headers:{
+               Authorization: `Bearer ${token}`,
+            }
+         })
       
-               if(id == user.id){
-                  return {...user, data}
-               } else {
-                  return user
-               }
+            const newPostList = getPosts.map(post => {
+               
+                  if(post.id == id){
+                     return {...post, ...data}
+                  } else {
+                     return post
+                  }
+
             })
 
-            //setGetUsers(newPostList)
+            setGetPost(newPostList)
 
    };
 
@@ -164,10 +184,14 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             deletePost,
             editPost,
             followUsers, 
+            setGetPost,
+            getPosts, 
+            getAllPosts,
             searchValue,
             setSearchValue 
          }}>
 
+      {/* <DashboardContext.Provider value={{sendComments,sendPost,getComments,getUsers ,users,deletePost,editPost,followUsers,setGetPost,getPosts, getAllPosts }}> */}
          {children}
       </DashboardContext.Provider>
    );

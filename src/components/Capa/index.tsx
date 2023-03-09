@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { ProfileContext } from "../../Providers/ProfileContext";
 import { UserContext } from "../../Providers/UserContext";
 
+
 export const CapaPerfil = () => {
    const {user} = useContext(UserContext)
    const { setUpdateProfileImage } = useContext(ProfileContext);
@@ -21,7 +22,7 @@ export const CapaPerfil = () => {
                src={user?.profile_img}
                alt={user?.name}
             />
-            <button onClick={() => setUpdateProfileImage(true)}><MdOutlineAddAPhoto /></button>
+            <button onClick={() => setUpdateProfileImage(true)}><MdOutlineAddAPhoto size='35px'/></button>
          </div>
       </CapaStyle>
    );

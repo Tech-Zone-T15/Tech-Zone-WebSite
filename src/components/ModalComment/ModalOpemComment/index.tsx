@@ -6,14 +6,15 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { Iusers} from "../../../Providers/DashboardContext/@types/dashboardTypes";
+import { IComments, Iposts, Iusers} from "../../../Providers/DashboardContext/@types/dashboardTypes";
 import Box from '@mui/material/Box';
 import Comments from "../../Comments";
 
 interface IopemModalComment{
    opemModalComment: true;
    setopemModalComment: React.Dispatch<React.SetStateAction<boolean>>;
-   user:Iusers
+   post:Iposts
+
 }
 
 
@@ -26,8 +27,8 @@ const Transition = React.forwardRef(function Transition(
    return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenDialog({opemModalComment,setopemModalComment,user}:IopemModalComment) {
-   const {profile_img,name} = user 
+export default function FullScreenDialog({opemModalComment,setopemModalComment,post}:IopemModalComment) {
+
    const handleClose = () => {
       setopemModalComment(!opemModalComment);
    };
@@ -53,7 +54,7 @@ export default function FullScreenDialog({opemModalComment,setopemModalComment,u
                </Toolbar>
             </AppBar>
             <Box>
-               {user.comments.map(comment => <Comments key={comment.id} comments={comment} profile_img={profile_img} name={name} comment={""}/>)}
+               {post.comments.map((comment: IComments) => <Comments key={comment.id} comments={comment} comment={""} />)}
             </Box>
          </Dialog>
       </div>

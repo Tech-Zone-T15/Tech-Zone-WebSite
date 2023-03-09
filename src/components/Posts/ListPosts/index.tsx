@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import ModalPostDelete from "../../ModalPostDelete";
 import ModalPostEdit from "../../ModalPostEdit";
 import { IpostsProps } from "../../../Providers/DashboardContext/@types/dashboardTypes";
@@ -16,11 +16,14 @@ import { red } from "@mui/material/colors";
 import AddComment from "@mui/icons-material/AddComment";
 import DeleteForever from "@mui/icons-material/DeleteForever";
 import  Edit  from "@mui/icons-material/Edit";
+import { DashboardContext } from "../../../Providers/DashboardContext";
 
 
-const ListPosts = ({ post, profile_img,name,user}: IpostsProps) => {
+const ListPosts = ({ post}: IpostsProps) => {
 
-   const { img, content } = post;
+      const {users} = useContext(DashboardContext)
+
+      const { img, content } = post;
 
    const [opemModal, setOpemModal] = useState(false);
    const [opemModalEdit, setOpemModalEdit] = useState(false);
@@ -45,7 +48,7 @@ const ListPosts = ({ post, profile_img,name,user}: IpostsProps) => {
             <CardHeader
                avatar={
                   <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                     <img src={profile_img} alt={name} />
+                        {users.map(user => user.id == post.userId ? <img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
                   </Avatar>
                }
                action={
@@ -58,7 +61,8 @@ const ListPosts = ({ post, profile_img,name,user}: IpostsProps) => {
                      </IconButton>
                   </>
                }
-               title={name}
+
+               title={users.map(user => user.id == post.userId ?  user.name : null)}
             />
             <CardMedia
                component="img"
@@ -99,7 +103,7 @@ const ListPosts = ({ post, profile_img,name,user}: IpostsProps) => {
             <ModalOpemComment
                opemModalComment={opemModalComment}
                setopemModalComment={setopemModalComment}
-               user={user}
+               post={post}
             />
          )}
       </>

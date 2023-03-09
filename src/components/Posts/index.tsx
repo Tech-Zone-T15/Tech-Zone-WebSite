@@ -1,6 +1,7 @@
 import { UserPost} from "./UserPost";
 import { useContext, useEffect, useState} from "react";
 import { DashboardContext } from "../../Providers/DashboardContext";
+import ListPosts from "./ListPosts";
 
 
 
@@ -24,14 +25,19 @@ const Post = () => {
    console.log(postsV)
    console.log(postsVD)
     
+
+
+   const {getPosts} = useContext(DashboardContext)
+
    return ( 
       <>
-         {users.map(user => <UserPost key={user.id} user={user} />)}
+         {getPosts.map(post => <ListPosts key={post.id} post={post} />)}
       </>
 
    );
 };
 
 export default Post;
+
 
 

@@ -1,29 +1,36 @@
+import { Key } from "react";
+import { number } from "yup";
+
 export interface IDefaultProviderProps {
    children: React.ReactNode;
 }
 
 
-export interface Ipost{
-   userId:number
+export interface Iposts{
+   userId:number | string
    img:string
    content:string
-   id:number
+   id:number | string
+   comments: [] 
+   comment: [] | string | number
 }
 
 export interface IComments {
+   id: Key | null | undefined;
    map: any;
    postId: number;
    userId: number;
    name: string;
    profile_img: string;
    comment: [] | string;
-   id: number;
+   
 }
 export interface ICommentsProps {
-   comments:ICommentsProps
+   comments:IComments
    comment:string
-   profile_img:string
-   name:string
+   id?:number
+   profile_img?:string
+   name?:string
 }
 
 export interface IsendPost {
@@ -62,18 +69,18 @@ export interface Iusers{
    email:string
    id:number
    name:string
-   posts: Ipost[]
+   posts: Iposts[]
    profile_img:string
 }
 export interface IpostsProps{
-   post:Ipost
-   profile_img:string
-   name:string
-   user:Iusers
+   post:Iposts
+   profile_img?:string
+   name?:string
+   user?:Iusers
 }
 export interface IUserProps{
    user:Iusers
-   comments:IComments
+   comments?:IComments
 }
 export interface IDashboardContext {
    sendComments: (data: IsendComments) => Promise<void>
@@ -83,7 +90,11 @@ export interface IDashboardContext {
    users: Iusers[]
    deletePost: (postId: Iusers) => Promise<void>
    editPost: (data: IUpdatePost) => Promise<void>
+   setGetPost: React.Dispatch<React.SetStateAction<Iposts[]>>
    followUsers: Iusers[]
    searchValue: string
    setSearchValue: React.Dispatch<React.SetStateAction<string>>
+   getPosts: Iposts[]
+   getAllPosts: () => Promise<void>
+
 }
