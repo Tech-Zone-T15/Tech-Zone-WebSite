@@ -6,6 +6,7 @@ export const UserPost = ({user}:IUserProps) => {
    
    const {profile_img,name} = user
 
+   // console.log(user)
 
    return (
 

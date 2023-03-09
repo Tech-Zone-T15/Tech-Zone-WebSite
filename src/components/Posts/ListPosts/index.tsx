@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalPostDelete from "../../ModalPostDelete";
 import ModalPostEdit from "../../ModalPostEdit";
 import { IpostsProps } from "../../../Providers/DashboardContext/@types/dashboardTypes";
@@ -25,6 +25,19 @@ const ListPosts = ({ post, profile_img,name,user}: IpostsProps) => {
    const [opemModal, setOpemModal] = useState(false);
    const [opemModalEdit, setOpemModalEdit] = useState(false);
    const [opemModalComment, setopemModalComment] = useState(false);
+
+   // console.log(post)
+   // interface postArrayVProps{
+   //    content: string
+   //    id: number 
+   //    img: string
+   //    userId: number
+   // }
+
+   // const [postsArrayV, setPostsArrayV] = useState<postArrayVProps[]>([]);
+   // useEffect(() => {
+   //    setPostsArrayV(post);
+   // },[])
 
    return (
       <>

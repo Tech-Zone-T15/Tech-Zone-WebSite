@@ -12,6 +12,16 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [users ,setGetUsers ] = useState<Iusers[]>([])
 
+   //-------------------------- Vitor -----------------------------//
+
+  const [searchValue, setSearchValue] = useState('');
+
+
+
+
+   //-------------------------------------------------------//
+
+
    const token = localStorage.getItem("@TOKEN");
    
 
@@ -26,11 +36,12 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             },
          });
          setGetUsers(response.data)
-         console.log(response.data)
       } catch (error) {
          console.error(error)
       }
    };
+
+
 
 
    const getComments = async () => { // requisição para renderizar os Comentarios
@@ -143,7 +154,19 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    return (
 
-      <DashboardContext.Provider value={{sendComments,sendPost,getComments,getUsers ,users,deletePost,editPost,followUsers }}>
+      <DashboardContext.Provider 
+         value={{
+            sendComments,
+            sendPost,
+            getComments,
+            getUsers ,
+            users,
+            deletePost,
+            editPost,
+            followUsers, 
+            searchValue,
+            setSearchValue 
+         }}>
 
          {children}
       </DashboardContext.Provider>

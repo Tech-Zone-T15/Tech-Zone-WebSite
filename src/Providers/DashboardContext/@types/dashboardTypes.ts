@@ -84,4 +84,6 @@ export interface IDashboardContext {
    deletePost: (postId: Iusers) => Promise<void>
    editPost: (data: IUpdatePost) => Promise<void>
    followUsers: Iusers[]
+   searchValue: string
+   setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
