@@ -4,7 +4,6 @@ import { BiEditAlt } from "react-icons/Bi";
 import { UserContext } from "../../Providers/UserContext";
 import { ProfileDataStyle } from "./style";
 import { StyledButton } from "../../styles/button";
-import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { TextField, Typography } from "@mui/material";
 
 export const ProfileData = () => {
@@ -12,23 +11,27 @@ export const ProfileData = () => {
       useContext(ProfileContext);
    const { user } = useContext(UserContext);
 
+
    return (
       <ProfileDataStyle>
          <div>
-            <Typography variant="h4">Dados pessoais </Typography>
-            <BiEditAlt onClick={() => setUpdateProfileModal(true)} size='35px'/>
+            <Typography variant="h4">Informações pessoais </Typography>
+            <BiEditAlt
+               onClick={() => setUpdateProfileModal(true)}
+               size="35px"
+            />
          </div>
          <Typography variant="h5">Nome: {user?.name}</Typography>
          <Typography variant="h5">Email: {user?.email}</Typography>
          <Typography variant="h5">Cidade: {user?.city}</Typography>
-         <TextField fullWidth multiline={true} minRows={5} defaultValue={user?.bio} disabled={true}/>
-         <StyledButton
-            $buttonSize="large"
-            $buttonStyle="red"
-            onClick={() => setDeleteProfileModal(true)}
-         >
-            Deletar perfil
-         </StyledButton>
+         <TextField
+            fullWidth
+            multiline={true}
+            minRows={5}
+            defaultValue={user?.bio}
+            disabled={true}
+         />
+         
       </ProfileDataStyle>
    );
 };

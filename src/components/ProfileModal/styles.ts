@@ -32,6 +32,11 @@ export const ModalProfile = styled.dialog`
       display: flex;
       justify-content: space-around;
    }
+   .form-bottom{
+      width: 100%;
+      display: flex;
+      justify-content: space-around
+   }
 `;
 export const ModalBox = styled.div`
    background: rgba(51, 51, 51, 0.5);
