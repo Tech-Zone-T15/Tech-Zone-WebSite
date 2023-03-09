@@ -8,6 +8,7 @@ import {
    IRegisterFormValues,
    IUser,
    IUserContext,
+   IUserID,
 } from "./@types";
 import { api } from "../../services/api";
 import jwt_decode from "jwt-decode";
@@ -94,6 +95,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       localStorage.removeItem("@TOKEN");
       navigate("/");
    };
+
    const typeWritter = (title: HTMLElement, content: string) => {
       let currentText = "";
       const charArray = content.split("");
@@ -112,6 +114,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
          }, 40 * i);
       });
    };
+   
    return (
       <UserContext.Provider
          value={{

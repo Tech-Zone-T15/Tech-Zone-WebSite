@@ -15,7 +15,7 @@ export const DashboarHeader = () => {
    return (
       <StyledHeaderDash>
          <StyledContainer containerWidth={1300}>
-            <div id="header">
+            <div id="header__div">
                <div id="header__div-left">
                   <div id="header__perfil">
                      <div>
@@ -24,20 +24,19 @@ export const DashboarHeader = () => {
                      <StyledParagraph>{user?.name}</StyledParagraph>
                   </div>
                </div>
-
-            </div>
-            <div id='header__div-right'>
-               <SearchForm/>
-               <div id='buttons__div'>
-                  <StyledButtonLink to='/perfil' $buttonSize='small' $buttonStyle='white' >
-                     Perfil
-                  </StyledButtonLink>
-                  <StyledButton type='button' $buttonSize='small' $buttonStyle='blue' onClick={() => userLogOut()}>
-                     Sair
-                  </StyledButton>
-
+               <div id='header__div-right'>
+                  <SearchForm/>
+                  <div id='buttons__div'>
+                     <StyledButtonLink to='/perfil' $buttonSize='small' $buttonStyle='white' >
+                        Perfil
+                     </StyledButtonLink>
+                     <StyledButton type='button' $buttonSize='small' $buttonStyle='blue' onClick={() => userLogOut()}>
+                        Sair
+                     </StyledButton>
+                  </div>
                </div>
             </div>
+
          </StyledContainer>
       </StyledHeaderDash>
    );

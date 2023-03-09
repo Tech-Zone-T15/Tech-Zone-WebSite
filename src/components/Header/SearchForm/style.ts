@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledSearchForm = styled.form`
   width: 100%;
-  max-width: 280px;
+  width: 300px;
   height: 55px;
 
   display: flex;

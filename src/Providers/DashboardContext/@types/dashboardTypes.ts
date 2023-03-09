@@ -94,5 +94,8 @@ export interface IDashboardContext {
    followUsers: Iusers[]
    getPosts: Iposts[]
    getAllPosts: () => Promise<void>
-
+   searchValue: string
+   setSearchValue: React.Dispatch<React.SetStateAction<string>>
+   setFilteredPosts: React.Dispatch<React.SetStateAction<string>>
+   searchPostsList: Iposts[]
 }
