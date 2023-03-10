@@ -77,19 +77,7 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
       }
    }
 
-   async function deletePost(
-      postId: number,
-      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-   ) {
-      try {
-         await api.delete(`/posts/${postId}`, {
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         });
-         event.target.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
-      } catch (error) {}
-   }
+
 
    return (
       <ProfileContext.Provider
@@ -104,8 +92,7 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
             setDeleteProfileModal,
             myPosts,
             setMyPosts,
-            unfollow,
-            deletePost
+            unfollow
          }}
       >
          {children}
