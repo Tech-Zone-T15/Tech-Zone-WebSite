@@ -5,8 +5,13 @@ import { UserContext } from "../../Providers/UserContext";
 import { ProfileDataStyle } from "./style";
 import { StyledButton } from "../../styles/button";
 import { TextField, Typography } from "@mui/material";
+import {IoIosArrowDropupCircle} from 'react-icons/io'
 
-export const ProfileData = () => {
+interface iProfileDataProps{
+   editing: boolean;
+   setEditing: React.Dispatch<React.SetStateAction<boolean>>
+}
+export const ProfileData = ({editing, setEditing}: iProfileDataProps) => {
    const { setUpdateProfileModal, setDeleteProfileModal } =
       useContext(ProfileContext);
    const { user } = useContext(UserContext);
@@ -14,6 +19,9 @@ export const ProfileData = () => {
 
    return (
       <ProfileDataStyle>
+         <div>
+            <Typography variant="h6">Cancelar <IoIosArrowDropupCircle onClick={() => setEditing(!editing)}/></Typography>
+         </div>
          <div>
             <Typography variant="h4">Informações pessoais </Typography>
             <BiEditAlt

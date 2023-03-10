@@ -18,12 +18,14 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import ModalOpemComment from "../ModalComment/ModalOpemComment";
 
+
 export const MyPostsList = () => {
+
    const { myPosts } = useContext(ProfileContext);
    const { user } = useContext(UserContext);
-   const [openModal, setOpenModal] = useState(false);
    const [openModalEdit, setOpenModalEdit] = useState(false);
    const [openModalComment, setopenModalComment] = useState(false);
+   const { deletePost } = useContext(ProfileContext);
 
    return (
       <MyPostsStyle>
@@ -40,7 +42,7 @@ export const MyPostsList = () => {
          ) : (
             <ul>
                {myPosts.map((post) => (
-                  <li key={post.id}>
+                  <li key={crypto.randomUUID()}>
                      <CardHeader
                         avatar={
                            <Avatar>
@@ -51,7 +53,7 @@ export const MyPostsList = () => {
                            <>
                               <IconButton
                                  aria-label="deletar post"
-                                 onClick={() => setOpenModal(!openModal)}
+                                 onClick={(event) => deletePost(post.id, event)}
                               >
                                  <DeleteForever />
                               </IconButton>
@@ -67,12 +69,14 @@ export const MyPostsList = () => {
                         }
                         title={user?.name}
                      />
-                     {post.img && <CardMedia
-                        component="img"
-                        height="194"
-                        src={post.img}
-                        alt="Imagem do post"
-                     />}
+                     {post.img && (
+                        <CardMedia
+                           component="img"
+                           height="194"
+                           src={post.img}
+                           alt="Imagem do post"
+                        />
+                     )}
                      <CardContent>
                         <Typography variant="body2" color="text.secondary">
                            {post.content}
@@ -82,20 +86,26 @@ export const MyPostsList = () => {
                         <IconButton aria-label="add to favorites">
                            <FavoriteIcon />
                         </IconButton>
-                       
+                        <IconButton
+                           aria-label="Abri comentarios "
+                           onClick={() =>
+                              setopenModalComment(!openModalComment)
+                           }
+                        >
+                           <AddComment />
+                        </IconButton>
                      </CardActions>
-
-                     {openModal && (
-                        <ModalPostDelete
-                           opemModal={openModal}
-                           setOpemModal={setOpenModal}
-                           post={post}
-                        />
-                     )}
                      {openModalEdit && (
                         <ModalPostEdit
                            opemModalEdit={openModalEdit}
                            setOpemModalEdit={setOpenModalEdit}
+                           post={post}
+                        />
+                     )}
+                     {openModalComment && (
+                        <ModalOpemComment
+                           opemModalComment={openModalComment}
+                           setopemModalComment={setopenModalComment}
                            post={post}
                         />
                      )}

@@ -14,20 +14,29 @@ import { toast } from "react-toastify";
 import { MyPostsList } from "../../components/MyPosts";
 import { UserFollowing } from "../../components/UserFollowing";
 import { Typography } from "@mui/material";
+import { IoIosArrowDropdownCircle } from "react-icons/io";
+import { IUser } from "../../Providers/UserContext/@types";
 
-interface ifollowObject{
+interface ifollowObject {
    userId: number;
    follows: number;
    id: number;
 }
-
+interface iFollowersList {
+   userId: number;
+   follows: number;
+   id: number;
+   user: IUser;
+}
 function PerfilPage() {
    const { updateProfileModal, updateProfileImage, deleteProfileModal } =
       useContext(ProfileContext);
-   const { setMyPosts, myPosts } = useContext(ProfileContext);
-   const [followingList, setFollowingList] = useState([]);
    const { user } = useContext(UserContext);
    const token = localStorage.getItem("@TOKEN");
+   const { setMyPosts, myPosts } = useContext(ProfileContext);
+   const [followingList, setFollowingList] = useState<ifollowObject[]>([]);
+   const [followersList, setFollowersList] = useState<iFollowersList[]>([]);
+   const [editing, setEditing] = useState(false);
 
    useEffect(() => {
       async function getMyPosts() {
@@ -37,13 +46,18 @@ function PerfilPage() {
                   Authorization: `Bearer ${token}`,
                },
             });
-            setMyPosts(response.data);
+            response.data === myPosts ? null : setMyPosts(response.data);
          } catch (error) {
             if (axios.isAxiosError(error)) {
                toast.error(error.response?.data);
             }
          }
       }
+
+      getMyPosts();
+   }, []);
+
+   useEffect(() => {
       async function getUsers() {
          try {
             const response = await api.get(`/users/${user?.id}/follow`, {
@@ -51,16 +65,34 @@ function PerfilPage() {
                   Authorization: `Bearer ${token}`,
                },
             });
-            setFollowingList(response.data);
-            console.log(response.data)
+            response.data === followingList
+               ? null
+               : setFollowingList(response.data);
          } catch (error) {
             if (axios.isAxiosError(error)) {
                toast.error(error.response?.data);
             }
          }
       }
-      getMyPosts();
       getUsers();
+   }, []);
+
+   useEffect(() => {
+      async function getFollowers() {
+         try {
+            const response = await api.get(`/follow?follows=${user?.id}&_expand=user`, {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            });
+            setFollowersList(response.data);
+         } catch (error) {
+            if (axios.isAxiosError(error)) {
+               toast.error(error.response?.data);
+            }
+         }
+      }
+      getFollowers();
    }, []);
 
    return (
@@ -76,14 +108,44 @@ function PerfilPage() {
          />
          <StyledMain>
             <CapaPerfil />
-            <ProfileData />
-            <div>
+            {editing === false ? (
+               <div className="open-edit">
+                  <Typography variant="h6">
+                     Editar Perfil{" "}
+                     <IoIosArrowDropdownCircle
+                        onClick={() => setEditing(!editing)}
+                     />
+                  </Typography>
+               </div>
+            ) : (
+               <ProfileData editing={editing} setEditing={setEditing} />
+            )}
+            <div className="following-box">
+               <Typography variant="h6">Seguidores</Typography>
+               <div className="following-lista">
+                  {followersList.length > 0 ? (
+                     <ul>
+                        {followersList.map(follower => (
+                           <UserFollowing key={follower.id} userObj={follower.user}/>
+                        ))}
+                     </ul>
+                  ): (
+                     <li key={crypto.randomUUID()}>
+                     <Typography variant="subtitle1">
+                        Ninguém te segue
+                     </Typography>
+                  </li>
+                  )}
+               </div>
+            </div>
+            <div className="following-box">
                <Typography variant="h6">Seguindo</Typography>
-               <div className="seguindo">
+               <div className="following-lista">
                   {followingList.length > 0 ? (
                      <ul>
                         {followingList.map((followObject: ifollowObject) => (
                            <UserFollowing
+                              key={followObject.id}
                               id={followObject.follows}
                               followId={followObject.id}
                            />
@@ -91,7 +153,9 @@ function PerfilPage() {
                      </ul>
                   ) : (
                      <li key={crypto.randomUUID()}>
-                        <Typography variant="subtitle1">Você não está seguindo ninguém</Typography>
+                        <Typography variant="subtitle1">
+                           Você não está seguindo ninguém
+                        </Typography>
                      </li>
                   )}
                </div>

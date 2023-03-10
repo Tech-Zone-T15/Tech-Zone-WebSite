@@ -13,6 +13,8 @@ export const MyPostsStyle = styled.div`
       max-width: 100%;
    }
    ul{
+      display: flex;
+   flex-direction: column;
       li{
          margin-bottom: 16px;
          border: 1px solid gray;
