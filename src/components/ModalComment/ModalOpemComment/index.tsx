@@ -6,9 +6,18 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { IComments, Iposts, Iusers} from "../../../Providers/DashboardContext/@types/dashboardTypes";
+import { IComments, IidUserLogin, Iposts} from "../../../Providers/DashboardContext/@types/dashboardTypes";
 import Box from '@mui/material/Box';
 import Comments from "../../Comments";
+import { DashboardContext } from "../../../Providers/DashboardContext";
+import { useContext, useEffect } from "react";
+import TextField from "@mui/material/TextField";
+import Avatar from "@mui/material/Avatar";
+import jwt_decode from 'jwt-decode';
+import Button from "@mui/material/Button";
+import DialogActions from "@mui/material/DialogActions";
+import { useForm } from "react-hook-form";
+import { MdOutlinePostAdd } from "react-icons/md";
 
 interface IopemModalComment{
    opemModalComment: true;
@@ -16,18 +25,59 @@ interface IopemModalComment{
    post:Iposts
 
 }
-
+interface IdataForm {
+   dataForm: string;
+   comment: string;
+}
 
 const Transition = React.forwardRef(function Transition(
    props: TransitionProps & {
       children: React.ReactElement;
    },
    ref: React.Ref<unknown>
-) {
-   return <Slide direction="up" ref={ref} {...props} />;
-});
+   ) {
+      return <Slide direction="up" ref={ref} {...props} />;
+   });
+   
+   export default function FullScreenDialog({opemModalComment,setopemModalComment,post}:IopemModalComment) {
+      
+      const {getComments,setGetComments,getAllPosts,users,sendComments} = useContext(DashboardContext)
 
-export default function FullScreenDialog({opemModalComment,setopemModalComment,post}:IopemModalComment) {
+      const token = localStorage.getItem("@TOKEN");
+
+      const idUserLogin = jwt_decode<IidUserLogin>(token);
+
+      const {comments,id} = post 
+
+
+   useEffect(() => { 
+
+      setGetComments(comments)
+
+      return ()=> {
+         getAllPosts()
+      }
+   }, []);
+
+   const {
+      register,
+      handleSubmit,
+      formState: { errors },
+   } = useForm<IdataForm>();
+
+
+   const submit = (dataForm:IdataForm) => {
+
+      const dataObj = {
+         postId:id,
+         userId:idUserLogin.sub
+      }
+      
+      const data = {...dataObj, ...dataForm}
+
+      sendComments(data)
+   };
+
 
    const handleClose = () => {
       setopemModalComment(!opemModalComment);
@@ -54,9 +104,37 @@ export default function FullScreenDialog({opemModalComment,setopemModalComment,p
                </Toolbar>
             </AppBar>
             <Box>
-               {post.comments.map((comment: IComments) => <Comments key={comment.id} comments={comment} comment={""} />)}
+               {getComments.map((comment: IComments) => <Comments key={comment.id} comments={comment} comment={""} />)}
             </Box>
+
+            <Box>
+               <Avatar aria-label="recipe">
+                  {users.map(user => user.id == idUserLogin.sub ? <img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
+               </Avatar>
+
+            <form onSubmit={handleSubmit(submit)}>
+
+                  <TextField
+                     type="textarea"
+                     id="textarea"
+                     label="Comentario"
+                     margin="dense"
+                     multiline
+                     fullWidth
+                     variant="filled"
+                     {...register("comment")}
+                  />
+            
+                  <DialogActions>
+                     <Button type="submit">Adicionar comentario</Button>
+                  </DialogActions>
+            
+               </form>
+
+            </Box>
+
          </Dialog>
+         
       </div>
    );
 }

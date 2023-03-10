@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { api } from "../../services/api";
 
-import {IDefaultProviderProps,IDashboardContext,Iusers,IsendPost,IsendComments,IUpdatePost,Iposts} from "./@types/dashboardTypes";
+import {IDefaultProviderProps,IDashboardContext,Iusers,IsendPost,IsendComments,IUpdatePost,Iposts,IUpdateComments,IComments} from "./@types/dashboardTypes";
 
 
 export const DashboardContext = createContext({} as IDashboardContext);
@@ -14,9 +14,10 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [getPosts ,setGetPost ] = useState<Iposts[]>([])
 
+   const [getComments,setGetComments] = useState<IComments[]>([])
+
    const token = localStorage.getItem("@TOKEN");
    
-
    const getUsers = async () => { 
 
       const token = localStorage.getItem("@TOKEN");
@@ -50,40 +51,11 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       }
    };
 
-   const getComments = async () => { // requisição para renderizar os Comentarios
-      
-
-      try {
-         const response = await api.get("comments", {
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         });
-      } catch (error) {
-         console.error(error);
-      }
-   };
-
    const sendPost = async (data: IsendPost) => {
       //requisição para enviar os post
       try {
          const response = await api.post("post", data, {
             headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         });
-      } catch (error) {
-         console.error(error);
-      }
-   };
-
-   const sendComments = async (data: IsendComments) => {
-      //requisição para enviar os Comentarios
-      try {
-
-         const response = await api.post("comments", data, {
-            headers: {
-
                Authorization: `Bearer ${token}`,
             },
          });
@@ -161,9 +133,70 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    };
 
+   const editcomments = async (data:IUpdateComments) => {
+
+         const {id} = data
+
+         const response = await api.put(`comments/${id}`,data,{
+            headers:{
+               Authorization: `Bearer ${token}`,
+            }
+         })
+         
+         const newCommentsList = getComments.map(Comment => {
+               
+            if(Comment.id == id){
+               return {...Comment, ...data}
+            } else {
+               return Comment
+            }
+         })
+         
+         setGetComments(newCommentsList)
+      };
+
+      const deleteComments = async(CommentId:IUpdateComments) =>{
+         
+         const {id} = CommentId
+
+         try {
+   
+            const response = await api.delete(`comments/${id}`,{
+               headers:{
+                  Authorization: `Bearer ${token}`,
+               }
+            })
+   
+            const newPostList = getComments.filter(Comment => Comment.id !== id)
+   
+            setGetComments(newPostList)
+   
+         } catch (error) {
+            console.error;
+         }
+      };
+
+      const sendComments = async (data:IComments[]) => {
+
+         try {
+            const response = await api.post("comments", data, {
+               headers: {
+   
+                  Authorization: `Bearer ${token}`,
+               },
+            });
+
+            setGetComments([...getComments,response.data])
+
+         } catch (error) {
+            console.error(error);
+         }
+      };
+
+
    return (
 
-      <DashboardContext.Provider value={{sendComments,sendPost,getComments,getUsers ,users,deletePost,editPost,followUsers,setGetPost,getPosts, getAllPosts }}>
+      <DashboardContext.Provider value={{sendComments,sendPost,getUsers ,users,deletePost,editPost,followUsers,setGetPost,getPosts, getAllPosts,editcomments,getComments,setGetComments,deleteComments}}>
          {children}
       </DashboardContext.Provider>
    );
