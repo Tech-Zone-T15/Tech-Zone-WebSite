@@ -41,9 +41,8 @@ const ListPosts = ({ post}: IpostsProps) => {
             <CardHeader
 
                avatar={
-                  <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                  <Avatar aria-label="recipe">
                         {users.map(user => user.id == userId ? <img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
-                        V
                   </Avatar>
                }
                action={

@@ -1,12 +1,11 @@
 import { createContext, useState, useEffect } from "react";
 import { api } from "../../services/api";
-
+import { toast } from "react-toastify";
 import {
    IDefaultProviderProps,
    IDashboardContext,
    Iusers,
    IsendPost,
-   IsendComments,
    IUpdatePost,
    Iposts,
    IUpdateComments,
@@ -23,6 +22,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const [getPosts, setGetPost] = useState<Iposts[]>([]);
 
    const [getComments, setGetComments] = useState<IComments[]>([]);
+
+   const [loading, setLoading] = useState(false);
 
    //-------------------------- Vitor -----------------------------//
 
@@ -60,7 +61,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    };
 
    const getAllPosts = async () => {
-      // requisição para renderizar os post
 
       try {
          const response = await api.get("posts?_embed=users&_embed=comments", {
@@ -69,10 +69,14 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             },
          });
 
+         setLoading(true)
+
          setGetPost(response.data);
+
       } catch (error) {
          console.error(error);
       }
+
    };
 
    const sendPost = async (data: IsendPost) => {
@@ -86,6 +90,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       } catch (error) {
          console.error(error);
       }
+
    };
 
    const AllUsers = async () => {
@@ -126,6 +131,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          const newPostList = getPosts.filter((post) => post.id !== id);
 
          setGetPost(newPostList);
+
+         toast.success("Post Deletado com sucesso")
       } catch (error) {
          console.error;
       }
@@ -149,6 +156,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       });
 
       setGetPost(newPostList);
+
+      toast.success("Post Editado com sucesso")
    };
 
    const editcomments = async (data: IUpdateComments) => {
@@ -169,6 +178,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       });
 
       setGetComments(newCommentsList);
+
+      toast.success("Comentario Editado com sucesso")
    };
 
    const deleteComments = async (CommentId: IUpdateComments) => {
@@ -184,6 +195,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          const newPostList = getComments.filter((Comment) => Comment.id !== id);
 
          setGetComments(newPostList);
+
+         toast.success("Comentario Deletado com sucesso")
+
       } catch (error) {
          console.error;
       }
@@ -198,6 +212,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          });
 
          setGetComments([...getComments, response.data]);
+
+         toast.success("Comentario Enviado com sucesso")
+         
       } catch (error) {
          console.error(error);
       }
@@ -223,7 +240,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             searchValue,
             setSearchValue,
             setFilteredPosts,
-            searchPostsList
+            searchPostsList,
+            loading
          }}
       >
          {children}
