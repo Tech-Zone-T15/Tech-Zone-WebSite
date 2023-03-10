@@ -24,16 +24,16 @@ const Post = () => {
    // },[])
    // console.log(postsV)
    // console.log(postsVD)
-    
 
 
-   const {getPosts, searchPostsList} = useContext(DashboardContext)
 
-   console.log(searchPostsList)
+   const {getPosts} = useContext(DashboardContext)
+
+
 
    return ( 
       <>
-         {searchPostsList.map(post => <ListPosts key={post.id} post={post} />)}
+         {getPosts.map(post => <ListPosts key={post.id} post={post} />)}
       </>
 
    );

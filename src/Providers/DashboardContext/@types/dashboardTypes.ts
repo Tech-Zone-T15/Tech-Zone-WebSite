@@ -105,9 +105,9 @@ export interface IDashboardContext {
    setGetComments: React.Dispatch<React.SetStateAction<IComments[]>>
    getComments: IComments[]
    deleteComments: (CommentId: IUpdateComments) => Promise<void>
-   searchValue: string
-   setSearchValue: React.Dispatch<React.SetStateAction<string>>
-   setFilteredPosts: React.Dispatch<React.SetStateAction<string>>
-   searchPostsList: Iposts[]
+   // searchValue: string
+   // setSearchValue: React.Dispatch<React.SetStateAction<string>>
+   // setFilteredPosts: React.Dispatch<React.SetStateAction<string>>
+   // searchPostsList: Iposts[]
 
 }

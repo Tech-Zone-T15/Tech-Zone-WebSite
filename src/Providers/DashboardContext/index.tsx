@@ -19,7 +19,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    //-------------------------- Vitor -----------------------------//
 
-  const [searchValue, setSearchValue] = useState('');
+   const [searchValue, setSearchValue] = useState('');
 
    const [filteredPosts, setFilteredPosts] = useState('')
 
@@ -70,20 +70,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       }
    };
 
-
-   const getComments = async () => { // requisição para renderizar os Comentarios
-      
-
-      try {
-         const response = await api.get("comments", {
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         });
-      } catch (error) {
-         console.error(error);
-      }
-   };
 
 
    const sendPost = async (data: IsendPost) => {
@@ -233,27 +219,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
       <DashboardContext.Provider value={{sendComments,sendPost,getUsers ,users,deletePost,editPost,followUsers,setGetPost,getPosts, getAllPosts,editcomments,getComments,setGetComments,deleteComments}}>
 
-      <DashboardContext.Provider 
-         value={{
-            sendComments,
-            sendPost,
-            getComments,
-            getUsers ,
-            users,
-            deletePost,
-            editPost,
-            followUsers, 
-            setGetPost,
-            getPosts, 
-            getAllPosts,
-            searchValue,
-            setSearchValue,
-            setFilteredPosts,
-            searchPostsList
-         }}>
-
       {/* <DashboardContext.Provider value={{sendComments,sendPost,getComments,getUsers ,users,deletePost,editPost,followUsers,setGetPost,getPosts, getAllPosts }}> */}
-
+      
          {children}
       </DashboardContext.Provider>
    );
