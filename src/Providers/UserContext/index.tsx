@@ -71,7 +71,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
          // }, 2000);
          // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-         // setLoading(false);
+         // setLoading(false);´´
          {
             error.response.data === "Email already exists"
                ? toast.error("Email já cadastrado!")

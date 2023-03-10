@@ -1,28 +1,30 @@
 import { Key } from "react";
-import { number } from "yup";
+
 
 export interface IDefaultProviderProps {
    children: React.ReactNode;
 }
-
-
+export interface IidUserLogin{
+   sub: string | number;
+   idUserLogin: string | number
+} 
 export interface Iposts{
    userId:number | string
    img:string
    content:string
    id:number | string
-   comments: [] 
+   comments:[] 
    comment: [] | string | number
 }
 
 export interface IComments {
-   id: Key | null | undefined;
-   map: any;
+   id?: Key | null | undefined;
+   map?: any;
    postId: number;
    userId: number;
-   name: string;
-   profile_img: string;
-   comment: [] | string;
+   name?: string;
+   profile_img?: string;
+   comment:string;
    
 }
 export interface ICommentsProps {
@@ -39,26 +41,25 @@ export interface IsendPost {
    content: string;
 }
 
-export interface IsendComments {
-   postId: number;
-   userId: number;
-   name: string;
-   profile_img: string;
-   comment: string;
-}
-
-
 export interface IUpdatePost{
    userId:string | number
    img:string
    content:string
    id: number | string
 }
+
+export interface IUpdateComments{
+   id?: Key | null | undefined;
+   map?: any;
+   postId: number;
+   userId: number;
+   name?: string;
+   profile_img?: string;
+   comment:string;
+}
 export interface IsendComments{
-   postId:number
-   userId:number
-   name:string
-   profile_img:string
+   postId:number | string
+   userId:number | string
    comment:string
 }
 export interface Iusers{
@@ -83,9 +84,8 @@ export interface IUserProps{
    comments?:IComments
 }
 export interface IDashboardContext {
-   sendComments: (data: IsendComments) => Promise<void>
+   sendComments: (data: IComments[]) => Promise<void>
    sendPost: (data: IsendPost) => Promise<void>
-   getComments: () => Promise<void>
    getUsers : () => Promise<void>
    users: Iusers[]
    deletePost: (postId: Iusers) => Promise<void>
@@ -93,9 +93,15 @@ export interface IDashboardContext {
    setGetPost: React.Dispatch<React.SetStateAction<Iposts[]>>
    followUsers: Iusers[]
    getPosts: Iposts[]
+   editcomments: (data: IUpdateComments) => Promise<void>
    getAllPosts: () => Promise<void>
+   setGetComments: React.Dispatch<React.SetStateAction<IComments[]>>
+   getComments: IComments[]
+   deleteComments: (CommentId: IUpdateComments) => Promise<void>
    searchValue: string
    setSearchValue: React.Dispatch<React.SetStateAction<string>>
    setFilteredPosts: React.Dispatch<React.SetStateAction<string>>
    searchPostsList: Iposts[]
+   loading: boolean
+
 }

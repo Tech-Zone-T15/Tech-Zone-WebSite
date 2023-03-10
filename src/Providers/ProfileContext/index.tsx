@@ -62,6 +62,21 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
       }
    }
 
+   async function unfollow(id: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+      try {
+         await api.delete(`/follow/${id}`,{
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
+         event.target.parentElement.parentElement.parentElement.remove()
+      } catch (error) {
+         if(axios.isAxiosError(error)){
+            toast.error(error.response?.data)
+         }
+      }
+   }
+
 
 
    return (
@@ -76,7 +91,8 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
             deleteProfileModal,
             setDeleteProfileModal,
             myPosts,
-            setMyPosts
+            setMyPosts,
+            unfollow
          }}
       >
          {children}

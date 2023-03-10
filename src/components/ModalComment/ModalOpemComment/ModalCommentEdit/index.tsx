@@ -6,47 +6,44 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Iposts } from "../../Providers/DashboardContext/@types/dashboardTypes";
 import { useForm } from "react-hook-form";
-import { DashboardContext } from "../../Providers/DashboardContext";
 import { useContext } from "react";
+import { IComments } from "../../../../Providers/DashboardContext/@types/dashboardTypes";
+import { DashboardContext } from "../../../../Providers/DashboardContext";
 
 
-interface IopemModalEdit {
+interface IModalCommentEdit {
    opemModalEdit: true;
    setOpemModalEdit: React.Dispatch<React.SetStateAction<boolean>>;
-   post: Iposts;
+   comments: IComments
 }
 interface IdataForm {
    dataForm: string;
-   content: string;
+   comment: string;
 }
 
-export default function FormDialog({
-   opemModalEdit,
-   setOpemModalEdit,
-   post,
-}: IopemModalEdit) {
-   const { content } = post;
+export default function ModalCommentEdit({opemModalEdit,setOpemModalEdit,comments}: IModalCommentEdit) {
 
-   const { editPost } = useContext(DashboardContext);
+   const {comment} = comments
 
+   
+   const {editcomments} = useContext(DashboardContext)
+   
    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-   } = useForm<IdataForm>();
+      register,handleSubmit,formState: { errors },} = useForm<IdataForm>();
 
    const handleClose = () => {
+
       setOpemModalEdit(!opemModalEdit);
+
    };
 
    const submit = (dataForm: IdataForm) => {
-      const data = { ...post, ...dataForm };
 
+      const data = { ...comments,...dataForm };
+
+      editcomments(data)
       
-      editPost(data);
-
       setOpemModalEdit(!opemModalEdit);
    };
 
@@ -68,9 +65,9 @@ export default function FormDialog({
                margin="dense"
                multiline
                fullWidth
-               defaultValue={content}
+               defaultValue={comment}
                variant="filled"
-               {...register("content")}
+               {...register("comment")}
             />
 
             <DialogActions>

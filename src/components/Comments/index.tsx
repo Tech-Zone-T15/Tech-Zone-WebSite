@@ -7,13 +7,28 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { ICommentsProps } from "../../Providers/DashboardContext/@types/dashboardTypes";
+import { ICommentsProps,IidUserLogin } from "../../Providers/DashboardContext/@types/dashboardTypes";
 import DeleteForever from "@mui/icons-material/DeleteForever";
 import Edit from "@mui/icons-material/Edit";
+import { useContext, useState } from "react";
+import { DashboardContext } from "../../Providers/DashboardContext";
+import ModalCommentEdit from "../ModalComment/ModalOpemComment/ModalCommentEdit";
+import jwt_decode from 'jwt-decode';
+import ModalCommentDelete from "../ModalComment/ModalOpemComment/ModalCommentDelete";
+
 
 export default function Comments({comments}: ICommentsProps) {
 
-   const {comment} = comments
+   const {comment,userId} = comments
+
+   const {users} = useContext(DashboardContext)
+
+   const token = localStorage.getItem("@TOKEN");
+
+   const idUserLogin = jwt_decode<IidUserLogin>(token);
+
+   const [opemModalDelete, setOpemModalDelete] = useState(false);
+   const [opemModalEdit, setOpemModalEdit] = useState(false);
 
    return (
       <>
@@ -21,26 +36,21 @@ export default function Comments({comments}: ICommentsProps) {
             <CardHeader
                avatar={
                   <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                     {/* <img src={profile_img} alt={name} /> */}
+                     {users.map(user => user.id == userId ? <img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
                   </Avatar>
                }
                action={
+                  idUserLogin.sub == userId ? (
                   <>
-                     <IconButton
-                        aria-label="deletar post"
-                     >
-                        <DeleteForever />
+                     <IconButton aria-label="deletar post" onClick={() =>setOpemModalDelete(!opemModalDelete)}>
+                        <DeleteForever/>
                      </IconButton>
-
-                     <IconButton
-                        aria-label="editar post"
-                        
-                     >
-                        <Edit />
+                     <IconButton aria-label="editar post"  onClick={() =>setOpemModalEdit(!opemModalEdit)}>
+                        <Edit/>
                      </IconButton>
-                  </>
+                  </>):(null)
                }
-               // title={name}
+                  title={users.map(user => user.id == userId ?  user.name : null)}
             />
             <CardContent>
                <Typography variant="body2" color="text.secondary">
@@ -53,6 +63,23 @@ export default function Comments({comments}: ICommentsProps) {
                </IconButton>
             </CardActions>
          </Card>
+
+         {opemModalDelete && (
+            <ModalCommentDelete
+            opemModalDelete={opemModalDelete}
+            setOpemModalDelete={setOpemModalDelete}
+               comments={comments}
+            />
+         )} 
+
+         {opemModalEdit && (
+            <ModalCommentEdit
+               opemModalEdit={opemModalEdit}
+               setOpemModalEdit={setOpemModalEdit}
+               comments={comments}
+            />
+         )}
+
       </>
    );
 }
