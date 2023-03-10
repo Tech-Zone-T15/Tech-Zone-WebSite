@@ -25,7 +25,6 @@ export const MyPostsList = () => {
    const { user } = useContext(UserContext);
    const [openModalEdit, setOpenModalEdit] = useState(false);
    const [openModalComment, setopenModalComment] = useState(false);
-   const { deletePost } = useContext(ProfileContext);
 
    return (
       <MyPostsStyle>
@@ -53,7 +52,7 @@ export const MyPostsList = () => {
                            <>
                               <IconButton
                                  aria-label="deletar post"
-                                 onClick={(event) => deletePost(post.id, event)}
+                                
                               >
                                  <DeleteForever />
                               </IconButton>
@@ -102,13 +101,13 @@ export const MyPostsList = () => {
                            post={post}
                         />
                      )}
-                     {openModalComment && (
+ {/*                     {openModalComment && (
                         <ModalOpemComment
                            opemModalComment={openModalComment}
                            setopemModalComment={setopenModalComment}
                            post={post}
                         />
-                     )}
+                     )} */}
                   </li>
                ))}
             </ul>
