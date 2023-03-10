@@ -12,7 +12,7 @@ const Post = () => {
       <>
          {searchPostsList.map(post => <ListPosts key={post.id} post={post} />)}
       </>
-
+      
    );
 };
 

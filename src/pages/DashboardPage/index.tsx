@@ -5,12 +5,13 @@ import { DashboarHeader } from "../../components/Header";
 import Post from "../../components/Posts";
 import { useContext,useEffect } from "react";
 import { DashboardContext } from "../../Providers/DashboardContext";
+import SkeletonPost from "../../components/SkeletonPost";
 
 
 
 const DashboardPage = () => {
 
-   const {getUsers,getAllPosts} = useContext(DashboardContext)
+   const {getUsers,getAllPosts,loading} = useContext(DashboardContext)
 
    useEffect(() => { 
       getUsers()
@@ -39,7 +40,7 @@ const DashboardPage = () => {
                <p>Input Para enviar os post </p>
             </div>
 
-            <Post/>
+            {loading == false? (<SkeletonPost/>):(<Post/>)}
             
          </main>
          <aside>

@@ -41,13 +41,6 @@ export interface IsendPost {
    content: string;
 }
 
-export interface IsendComments {
-   postId: number | string;
-   userId: number | string;
-   comment: string;
-}
-
-
 export interface IUpdatePost{
    userId:string | number
    img:string
@@ -109,5 +102,6 @@ export interface IDashboardContext {
    setSearchValue: React.Dispatch<React.SetStateAction<string>>
    setFilteredPosts: React.Dispatch<React.SetStateAction<string>>
    searchPostsList: Iposts[]
+   loading: boolean
 
 }
