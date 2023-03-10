@@ -62,19 +62,33 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
       }
    }
 
-   async function unfollow(id: number) {
+   async function unfollow(id: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
       try {
          await api.delete(`/follow/${id}`,{
             headers: {
                Authorization: `Bearer ${token}`
             }
          })
-
+         event.target.parentElement.parentElement.parentElement.remove()
       } catch (error) {
          if(axios.isAxiosError(error)){
             toast.error(error.response?.data)
          }
       }
+   }
+
+   async function deletePost(
+      postId: number,
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+   ) {
+      try {
+         await api.delete(`/posts/${postId}`, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         event.target.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+      } catch (error) {}
    }
 
    return (
@@ -90,7 +104,8 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
             setDeleteProfileModal,
             myPosts,
             setMyPosts,
-            unfollow
+            unfollow,
+            deletePost
          }}
       >
          {children}

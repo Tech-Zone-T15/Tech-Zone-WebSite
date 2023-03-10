@@ -7,6 +7,7 @@ import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import { Typography } from "@mui/material";
 import { ProfileContext } from "../../Providers/ProfileContext";
+import { IUser } from "../../Providers/UserContext/@types";
 
 interface iUser {
    email: string;
@@ -19,16 +20,21 @@ interface iUser {
    id: number;
 }
 interface iUserFollowing{
-   id: number;
-   followId: number;
+   id?: number;
+   followId?: number;
+   userObj?: IUser
 }
 
-export const UserFollowing = ({ id, followId }: iUserFollowing) => {
+
+export const UserFollowing = ({ id, followId, userObj }: iUserFollowing) => {
+   
    const token = localStorage.getItem("@TOKEN");
    const [user, setUser] = useState<Omit<iUser, "password">>();
    const {unfollow} = useContext(ProfileContext)
+   
 
    useEffect(() => {
+      
       async function getUser(id: number) {
          try {
             const response = await api.get(`/users/${id}`, {
@@ -43,11 +49,27 @@ export const UserFollowing = ({ id, followId }: iUserFollowing) => {
             }
          }
       }
-      getUser(id);
-   }, [0]);
-   
+      id && (getUser(id))
+   }, []);
+
+
+
    return (
-      <li key={crypto.randomUUID()}>
+      userObj ? (
+         <li>
+         <Card sx={{ maxWidth: 200, minWidth: 150 }}>
+            <CardHeader
+               avatar={
+                  <Avatar>
+                     <img src={userObj.profile_img} alt={userObj.name} />
+                  </Avatar>
+               }
+               title={userObj.name}
+            />
+         </Card>
+      </li>
+      ) : (
+         <li>
          <Card sx={{ maxWidth: 200, minWidth: 150 }}>
             <CardHeader
                avatar={
@@ -57,10 +79,11 @@ export const UserFollowing = ({ id, followId }: iUserFollowing) => {
                }
                title={user?.name}
             />
-            <button type="button" onClick={() => unfollow(followId)}>
+            <button type="button" onClick={(event) => unfollow(followId, event)}>
                <Typography variant="caption">Deixar de seguir</Typography>
             </button>
          </Card>
       </li>
+      )
    );
 };
