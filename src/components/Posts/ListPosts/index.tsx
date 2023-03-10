@@ -35,6 +35,19 @@ const ListPosts = ({ post}: IpostsProps) => {
    const [opemModalEdit, setOpemModalEdit] = useState(false);
    const [opemModalComment, setopemModalComment] = useState(false);
 
+   // console.log(post)
+   // interface postArrayVProps{
+   //    content: string
+   //    id: number 
+   //    img: string
+   //    userId: number
+   // }
+
+   // const [postsArrayV, setPostsArrayV] = useState<postArrayVProps[]>([]);
+   // useEffect(() => {
+   //    setPostsArrayV(post);
+   // },[])
+
    return (
       <>
          <Card sx={{ maxWidth: 400}}>

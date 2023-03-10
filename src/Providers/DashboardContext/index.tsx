@@ -14,9 +14,28 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [getPosts ,setGetPost ] = useState<Iposts[]>([])
 
+
    const [getComments,setGetComments] = useState<IComments[]>([])
 
+   //-------------------------- Vitor -----------------------------//
+
+  const [searchValue, setSearchValue] = useState('');
+
+   const [filteredPosts, setFilteredPosts] = useState('')
+
+
+   //-------------------------------------------------------//
+
+
    const token = localStorage.getItem("@TOKEN");
+
+   const searchPostsList = getPosts.filter((post) => 
+      filteredPosts === ''
+      ?
+      true
+      :
+      post.content.toLowerCase().includes(filteredPosts.toLowerCase())
+   );
    
    const getUsers = async () => { 
 
@@ -36,7 +55,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       }
    };
 
-      const getAllPosts = async () => { // requisição para renderizar os post 
+   const getAllPosts = async () => { // requisição para renderizar os post 
 
       try {
          const response = await api.get("posts?_embed=users&_embed=comments", {
@@ -44,12 +63,28 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         
+
          setGetPost(response.data)
       } catch (error) {
          console.error(error)
       }
    };
+
+
+   const getComments = async () => { // requisição para renderizar os Comentarios
+      
+
+      try {
+         const response = await api.get("comments", {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+      } catch (error) {
+         console.error(error);
+      }
+   };
+
 
    const sendPost = async (data: IsendPost) => {
       //requisição para enviar os post
@@ -197,6 +232,28 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    return (
 
       <DashboardContext.Provider value={{sendComments,sendPost,getUsers ,users,deletePost,editPost,followUsers,setGetPost,getPosts, getAllPosts,editcomments,getComments,setGetComments,deleteComments}}>
+
+      <DashboardContext.Provider 
+         value={{
+            sendComments,
+            sendPost,
+            getComments,
+            getUsers ,
+            users,
+            deletePost,
+            editPost,
+            followUsers, 
+            setGetPost,
+            getPosts, 
+            getAllPosts,
+            searchValue,
+            setSearchValue,
+            setFilteredPosts,
+            searchPostsList
+         }}>
+
+      {/* <DashboardContext.Provider value={{sendComments,sendPost,getComments,getUsers ,users,deletePost,editPost,followUsers,setGetPost,getPosts, getAllPosts }}> */}
+
          {children}
       </DashboardContext.Provider>
    );

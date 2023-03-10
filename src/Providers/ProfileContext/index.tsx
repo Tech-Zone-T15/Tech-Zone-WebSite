@@ -5,17 +5,20 @@ import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { IDefaultProviderProps } from "../DashboardContext/@types/dashboardTypes";
 import { UserContext } from "../UserContext";
-import { iProfileContext, iUpdateProfile } from "./@types/profileTypes";
+import { iMyPost, iProfileContext, iUpdateProfile } from "./@types/profileTypes";
+
 
 export const ProfileContext = createContext({} as iProfileContext);
 
 export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
+
    const token = localStorage.getItem("@TOKEN");
    const navigate = useNavigate();
    const [updateProfileModal, setUpdateProfileModal] = useState(false);
    const [updateProfileImage, setUpdateProfileImage] = useState(false);
    const [deleteProfileModal, setDeleteProfileModal] = useState(false)
    const { user, setUser } = useContext(UserContext);
+   const [myPosts, setMyPosts] = useState<iMyPost[]>([])
 
    async function updateProfile(formData: iUpdateProfile) {
       try {
@@ -42,13 +45,34 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
+         api.delete(`/users/${user?.id}?_embed=posts&_embed=likes&_embed=comments`,{
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
          setDeleteProfileModal(false)
+         setUpdateProfileModal(false)
          toast.success("Perfil deletado");
          localStorage.removeItem("@TOKEN");
          navigate("/");
       } catch (error) {
          if (axios.isAxiosError(error)) {
             toast.error(error.response?.data);
+         }
+      }
+   }
+
+   async function unfollow(id: number) {
+      try {
+         await api.delete(`/follow/${id}`,{
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
+
+      } catch (error) {
+         if(axios.isAxiosError(error)){
+            toast.error(error.response?.data)
          }
       }
    }
@@ -63,7 +87,10 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
             setUpdateProfileImage,
             deleteProfile,
             deleteProfileModal,
-            setDeleteProfileModal
+            setDeleteProfileModal,
+            myPosts,
+            setMyPosts,
+            unfollow
          }}
       >
          {children}

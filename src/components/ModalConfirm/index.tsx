@@ -9,7 +9,7 @@ export const ModalConfirm = () => {
    return (
       <ModalBox>
          <ModalProfile>
-            <Typography variant="h5">Tem certeza que deseja excluir sua conta permanentemente?</Typography>
+            <Typography variant="h5">Tem certeza que deseja excluir sua conta permanentemente? Todas as suas publicações, likes e comentários também serão excluídos.</Typography>
             <div>
                <StyledButton
                   $buttonSize="medium"
