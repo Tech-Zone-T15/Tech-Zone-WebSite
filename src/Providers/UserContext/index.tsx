@@ -20,6 +20,14 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
    const [user, setUser] = useState<IUser | null>(null);
    const navigate = useNavigate();
    const token = localStorage.getItem("@TOKEN");
+   
+ 
+   let loggedId = "";
+   if(token) {
+      loggedId = jwt_decode(token)
+   }
+  
+   console.log(loggedId)
 
    //   const userLoad = () =>{
    //     if(!token){
@@ -28,11 +36,11 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
    //          navigate('/dashboard')
    //       }
    //    }
-
+   
    useEffect(() => {
       if (token) {
+         const userID = jwt_decode<IUserID>(token);
          const autoLogin = async () => {
-            const userID = jwt_decode<IUserID>(token);
             try {
                const response = await api.get(`users/${userID.sub}`, {
                   headers: {

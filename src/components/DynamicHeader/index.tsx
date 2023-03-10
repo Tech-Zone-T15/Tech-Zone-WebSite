@@ -6,7 +6,7 @@ import {
    IHeaderButtonsProps,
 } from "./DynamicHeaderButtons";
 import { StyledHeader } from "./style";
-// import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 
 export const DynamicHeader = ({
    text1,
@@ -36,7 +36,7 @@ export const DynamicHeader = ({
                location2={location2}
             />
             <div className="menu-close" onClick={toggleMenu}>
-               {/* <KeyboardDoubleArrowUpIcon/> */}
+               <KeyboardDoubleArrowUpIcon/>
             </div>
          </div>
       </StyledHeader>
