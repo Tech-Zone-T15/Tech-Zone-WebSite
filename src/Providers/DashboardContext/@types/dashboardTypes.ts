@@ -36,7 +36,7 @@ export interface ICommentsProps {
 }
 
 export interface IsendPost {
-   userId: string;
+   userId: number;
    img: string;
    content: string;
 }
@@ -83,6 +83,18 @@ export interface IUserProps{
    user:Iusers
    comments?:IComments
 }
+
+export interface Ifollows{
+   userId: number;
+   follows: number;
+   id?: number
+}
+
+export interface IUserID {
+   token: string;
+   sub: string;
+}
+
 export interface IDashboardContext {
    sendComments: (data: IComments[]) => Promise<void>
    sendPost: (data: IsendPost) => Promise<void>
@@ -103,5 +115,13 @@ export interface IDashboardContext {
    setFilteredPosts: React.Dispatch<React.SetStateAction<string>>
    searchPostsList: Iposts[]
    loading: boolean
-
+   followedsUsers: (data: Ifollows) => Promise<void>
+   setModalSendPost:React.Dispatch<React.SetStateAction<boolean>>
+   modalSendPost: boolean
+   setText1: React.Dispatch<React.SetStateAction<string>>
+   setText2: React.Dispatch<React.SetStateAction<string>>
+   setText3: React.Dispatch<React.SetStateAction<string>>
+   text1: string
+   text2: string
+   text3:string
 }

@@ -6,6 +6,7 @@ import Post from "../../components/Posts";
 import { useContext,useEffect } from "react";
 import { DashboardContext } from "../../Providers/DashboardContext";
 import SkeletonPost from "../../components/SkeletonPost";
+import {SendPost} from '../../components/SendPost'
 
 
 
@@ -36,6 +37,11 @@ const DashboardPage = () => {
                <button>Node.js</button>
             </div>
          </NavBar>
+<<<<<<< HEAD
+=======
+         <main>
+            <SendPost />
+>>>>>>> 77f5338c9e0dbfe0a72489674181960e4605d127
 
       <BackGrondColor>
          <MainContainer>
