@@ -93,7 +93,7 @@ const RegisterForm = () => {
             type="text"
             id="bio"
             {...register("bio")}
-            label="Sua bio (mín. 20 caracteres"
+            label="Sua bio (mín. 20 caracteres)"
          />
          <StyledButton type="submit" $buttonSize="large" $buttonStyle="blue">
             Cadastrar
