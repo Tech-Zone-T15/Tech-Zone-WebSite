@@ -13,10 +13,10 @@ export const StyledRegisterPage = styled.main`
 
    section {
       min-width: 300px;
-      width: 50%;
+      width: 49%;
       max-width: 480px;
       height: auto;
-      min-height: 600px;
+      min-height: 700px;
       gap: 80px;
       display: flex;
       flex-direction: column;
@@ -33,6 +33,7 @@ export const StyledRegisterPage = styled.main`
       }
       h1 {
          width: 80%;
+         height: 155px;
          font-weight: 600;
          font-size: 22px;
          line-height: 34px;

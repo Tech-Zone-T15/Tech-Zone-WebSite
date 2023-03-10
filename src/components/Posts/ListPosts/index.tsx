@@ -1,7 +1,13 @@
 import { useContext, useEffect, useState } from "react";
+import Lottie from "react-lottie";
+import animationData from "./heartAnimation.json";
+import { useContext, useState } from "react";
 import ModalPostDelete from "../../ModalPostDelete";
 import ModalPostEdit from "../../ModalPostEdit";
-import { IpostsProps,IidUserLogin } from "../../../Providers/DashboardContext/@types/dashboardTypes";
+import {
+   IpostsProps,
+   IidUserLogin,
+} from "../../../Providers/DashboardContext/@types/dashboardTypes";
 import ModalOpemComment from "../../ModalComment/ModalOpemComment";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
@@ -15,88 +21,129 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import AddComment from "@mui/icons-material/AddComment";
 import DeleteForever from "@mui/icons-material/DeleteForever";
-import  Edit  from "@mui/icons-material/Edit";
+import Edit from "@mui/icons-material/Edit";
 import { DashboardContext } from "../../../Providers/DashboardContext";
 import jwt_decode from 'jwt-decode';
 import { UserContext } from "../../../Providers/UserContext";
+import { StyledlikeAnimationContainer } from "./style";
 
 
-const ListPosts = ({ post}: IpostsProps) => {
+const ListPosts = ({ post }: IpostsProps) => {
 
-      const {users, getPostLikes, postLikes } = useContext(DashboardContext);
+   const {users, getPostLikes, postLikes } = useContext(DashboardContext);
 
-      const {user} = useContext(UserContext);
+   const {user} = useContext(UserContext);
 
-      const { img, content,userId } = post;
+   const { img, content,userId } = post;
 
-      const token = localStorage.getItem("@TOKEN");
+   const token = localStorage.getItem("@TOKEN");
 
-      const idUserLogin = jwt_decode<IidUserLogin>(token);
-
-      // console.log(post.id)
-      useEffect(() => {
-         if(user !== null){
-            getPostLikes(post.id)
-         }
-      },[])
-      console.log(postLikes.length)
+   // console.log(post.id)
+   useEffect(() => {
+      if(user !== null){
+         getPostLikes(post.id)
+      }
+   },[])
+   console.log(postLikes.length)
       
+   const idUserLogin = jwt_decode<IidUserLogin>(token);
+
    const [opemModal, setOpemModal] = useState(false);
    const [opemModalEdit, setOpemModalEdit] = useState(false);
    const [opemModalComment, setopemModalComment] = useState(false);
-
+   const [likeState, setLikeState] = useState(false);
+   const [animationState, setAnimationState] = useState({
+      isStopped: true,
+      isPaused: false,
+   });
+   const defaultOptions = {
+      loop: false,
+      autoplay: false,
+      animationData: animationData,
+      rendererSettings: {
+         preserveAspectRatio: "xMidYMid slice",
+      },
+   };
 
    return (
       <>
-         <Card sx={{ maxWidth: 400}}>
+         <Card sx={{ maxWidth: 400 }}>
             <CardHeader
-
                avatar={
                   <Avatar aria-label="recipe">
-                        {users.map(user => user.id == userId ? <img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
+                     {users.map((user) =>
+                        user.id == userId ? (
+                           <img
+                              src={user.profile_img}
+                              alt={user.name}
+                              key={user.id}
+                           />
+                        ) : null
+                     )}
                   </Avatar>
                }
                action={
-
-                     idUserLogin.sub == userId ? (
+                  idUserLogin.sub == userId ? (
                      <>
-                        <IconButton aria-label="deletar post" onClick={() =>setOpemModal(!opemModal)}>
-                           <DeleteForever/>
+                        <IconButton
+                           aria-label="deletar post"
+                           onClick={() => setOpemModal(!opemModal)}
+                        >
+                           <DeleteForever />
                         </IconButton>
-                        <IconButton aria-label="editar post"  onClick={() =>setOpemModalEdit(!opemModalEdit)}>
-                           <Edit/>
+                        <IconButton
+                           aria-label="editar post"
+                           onClick={() => setOpemModalEdit(!opemModalEdit)}
+                        >
+                           <Edit />
                         </IconButton>
                      </>
-                     ):(null)
-                  
+                  ) : null
                }
-
-               title={users.map(user => user.id == post.userId ?  user.name : null)}
+               title={users.map((user) =>
+                  user.id == post.userId ? user.name : null
+               )}
             />
-            {
-               img.length !== 0 ?(
-                  <CardMedia
-                     component="img"
-                     height="194"
-                     src={img} 
-                     alt="Imagem do post" 
-                  />
-               ):(null)
-            }
+            {img.length !== 0 ? (
+               <CardMedia
+                  component="img"
+                  height="194"
+                  src={img}
+                  alt="Imagem do post"
+               />
+            ) : null}
 
             <CardContent>
                <Typography variant="body2" color="text.secondary">
-               {content}
+                  {content}
                </Typography>
             </CardContent>
             <CardActions disableSpacing>
+               <StyledlikeAnimationContainer
+                  onClick={() => {
+                     setAnimationState({
+                        ...animationState,
+                        isStopped: !animationState.isStopped,
+                     });
+                     setLikeState(!likeState);
+                  }}
+               >
+                  <div className="animation">
+                     <Lottie
+                        options={defaultOptions}
+                        height={150}
+                        width={150}
+                        isStopped={animationState.isStopped}
+                        isPaused={animationState.isPaused}
+                     />
+                  </div>
+               </StyledlikeAnimationContainer>
 
-               <IconButton aria-label="add to favorites" >
-                  <FavoriteIcon />
-               </IconButton>
-
-               <IconButton aria-label="Abri comentarios " onClick={() =>setopemModalComment(!opemModalComment)}>
-                  <AddComment/>
+               <IconButton
+                  aria-label="Abri comentarios "
+                  onClick={() => setopemModalComment(!opemModalComment)}
+               >
+                  <AddComment />
                </IconButton>
             </CardActions>
          </Card>
@@ -127,5 +174,3 @@ const ListPosts = ({ post}: IpostsProps) => {
 };
 
 export default ListPosts;
-
-

@@ -32,6 +32,13 @@ export const StyledForm = styled.form`
       font-weight: 600;
       font-size: 16px;
    }
+   h2 {
+      color: ${mainTheme.colors.primary};
+      margin-bottom: 10px;
+   }
+   @media (max-width: 955px) {
+      width: 150%;
+   }
 `;
 
 export const StyledTextField = styled(TextField)`

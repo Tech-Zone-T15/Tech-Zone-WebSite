@@ -16,7 +16,7 @@ function LoginPage() {
       const h1Element = document.querySelector(".main-title") as HTMLElement;
       typeWritter(
          h1Element,
-         "Junte-se a nossa comunidade agora mesmo e mostre para o mundo todo o seu potencial."
+         "Junte-se a nossa comunidade agora mesmo e mostre para o mundo todo o seu potencial!"
       );
    }, []);
 
