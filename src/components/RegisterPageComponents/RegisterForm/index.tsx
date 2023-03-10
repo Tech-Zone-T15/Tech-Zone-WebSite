@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Providers/UserContext";
@@ -10,7 +10,9 @@ import { StyledButton } from "../../../styles/button";
 import { StyledForm } from "../../../styles/form";
 import { TextField } from "@mui/material";
 import { ErrorMessage } from "@hookform/error-message";
-
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 const RegisterForm = () => {
    const { userRegister } = useContext(UserContext);
    const navigate = useNavigate();
@@ -20,6 +22,12 @@ const RegisterForm = () => {
       handleSubmit,
       formState: { errors },
    } = useForm<IRegisterFormValues>({ resolver: yupResolver(Registerschema) });
+
+   const [showPassword, setShowPassword] = useState(false);
+
+   const handleShowPassword = () => {
+      setShowPassword((prevState) => !prevState);
+   };
 
    const onSubmit = (formData: IRegisterFormValues) => {
       userRegister(formData);
@@ -41,10 +49,19 @@ const RegisterForm = () => {
          <ErrorMessage errors={errors} name="password" as="p" />
          <TextField
             fullWidth
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             {...register("password")}
             label="Senha"
+            InputProps={{
+               endAdornment: (
+                  <InputAdornment position="end">
+                     <IconButton onClick={handleShowPassword}>
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                     </IconButton>
+                  </InputAdornment>
+               ),
+            }}
          />
          <ErrorMessage errors={errors} name="profile_img" as="p" />
          <TextField

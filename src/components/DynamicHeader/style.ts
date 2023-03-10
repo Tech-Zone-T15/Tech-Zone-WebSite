@@ -8,11 +8,11 @@ export const StyledHeader = styled.header`
    justify-content: space-around;
    top: 0;
    height: 80px;
-   width: 110%;
+   width: 100%;
    z-index: 2;
    box-shadow: 0px 4px 32px -12px rgba(0, 0, 0, 0.25);
    background-color: ${mainTheme.colors.gray1};
-   padding-left: 150px;
+   padding-left: 15px;
    padding-right: 30px;
 
    div {
@@ -49,7 +49,6 @@ export const StyledHeader = styled.header`
          align-items: baseline;
          font-weight: bolder;
          font-size: larger;
-
          position: absolute;
          top: 85px;
          left: -40px;
@@ -68,13 +67,11 @@ export const StyledHeader = styled.header`
          position: fixed;
          left: 40px;
          top: -5px;
+         display: none;
       }
 
       .menu-btn {
          display: block;
-      }
-      .menu-items {
-         display: none;
       }
 
       .menu-items.show {
