@@ -30,23 +30,10 @@ const ListPosts = ({ post}: IpostsProps) => {
 
       const idUserLogin = jwt_decode<IidUserLogin>(token);
       
-      
    const [opemModal, setOpemModal] = useState(false);
    const [opemModalEdit, setOpemModalEdit] = useState(false);
    const [opemModalComment, setopemModalComment] = useState(false);
 
-   // console.log(post)
-   // interface postArrayVProps{
-   //    content: string
-   //    id: number 
-   //    img: string
-   //    userId: number
-   // }
-
-   // const [postsArrayV, setPostsArrayV] = useState<postArrayVProps[]>([]);
-   // useEffect(() => {
-   //    setPostsArrayV(post);
-   // },[])
 
    return (
       <>
@@ -56,6 +43,7 @@ const ListPosts = ({ post}: IpostsProps) => {
                avatar={
                   <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
                         {users.map(user => user.id == userId ? <img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
+                        V
                   </Avatar>
                }
                action={
@@ -92,9 +80,11 @@ const ListPosts = ({ post}: IpostsProps) => {
                </Typography>
             </CardContent>
             <CardActions disableSpacing>
-               <IconButton aria-label="add to favorites">
+
+               <IconButton aria-label="add to favorites" >
                   <FavoriteIcon />
                </IconButton>
+
                <IconButton aria-label="Abri comentarios " onClick={() =>setopemModalComment(!opemModalComment)}>
                   <AddComment/>
                </IconButton>
