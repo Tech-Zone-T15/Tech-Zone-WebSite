@@ -75,12 +75,17 @@ const ListPosts = ({ post}: IpostsProps) => {
 
                title={users.map(user => user.id == post.userId ?  user.name : null)}
             />
-            <CardMedia
-               component="img"
-               height="194"
-               src={img} 
-               alt="Imagem do post" 
-            />
+            {
+               img.length !== 0 ?(
+                  <CardMedia
+                     component="img"
+                     height="194"
+                     src={img} 
+                     alt="Imagem do post" 
+                  />
+               ):(null)
+            }
+
             <CardContent>
                <Typography variant="body2" color="text.secondary">
                {content}
