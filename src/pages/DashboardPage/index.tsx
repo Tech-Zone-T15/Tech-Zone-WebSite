@@ -6,6 +6,7 @@ import Post from "../../components/Posts";
 import { useContext,useEffect } from "react";
 import { DashboardContext } from "../../Providers/DashboardContext";
 import SkeletonPost from "../../components/SkeletonPost";
+import {SendPost} from '../../components/SendPost'
 
 
 
@@ -36,9 +37,7 @@ const DashboardPage = () => {
             </div>
          </NavBar>
          <main>
-            <div>
-               <p>Input Para enviar os post </p>
-            </div>
+            <SendPost />
 
             {loading == false? (<SkeletonPost/>):(<Post/>)}
             
