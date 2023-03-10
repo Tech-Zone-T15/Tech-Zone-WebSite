@@ -1,6 +1,6 @@
 
 import UserSuggestion from "../../components/UserSuggestion";
-import { NavBar } from "./style";
+import { NavBar,Main,MainContainer,DashboarContainer, InputContainer,BackGrondColor } from "./style";
 import { DashboarHeader } from "../../components/Header";
 import Post from "../../components/Posts";
 import { useContext,useEffect } from "react";
@@ -20,9 +20,10 @@ const DashboardPage = () => {
 
 
    return (
-
       <>
-         <DashboarHeader/>
+      <DashboarHeader/>
+
+      <DashboarContainer>
          <NavBar>
             <div>
                <button>Html</button>
@@ -35,17 +36,26 @@ const DashboardPage = () => {
                <button>Node.js</button>
             </div>
          </NavBar>
-         <main>
-            <div>
-               <p>Input Para enviar os post </p>
-            </div>
 
-            {loading == false? (<SkeletonPost/>):(<Post/>)}
-            
-         </main>
-         <aside>
-            <UserSuggestion />
-         </aside>
+      <BackGrondColor>
+         <MainContainer>
+            <aside>
+               <UserSuggestion />
+            </aside>
+
+               <InputContainer>
+                  <p>Input Para enviar os post </p>
+               </InputContainer>
+            <Main>
+               
+               {loading == false? (<SkeletonPost/>):(<Post/>)}
+
+            </Main>
+         </MainContainer>
+
+      </BackGrondColor>
+
+      </DashboarContainer>
       </>
 
 )};

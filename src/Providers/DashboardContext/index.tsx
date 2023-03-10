@@ -80,8 +80,11 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    };
 
    const sendPost = async (data: IsendPost) => {
+
       //requisição para enviar os post
+      
       try {
+         
          const response = await api.post("post", data, {
             headers: {
                Authorization: `Bearer ${token}`,

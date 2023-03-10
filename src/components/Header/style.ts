@@ -3,7 +3,8 @@ import { mainTheme } from "../../styles/theme";
 
 export const StyledHeaderDash = styled.header`
    background-color: ${mainTheme.colors.gray1};
-
+   position: fixed;
+   width: 100%;
    #header__div {
       display: flex;
       flex-direction: column;
