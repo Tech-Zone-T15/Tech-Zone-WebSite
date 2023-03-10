@@ -116,8 +116,8 @@ const ListPosts = ({ post }: IpostsProps) => {
                   <div className="animation">
                      <Lottie
                         options={defaultOptions}
-                        height={150}
-                        width={150}
+                        height={40}
+                        width={200}
                         isStopped={animationState.isStopped}
                         isPaused={animationState.isPaused}
                      />
