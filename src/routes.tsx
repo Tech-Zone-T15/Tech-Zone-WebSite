@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import DashboardPage from "./pages/DashboardPage";
 import LandingPage from "./pages/LandingPage";
@@ -7,8 +8,13 @@ import PerfilPage from "./pages/PerfilPage";
 import ProtectedRotes from "./pages/ProtectedRotes";
 import RegisterPage from "./pages/RegisterPage";
 import { DashboardProvider } from "./Providers/DashboardContext";
+import { UserContext } from "./Providers/UserContext";
 
-const Router = () => (
+const Router = () => {
+
+   const { load } = useContext(UserContext);
+
+   return(
    <Routes>
 
       <Route element={<OpenRotes />}>
@@ -29,6 +35,7 @@ const Router = () => (
       </Route>
       
    </Routes>
-);
+   )
+}
 
 export default Router;

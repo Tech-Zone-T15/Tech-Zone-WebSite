@@ -10,6 +10,7 @@ import {
    Iposts,
    IUpdateComments,
    IComments,
+   IlikesPostProps,
 } from "./@types/dashboardTypes";
 
 export const DashboardContext = createContext({} as IDashboardContext);
@@ -30,6 +31,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const [searchValue, setSearchValue] = useState("");
 
    const [filteredPosts, setFilteredPosts] = useState("");
+
+   const [postLikes, setPostLikes] = useState<IlikesPostProps[]>([])
 
    //-------------------------------------------------------//
 
@@ -220,6 +223,19 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       }
    };
 
+   const getPostLikes = async (postID: string | number) => {
+      try {
+         const response = await api.get(`posts/${postID}/likes`,{
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         setPostLikes(response.data)
+      } catch (error) {
+         toast.error('Erro ao curtir Post')
+      }
+   }
+
    return (
       <DashboardContext.Provider
          value={{
@@ -241,7 +257,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             setSearchValue,
             setFilteredPosts,
             searchPostsList,
-            loading
+            loading,
+            getPostLikes,
+            postLikes
          }}
       >
          {children}

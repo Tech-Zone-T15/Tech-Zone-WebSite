@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ModalPostDelete from "../../ModalPostDelete";
 import ModalPostEdit from "../../ModalPostEdit";
 import { IpostsProps,IidUserLogin } from "../../../Providers/DashboardContext/@types/dashboardTypes";
@@ -18,17 +18,28 @@ import DeleteForever from "@mui/icons-material/DeleteForever";
 import  Edit  from "@mui/icons-material/Edit";
 import { DashboardContext } from "../../../Providers/DashboardContext";
 import jwt_decode from 'jwt-decode';
+import { UserContext } from "../../../Providers/UserContext";
 
 
 const ListPosts = ({ post}: IpostsProps) => {
 
-      const {users} = useContext(DashboardContext)
+      const {users, getPostLikes, postLikes } = useContext(DashboardContext);
+
+      const {user} = useContext(UserContext);
 
       const { img, content,userId } = post;
 
       const token = localStorage.getItem("@TOKEN");
 
       const idUserLogin = jwt_decode<IidUserLogin>(token);
+
+      // console.log(post.id)
+      useEffect(() => {
+         if(user !== null){
+            getPostLikes(post.id)
+         }
+      },[])
+      console.log(postLikes.length)
       
    const [opemModal, setOpemModal] = useState(false);
    const [opemModalEdit, setOpemModalEdit] = useState(false);

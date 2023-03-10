@@ -6,6 +6,7 @@ import Post from "../../components/Posts";
 import { useContext,useEffect } from "react";
 import { DashboardContext } from "../../Providers/DashboardContext";
 import SkeletonPost from "../../components/SkeletonPost";
+import { useLocation } from "react-router-dom";
 
 
 
@@ -18,6 +19,9 @@ const DashboardPage = () => {
       getAllPosts()
    }, []);
 
+   const location = useLocation()
+   localStorage.setItem('@location', location.pathname)
+   // console.log(location.pathname)
 
    return (
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { DynamicHeader } from '../../components/DynamicHeader'
 import { StyledButton, StyledButtonLink, StyledButtonLink2 } from '../../styles/button'
 import { StyledContainer } from '../../styles/grid'
@@ -8,6 +8,7 @@ import { StyledMainLanding } from './types'
 
 
 function LandingPage() {
+
    return (
       <>
          <DynamicHeader text1='Login' text2='Cadastro' location1='/login' location2='/register'/>

@@ -82,7 +82,19 @@ export interface IpostsProps{
 export interface IUserProps{
    user:Iusers
    comments?:IComments
+}  
+//---------------------
+export interface IPostLikes{
+   postId: number
+   userId: number
+   id: number
 }
+export interface IlikesPostProps{
+   postLikes: IPostLikes
+}
+
+//-------------------
+
 export interface IDashboardContext {
    sendComments: (data: IComments[]) => Promise<void>
    sendPost: (data: IsendPost) => Promise<void>
@@ -103,5 +115,7 @@ export interface IDashboardContext {
    setFilteredPosts: React.Dispatch<React.SetStateAction<string>>
    searchPostsList: Iposts[]
    loading: boolean
+   getPostLikes: (postID: string | number) => Promise<void>
+   postLikes: IlikesPostProps[]
 
 }

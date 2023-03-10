@@ -16,6 +16,7 @@ import { UserFollowing } from "../../components/UserFollowing";
 import { Typography } from "@mui/material";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { IUser } from "../../Providers/UserContext/@types";
+import { useLocation } from "react-router-dom";
 
 interface ifollowObject {
    userId: number;
@@ -37,6 +38,9 @@ function PerfilPage() {
    const [followingList, setFollowingList] = useState<ifollowObject[]>([]);
    const [followersList, setFollowersList] = useState<iFollowersList[]>([]);
    const [editing, setEditing] = useState(false);
+
+   const location = useLocation()
+   localStorage.setItem('@location', location.pathname)
 
    useEffect(() => {
       async function getMyPosts() {
