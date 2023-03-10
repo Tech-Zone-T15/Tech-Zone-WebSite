@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import ModalPostDelete from "../../ModalPostDelete";
 import ModalPostEdit from "../../ModalPostEdit";
-import { IpostsProps } from "../../../Providers/DashboardContext/@types/dashboardTypes";
+import { IpostsProps,IidUserLogin } from "../../../Providers/DashboardContext/@types/dashboardTypes";
 import ModalOpemComment from "../../ModalComment/ModalOpemComment";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
@@ -17,14 +17,20 @@ import AddComment from "@mui/icons-material/AddComment";
 import DeleteForever from "@mui/icons-material/DeleteForever";
 import  Edit  from "@mui/icons-material/Edit";
 import { DashboardContext } from "../../../Providers/DashboardContext";
+import jwt_decode from 'jwt-decode';
 
 
 const ListPosts = ({ post}: IpostsProps) => {
 
       const {users} = useContext(DashboardContext)
 
-      const { img, content } = post;
+      const { img, content,userId } = post;
 
+      const token = localStorage.getItem("@TOKEN");
+
+      const idUserLogin = jwt_decode<IidUserLogin>(token);
+      
+      
    const [opemModal, setOpemModal] = useState(false);
    const [opemModalEdit, setOpemModalEdit] = useState(false);
    const [opemModalComment, setopemModalComment] = useState(false);
@@ -46,20 +52,25 @@ const ListPosts = ({ post}: IpostsProps) => {
       <>
          <Card sx={{ maxWidth: 400}}>
             <CardHeader
+
                avatar={
                   <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        {users.map(user => user.id == post.userId ? <img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
+                        {users.map(user => user.id == userId ? <img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
                   </Avatar>
                }
                action={
-                  <>
-                     <IconButton aria-label="deletar post" onClick={() =>setOpemModal(!opemModal)}>
-                        <DeleteForever/>
-                     </IconButton>
-                     <IconButton aria-label="editar post"  onClick={() =>setOpemModalEdit(!opemModalEdit)}>
-                        <Edit/>
-                     </IconButton>
-                  </>
+
+                     idUserLogin.sub == userId ? (
+                     <>
+                        <IconButton aria-label="deletar post" onClick={() =>setOpemModal(!opemModal)}>
+                           <DeleteForever/>
+                        </IconButton>
+                        <IconButton aria-label="editar post"  onClick={() =>setOpemModalEdit(!opemModalEdit)}>
+                           <Edit/>
+                        </IconButton>
+                     </>
+                     ):(null)
+                  
                }
 
                title={users.map(user => user.id == post.userId ?  user.name : null)}
@@ -111,4 +122,5 @@ const ListPosts = ({ post}: IpostsProps) => {
 };
 
 export default ListPosts;
+
 

@@ -6,16 +6,16 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { DashboardContext } from "../../Providers/DashboardContext";
 import { useContext } from "react";
-import { Iposts } from "../../Providers/DashboardContext/@types/dashboardTypes";
+import { DashboardContext } from "../../../../Providers/DashboardContext";
+import { IComments } from "../../../../Providers/DashboardContext/@types/dashboardTypes";
 
 
 
 interface IopemModal{
-   opemModal: true
-   setOpemModal: React.Dispatch<React.SetStateAction<boolean>>
-   post: Iposts
+   opemModalDelete: true
+   setOpemModalDelete: React.Dispatch<React.SetStateAction<boolean>>
+   comments:IComments
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -27,18 +27,18 @@ const Transition = React.forwardRef(function Transition(
    return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AlertDialogSlide({opemModal,setOpemModal,post}:IopemModal) {
+export default function ModalCommentDelete({opemModalDelete,setOpemModalDelete,comments}:IopemModal) {
 
-   const {deletePost} = useContext(DashboardContext)
+   const {deleteComments} = useContext(DashboardContext)
 
    const handleClose = () => {
-      setOpemModal(!opemModal);
+      setOpemModalDelete(!opemModalDelete);
    };
 
    return (
       <div>
          <Dialog
-            open={opemModal}
+            open={opemModalDelete}
             TransitionComponent={Transition}
             keepMounted
             onClose={handleClose}
@@ -51,7 +51,7 @@ export default function AlertDialogSlide({opemModal,setOpemModal,post}:IopemModa
             </DialogContent>
             <DialogActions>
                <Button onClick={handleClose}>Disagree</Button>
-               <Button onClick={() => deletePost(post)}>Agree</Button>
+               <Button onClick={() => deleteComments(comments)}>Agree</Button>
             </DialogActions>
          </Dialog>
       </div>
