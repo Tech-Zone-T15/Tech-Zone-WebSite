@@ -148,7 +148,7 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
    
    async function deleteMyPost(postId: number) {
       try {
-         const response =await api.delete(`/posts/${postId}`,{
+         await api.delete(`/posts/${postId}`,{
             headers: {
                Authorization: `Bearer ${token}`
             }
@@ -163,6 +163,20 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
       }
    }
 
+   async function follow(userIdToFollow: number) {
+      try {
+         const response = await api.post(`/follow`,{userId: user?.id, follows: userIdToFollow}, {
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
+         setFollowingList([...followingList, response.data])
+      } catch (error) {
+         if(axios.isAxiosError(error)){
+            toast.error(error.response?.data)
+         }
+      }
+   }
    return (
       <ProfileContext.Provider
          value={{
@@ -182,7 +196,8 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
             getUsersProfile,
             followingList,
             editMyPost,
-            deleteMyPost
+            deleteMyPost,
+            follow
          }}
       >
          {children}
