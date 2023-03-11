@@ -42,13 +42,13 @@ const ListPosts = ({ post }: IpostsProps) => {
    //------------------------------------
 
    // console.log(post.id)
-   useEffect(() => {
+   // useEffect(() => {
 
-      if(user !== null){
-         getPostLikes(post.id)
-      }
-      console.log(post.id)
-   },[])
+   //    if(user !== null){
+   //       getPostLikes(post.id)
+   //    }
+   //    console.log(post.id)
+   // },[])
 
    // console.log(postLikes)
    
@@ -70,6 +70,8 @@ const ListPosts = ({ post }: IpostsProps) => {
       //       })
       //    }
       // }
+
+      console.log(post.likes)
    
 
    //--------------------------------------
@@ -171,7 +173,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                         isStopped={animationState.isStopped}
                         isPaused={animationState.isPaused}
                      />
-                  </div> {postLikes.length}
+                  </div> {post.likes.length}
                </StyledlikeAnimationContainer>
 
                <IconButton

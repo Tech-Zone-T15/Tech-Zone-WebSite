@@ -14,7 +14,7 @@ export interface Iposts{
    content:string
    id:number | string
    comments:[] 
-   comment: [] | string | number
+   likes:[]
 }
 
 export interface IComments {

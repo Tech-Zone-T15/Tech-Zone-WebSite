@@ -91,7 +91,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const getAllPosts = async () => {
 
       try {
-         const response = await api.get("posts?_embed=users&_embed=comments", {
+         const response = await api.get("posts?_embed=comments&_embed=likes", {
             headers: {
                Authorization: `Bearer ${token}`,
             },
@@ -292,7 +292,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          });
          setAllUsersFollowed(response.data)
       } catch (error) {
-         toast.error('Erro ao curtir Post')
+         toast.error('Erro ao curtir Seguir')
       }
    }
 
