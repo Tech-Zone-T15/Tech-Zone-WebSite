@@ -27,10 +27,11 @@ import { StyledlikeAnimationContainer } from "./style";
 import { Img } from "./styled";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { toast } from "react-toastify";
 
 const ListPosts = ({ post }: IpostsProps) => {
 
-   const {users, getPostLikes, postLikes } = useContext(DashboardContext);
+   const {users, getPostLikes, postLikes, likingPost, unLinkingPost } = useContext(DashboardContext);
 
    const {user} = useContext(UserContext);
 
@@ -38,13 +39,40 @@ const ListPosts = ({ post }: IpostsProps) => {
 
    const token = localStorage.getItem("@TOKEN");
 
+   //------------------------------------
+
    // console.log(post.id)
    useEffect(() => {
+
       if(user !== null){
          getPostLikes(post.id)
       }
+      console.log(post.id)
    },[])
-   console.log(postLikes.length)
+
+   // console.log(postLikes)
+   
+   //    postLikes.map(likeObj => {
+         
+   //    } )
+   // console.log()
+
+      // const data = { `postId:${post.id}, `userId:${user?.id}` } 
+
+      // const handleClick = () => {
+      //    if(user !== null){
+      //       postLikes.map(likeObj => {
+      //          likeObj.userId !== user.id
+      //          ?
+      //          likingPost(`postId:${post.id}` , `userId:${user.id}`)
+      //          :
+      //          unLinkingPost(likeObj.id)
+      //       })
+      //    }
+      // }
+   
+
+   //--------------------------------------
       
    const idUserLogin = jwt_decode<IidUserLogin>(token);
 
@@ -143,7 +171,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                         isStopped={animationState.isStopped}
                         isPaused={animationState.isPaused}
                      />
-                  </div>
+                  </div> {postLikes.length}
                </StyledlikeAnimationContainer>
 
                <IconButton

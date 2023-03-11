@@ -12,7 +12,9 @@ import {
    IComments,
    IlikesPostProps,
    Ifollows,
-   IUserID
+   IUserID,
+   ILikingPost,
+   IPostLikes
 } from "./@types/dashboardTypes";
 
 import jwt_decode from "jwt-decode";
@@ -37,7 +39,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [filteredPosts, setFilteredPosts] = useState("");
 
-   const [postLikes, setPostLikes] = useState<IlikesPostProps[]>([])
+   const [postLikes, setPostLikes] = useState<IPostLikes[]>([])
 
    //-------------------------------------------------------//
 
@@ -275,6 +277,26 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          console.error(error);
       }
    };
+   
+   const followedsUsers = async (data: Ifollows) => {
+      let loggedId = "";
+      if (token) {
+         loggedId = jwt_decode<IUserID>(token).sub;
+      }
+      try {
+         const idNumber = Number(loggedId);
+         const response = await api.post(`users/${idNumber}/follow`, data, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         setAllUsersFollowed(response.data)
+      } catch (error) {
+         toast.error('Erro ao curtir Post')
+      }
+   }
+
+   //----------------------- VITOR ------------------------ 
 
    const getPostLikes = async (postID: string | number) => {
       try {
@@ -283,32 +305,42 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-            console.log(response);
+            // console.log(response.data);
+            setPostLikes(response.data)
          } catch (error) {
             console.error;
          }
-      }
+   }
    
-      
-      const followedsUsers = async (data: Ifollows) => {
-         let loggedId = "";
-         if (token) {
-            loggedId = jwt_decode<IUserID>(token).sub;
-         }
-         try {
-            const idNumber = Number(loggedId);
-            const response = await api.post(`users/${idNumber}/follow`, data, {
-               headers: {
-                  Authorization: `Bearer ${token}`,
-               },
-            });
-            setPostLikes(response.data)
-         } catch (error) {
-            toast.error('Erro ao curtir Post')
-         }
+   const likingPost = async (data: ILikingPost) => {
+      try {
+         const response = await api.post('likes', data, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         setPostLikes([...postLikes, response.data])
+         toast.success("Post curtido com sucesso.")
+      } catch (error) {
+         
       }
+   }
 
+   const unLinkingPost = async (likeID: number) => {
+      try {
+         const response = await api.delete(`likes${likeID}`, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         })
+      } catch (error) {
+         
+      }
+   }
 
+//----------------------------------------------------------------
+
+   
    return (
       <DashboardContext.Provider
          value={{
@@ -341,7 +373,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             setText3,
             text1,
             text2,
-            text3
+            text3,
+            likingPost,
+            unLinkingPost
          }}
       >
          {children}

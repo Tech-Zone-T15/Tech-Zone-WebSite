@@ -92,7 +92,10 @@ export interface IPostLikes{
 export interface IlikesPostProps{
    postLikes: IPostLikes
 }
-
+export interface ILikingPost{
+   postId: number,
+   userId: number
+}
 //-------------------
 
 export interface Ifollows{
@@ -127,7 +130,7 @@ export interface IDashboardContext {
    searchPostsList: Iposts[]
    loading: boolean
    getPostLikes: (postID: string | number) => Promise<void>
-   postLikes: IlikesPostProps[]
+   postLikes: IPostLikes[]
 
    followedsUsers: (data: Ifollows) => Promise<void>
    setModalSendPost:React.Dispatch<React.SetStateAction<boolean>>
@@ -138,4 +141,6 @@ export interface IDashboardContext {
    text1: string
    text2: string
    text3:string
+   likingPost: (data: ILikingPost) => Promise<void>
+   unLinkingPost: (likeID: number) => Promise<void>
 }
