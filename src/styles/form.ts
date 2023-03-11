@@ -36,9 +36,6 @@ export const StyledForm = styled.form`
       color: ${mainTheme.colors.primary};
       margin-bottom: 10px;
    }
-   @media (max-width: 955px) {
-      width: 150%;
-   }
 `;
 
 export const StyledTextField = styled(TextField)`

@@ -63,7 +63,13 @@ export const StyledHeaderDash = styled.header`
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             gap: 25px;
+            div {
+               width: 222px;
+               display: flex;
+               justify-content: space-around;
+            }
          }
       }
       .header__div-right.show {
@@ -105,6 +111,14 @@ export const StyledHeaderDash = styled.header`
             .menu-close {
                display: none;
             }
+         }
+      }
+      @media (max-width: 520px) {
+         #buttons__div {
+            flex-direction: column;
+         }
+         .header__div-right.show {
+            height: 223px;
          }
       }
    }
