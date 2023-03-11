@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Lottie from "react-lottie";
 import animationData from "./heartAnimation.json";
-import { useContext, useState } from "react";
+
 import ModalPostDelete from "../../ModalPostDelete";
 import ModalPostEdit from "../../ModalPostEdit";
 import {
@@ -131,8 +131,8 @@ const ListPosts = ({ post }: IpostsProps) => {
                   <div className="animation">
                      <Lottie
                         options={defaultOptions}
-                        height={150}
-                        width={150}
+                        height={40}
+                        width={200}
                         isStopped={animationState.isStopped}
                         isPaused={animationState.isPaused}
                      />

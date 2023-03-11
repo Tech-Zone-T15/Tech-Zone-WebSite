@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import {
@@ -11,7 +11,12 @@ import {
    IUpdateComments,
    IComments,
    IlikesPostProps,
+   Ifollows,
+   IUserID
 } from "./@types/dashboardTypes";
+
+import jwt_decode from "jwt-decode";
+import { UserContext } from "../UserContext";
 
 export const DashboardContext = createContext({} as IDashboardContext);
 
@@ -35,6 +40,24 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const [postLikes, setPostLikes] = useState<IlikesPostProps[]>([])
 
    //-------------------------------------------------------//
+
+
+   //---------------------------- Savio ----------------------------//
+
+   
+   const { user } = useContext(UserContext);
+
+   const [text1, setText1] = useState("Seguir");
+   const [text2, setText2] = useState("Seguir");
+   const [text3, setText3] = useState("Seguir");
+
+   const [modalSendPost, setModalSendPost] = useState(false);
+
+   const [allUsersFollowed, setAllUsersFollowed] = useState<Ifollows[]>([]);
+
+
+   //-------------------------------------------------------//
+
 
    const token = localStorage.getItem("@TOKEN");
 
@@ -85,11 +108,14 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const sendPost = async (data: IsendPost) => {
       //requisição para enviar os post
       try {
-         const response = await api.post("post", data, {
+         const response = await api.post("posts", data, {
             headers: {
                Authorization: `Bearer ${token}`,
             },
          });
+
+         setGetPost([...getPosts, response.data])
+         toast.success('Sua publicação foi enviada com sucesso')
       } catch (error) {
          console.error(error);
       }
@@ -97,17 +123,42 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    };
 
    const AllUsers = async () => {
+      const id = user!.id;
+
       try {
          const response = await api.get("/users", {
             headers: {
                Authorization: `Bearer ${token}`,
             },
          });
+         const ListFollows = await api.get("/follow", {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         setAllUsersFollowed(ListFollows.data);
+
          const array = response.data;
-         const ArraySize = array.length;
          const NewArray: Iusers[] = [];
+
+         const filteredList = ListFollows.data.filter((follow: Ifollows) => {
+            return Number(follow.userId) === Number(id);
+         });
+
+         const NewList = array.filter((user: Iusers) => {
+            return !filteredList.some((follow: Ifollows) => {
+               return user.id === follow.follows;
+            });
+         });
+
+         const FinalList = NewList.filter((users: Iusers) => {
+            return users.id !== id;
+         });
+
+         const length = FinalList.length;
+
          while (NewArray.length < 3) {
-            const RandomNumber1 = array[Math.floor(Math.random() * ArraySize)];
+            const RandomNumber1 = FinalList[Math.floor(Math.random() * length)];
             if (!NewArray.includes(RandomNumber1)) {
                NewArray.push(RandomNumber1);
                setFollowUsers(NewArray);
@@ -230,11 +281,31 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         setPostLikes(response.data)
-      } catch (error) {
-         toast.error('Erro ao curtir Post')
+            console.log(response);
+         } catch (error) {
+            console.error;
+         }
       }
-   }
+   
+      
+      const followedsUsers = async (data: Ifollows) => {
+         let loggedId = "";
+         if (token) {
+            loggedId = jwt_decode<IUserID>(token).sub;
+         }
+         try {
+            const idNumber = Number(loggedId);
+            const response = await api.post(`users/${idNumber}/follow`, data, {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            });
+            setPostLikes(response.data)
+         } catch (error) {
+            toast.error('Erro ao curtir Post')
+         }
+      }
+
 
    return (
       <DashboardContext.Provider
@@ -259,10 +330,19 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             searchPostsList,
             loading,
             getPostLikes,
-            postLikes
+            postLikes,
+            followedsUsers,
+            setModalSendPost,
+            modalSendPost,
+            setText1,
+            setText2,
+            setText3,
+            text1,
+            text2,
+            text3
          }}
       >
          {children}
       </DashboardContext.Provider>
    );
-};
+}
