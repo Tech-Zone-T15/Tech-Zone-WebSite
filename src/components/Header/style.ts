@@ -3,8 +3,6 @@ import { mainTheme } from "../../styles/theme";
 
 export const StyledHeaderDash = styled.header`
    background-color: ${mainTheme.colors.gray1};
-   display: flex;
-
    #header__div {
       display: flex;
       flex-direction: row;
@@ -13,7 +11,6 @@ export const StyledHeaderDash = styled.header`
       justify-content: space-between;
       margin-left: 15px;
 
-      /* height: 80px; */
       width: 82%;
       .menu-btn {
          background-color: transparent;
@@ -24,7 +21,7 @@ export const StyledHeaderDash = styled.header`
 
       #header____div-left {
          display: flex;
-         /* flex-direction: column; */
+
          align-items: center;
          justify-content: center;
       }
@@ -53,7 +50,7 @@ export const StyledHeaderDash = styled.header`
       .header__div-right {
          display: none;
          flex-direction: column;
-         /* align-items: center; */
+
          gap: 20px;
 
          .menu-close {
@@ -65,7 +62,7 @@ export const StyledHeaderDash = styled.header`
          #buttons__div {
             display: flex;
             justify-content: space-between;
-            /* align-items: center; */
+            align-items: center;
             gap: 25px;
          }
       }
@@ -73,10 +70,13 @@ export const StyledHeaderDash = styled.header`
          display: flex;
          flex-direction: column;
          align-items: center;
-         justify-content: center;
+         justify-content: space-between;
+         border-top: solid transparent 50px;
          position: absolute;
-         width: 82%;
-         height: 120px;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 175px;
          background-color: ${mainTheme.colors.gray1};
       }
 

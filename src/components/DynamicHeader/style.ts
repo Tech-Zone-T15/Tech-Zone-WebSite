@@ -37,8 +37,8 @@ export const StyledHeader = styled.header`
    }
    .menu-items {
       display: flex;
-      width: 50%;
-      justify-content: space-around;
+      width: 100%;
+      justify-content: right;
    }
 
    @media (max-width: 955px) {

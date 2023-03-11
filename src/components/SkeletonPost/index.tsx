@@ -5,16 +5,21 @@ import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Skeleton from "@mui/material/Skeleton";
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface MediaProps {
    loading?: boolean;
 }
 
+
 function SkeletonPost(props: MediaProps) {
-   const { loading = false } = props;
+   
+   const theme = useTheme();
+   const mdUp = useMediaQuery(theme.breakpoints.up('sm'));
 
    return (
-      <Card sx={{ maxWidth: 400, m: 2 }}>
+      <Card sx={{ width:mdUp ? 600 : 300 }}>
          <CardHeader
             avatar={
 
