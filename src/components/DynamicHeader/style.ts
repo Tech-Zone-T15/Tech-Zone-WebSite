@@ -7,6 +7,7 @@ export const StyledHeader = styled.header`
    align-items: center;
    justify-content: space-around;
    top: 0;
+   left: 0;
    height: 80px;
    width: 100%;
    z-index: 2;
@@ -42,7 +43,6 @@ export const StyledHeader = styled.header`
    }
 
    @media (max-width: 955px) {
-      padding-left: 50px;
       .menu-close {
          display: flex;
          justify-content: center;

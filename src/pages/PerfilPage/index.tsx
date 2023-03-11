@@ -80,11 +80,14 @@ function PerfilPage() {
    useEffect(() => {
       async function getFollowers() {
          try {
-            const response = await api.get(`/follow?follows=${user?.id}&_expand=user`, {
-               headers: {
-                  Authorization: `Bearer ${token}`,
-               },
-            });
+            const response = await api.get(
+               `/follow?follows=${user?.id}&_expand=user`,
+               {
+                  headers: {
+                     Authorization: `Bearer ${token}`,
+                  },
+               }
+            );
             setFollowersList(response.data);
          } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -102,9 +105,9 @@ function PerfilPage() {
          {deleteProfileModal && <ModalConfirm />}
          <DynamicHeader
             text1="Voltar"
-            text2="Início"
+            text2="LogOut"
             location1="/dashboard"
-            location2="/dashboard"
+            location2="/out"
          />
          <StyledMain>
             <CapaPerfil />
@@ -125,16 +128,19 @@ function PerfilPage() {
                <div className="following-lista">
                   {followersList.length > 0 ? (
                      <ul>
-                        {followersList.map(follower => (
-                           <UserFollowing key={follower.id} userObj={follower.user}/>
+                        {followersList.map((follower) => (
+                           <UserFollowing
+                              key={follower.id}
+                              userObj={follower.user}
+                           />
                         ))}
                      </ul>
-                  ): (
+                  ) : (
                      <li key={crypto.randomUUID()}>
-                     <Typography variant="subtitle1">
-                        Ninguém te segue
-                     </Typography>
-                  </li>
+                        <Typography variant="subtitle1">
+                           Ninguém te segue
+                        </Typography>
+                     </li>
                   )}
                </div>
             </div>
