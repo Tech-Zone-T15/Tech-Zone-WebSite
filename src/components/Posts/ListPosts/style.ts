@@ -9,8 +9,7 @@ export const StyledlikeAnimationContainer = styled.div`
    justify-content: center;
    flex-wrap: wrap;
    margin-bottom: 7px;
-   margin-right: 300px;
-
+   
    .animation {
       pointer-events: none;
    }

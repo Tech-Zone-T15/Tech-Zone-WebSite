@@ -8,10 +8,8 @@ export const UserSuggestionContainer = styled.aside`
    border: 1px solid ${mainTheme.colors.gray2};
    width: 100%;
    padding: 10px;
+   background-color: #ffffff;
 
-   @media (min-width: 800px) {
-      width: 30%;
-   }
 `;
 
 export const ListSuggestions = styled.ul`
