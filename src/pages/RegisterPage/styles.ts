@@ -50,4 +50,14 @@ export const StyledRegisterPage = styled.main`
       flex-direction: column;
       padding: 20px;
    }
+   @media ((max-width: 690px)) {
+      .main-title {
+         margin-bottom: 40px;
+      }
+   }
+   @media ((max-width: 650px)) {
+      .main-title {
+         margin-bottom: 70px;
+      }
+   }
 `;

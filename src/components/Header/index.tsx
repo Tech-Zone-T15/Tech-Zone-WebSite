@@ -35,22 +35,26 @@ export const DashboarHeader = () => {
                </button>
                <div className={`header__div-right ${isMenuOpen ? "show" : ""}`}>
                   <div id="buttons__div">
-                     <SearchForm />
-                     <StyledButtonLink
-                        to="/perfil"
-                        $buttonSize="small"
-                        $buttonStyle="white"
-                     >
-                        Perfil
-                     </StyledButtonLink>
-                     <StyledButton
-                        type="button"
-                        $buttonSize="small"
-                        $buttonStyle="blue"
-                        onClick={() => userLogOut()}
-                     >
-                        Sair
-                     </StyledButton>
+                     <div>
+                        <SearchForm />
+                     </div>
+                     <div>
+                        <StyledButtonLink
+                           to="/perfil"
+                           $buttonSize="small"
+                           $buttonStyle="white"
+                        >
+                           Perfil
+                        </StyledButtonLink>
+                        <StyledButton
+                           type="button"
+                           $buttonSize="small"
+                           $buttonStyle="blue"
+                           onClick={() => userLogOut()}
+                        >
+                           Sair
+                        </StyledButton>
+                     </div>
                   </div>
                   <div className="menu-close" onClick={toggleMenu}>
                      <KeyboardDoubleArrowUpIcon />

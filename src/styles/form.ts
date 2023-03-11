@@ -8,7 +8,7 @@ export const StyledForm = styled.form`
    justify-content: space-around;
    align-items: center;
    padding: 20px;
-   gap: 10px;
+   gap: 20px;
    background-color: ${mainTheme.colors.gray1};
    width: 90%;
    min-width: 300px;
@@ -35,9 +35,6 @@ export const StyledForm = styled.form`
    h2 {
       color: ${mainTheme.colors.primary};
       margin-bottom: 10px;
-   }
-   @media (max-width: 955px) {
-      width: 150%;
    }
 `;
 
