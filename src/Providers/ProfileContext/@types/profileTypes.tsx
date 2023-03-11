@@ -37,7 +37,7 @@ export interface iProfileContext{
    deleteProfile: ()=> Promise<void>
    deleteProfileModal: boolean
    setDeleteProfileModal: React.Dispatch<React.SetStateAction<boolean>>
-   unfollow: (id: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>)=> Promise<void>
+   unfollow: (id: number)=> Promise<void>
    getMyPosts: ()=> Promise<void>
    myPosts: iMyPost[]
    getFollowers: ()=> Promise<void>
@@ -46,5 +46,5 @@ export interface iProfileContext{
    followingList: ifollowingObj[]
    editMyPost: (formData: iMyPost, postId: number)=> Promise<void>
    deleteMyPost: (postId: number)=> Promise<void>
-
+   follow: (userIdToFollow: number)=> Promise<void>
 }

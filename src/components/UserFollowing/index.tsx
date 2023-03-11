@@ -9,6 +9,8 @@ import { Typography } from "@mui/material";
 import { ProfileContext } from "../../Providers/ProfileContext";
 import { IUser } from "../../Providers/UserContext/@types";
 import { UnfollowButtonStyled } from "./style";
+import { Img } from "../../components/Posts/ListPosts/styled";
+
 
 interface iUser {
    email: string;
@@ -22,14 +24,15 @@ interface iUser {
 }
 interface iUserFollowing {
    id?: number;
-   followId?: number;
+   followId: number;
    userObj?: IUser;
 }
 
-export const UserFollowing = ({ id, followId, userObj}: iUserFollowing) => {
+export const UserFollowing = ({ id, followId, userObj }: iUserFollowing) => {
    const token = localStorage.getItem("@TOKEN");
    const [user, setUser] = useState<Omit<iUser, "password">>();
    const { unfollow } = useContext(ProfileContext);
+   const {followersList, followingList, follow} = useContext(ProfileContext)
 
    useEffect(() => {
       async function getUser(id: number) {
@@ -49,18 +52,31 @@ export const UserFollowing = ({ id, followId, userObj}: iUserFollowing) => {
       id && getUser(id);
    }, []);
 
-
    return userObj ? (
       <li>
          <Card sx={{ maxWidth: 200, minWidth: 150 }}>
             <CardHeader
                avatar={
-                  <Avatar>
-                     <img src={userObj.profile_img} alt={userObj.name} />
+                  <Avatar
+                     aria-label="Avatar do usuario"
+                     sx={{ width: 50, height: 50 }}
+                  >
+                     <Img src={userObj.profile_img} alt={userObj.name} />
                   </Avatar>
                }
                title={userObj.name}
             />
+            { 
+               followingList.some(user => user.follows === userObj.id) ? (
+                  <UnfollowButtonStyled>
+                     <Typography variant="caption">Seguindo</Typography>
+                  </UnfollowButtonStyled>
+               ): (
+                  <UnfollowButtonStyled onClick={() => follow(userObj.id)}>
+                     <Typography variant="caption">Siga de volta</Typography>
+                  </UnfollowButtonStyled>
+               )
+            }
          </Card>
       </li>
    ) : (
@@ -69,14 +85,14 @@ export const UserFollowing = ({ id, followId, userObj}: iUserFollowing) => {
             <CardHeader
                avatar={
                   <Avatar>
-                     <img src={user?.profile_img} alt={user?.name} />
+                     <Img src={user?.profile_img} alt={user?.name} />
                   </Avatar>
                }
                title={user?.name}
             />
             <UnfollowButtonStyled
                type="button"
-               onClick={(event) => unfollow(followId)}
+               onClick={() => unfollow(followId)}
             >
                <Typography variant="caption">Deixar de seguir</Typography>
             </UnfollowButtonStyled>

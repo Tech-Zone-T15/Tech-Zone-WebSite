@@ -46,11 +46,6 @@ export default function ProfileModalEditPost({opemModalEdit,setOpemModalEdit,pos
       <Dialog open={opemModalEdit} onClose={handleClose}>
          <form onSubmit={handleSubmit(submit)}>
             <DialogTitle>Editar publicação</DialogTitle>
-            <DialogContent>
-{/*                <DialogContentText>
-                  Editar Post
-               </DialogContentText> */}
-            </DialogContent>
             <TextField
                type="textarea"
                id="textarea"

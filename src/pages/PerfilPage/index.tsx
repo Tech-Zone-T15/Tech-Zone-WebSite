@@ -11,22 +11,27 @@ import { MyPostsList } from "../../components/MyPosts";
 import { UserFollowing } from "../../components/UserFollowing";
 import { Typography } from "@mui/material";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
-
-
+import { UserContext } from "../../Providers/UserContext";
 
 function PerfilPage() {
    const { updateProfileModal, updateProfileImage, deleteProfileModal } =
       useContext(ProfileContext);
    const [editing, setEditing] = useState(false);
-   const {getMyPosts, getFollowers, getUsersProfile, myPosts, followersList, followingList} = useContext(ProfileContext)
+   const {
+      getMyPosts,
+      getFollowers,
+      getUsersProfile,
+      myPosts,
+      followersList,
+      followingList,
+   } = useContext(ProfileContext);
+   const {user} = useContext(UserContext)
 
    useEffect(() => {
       getMyPosts();
       getFollowers();
       getUsersProfile();
    }, []);
-
-
 
    return (
       <>
@@ -54,14 +59,19 @@ function PerfilPage() {
                <ProfileData editing={editing} setEditing={setEditing} />
             )}
             <div className="followers-box">
-               <Typography variant="h6">Seguidores ({followersList.length})</Typography>
+               <Typography variant="h6">
+                  Seguidores ({followersList.length})
+               </Typography>
                <div className="followers-list">
                   {followersList.length > 0 ? (
                      <ul>
-
-                        {followersList.map(follower => (
-                           <UserFollowing key={follower.id} userObj={follower.user} followingList={followingList}/>
-
+                        {followersList.map((follower) => (
+                           <UserFollowing
+                              key={follower.id}
+                              userObj={follower.user}
+                              
+                           />
+                           
                         ))}
                      </ul>
                   ) : (
@@ -74,7 +84,9 @@ function PerfilPage() {
                </div>
             </div>
             <div className="following-box">
-               <Typography variant="h6">Seguindo ({followingList.length})</Typography>
+               <Typography variant="h6">
+                  Seguindo ({followingList.length})
+               </Typography>
                <div className="following-list">
                   {followingList.length > 0 ? (
                      <ul>
@@ -95,7 +107,7 @@ function PerfilPage() {
                   )}
                </div>
             </div>
-            <MyPostsList myPosts={myPosts}/>
+            <MyPostsList myPosts={myPosts} />
          </StyledMain>
       </>
    );
