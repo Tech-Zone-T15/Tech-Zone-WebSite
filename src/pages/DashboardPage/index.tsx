@@ -1,23 +1,27 @@
-
 import UserSuggestion from "../../components/UserSuggestion";
-import { NavBar } from "./style";
+import {
+   NavBar,
+   Main,
+   MainContainer,
+   DashboarContainer,
+   BackGrondColor,
+   ReversePost,
+} from "./style";
 import { DashboarHeader } from "../../components/Header";
 import Post from "../../components/Posts";
-import { useContext,useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { DashboardContext } from "../../Providers/DashboardContext";
 import SkeletonPost from "../../components/SkeletonPost";
 import { useLocation } from "react-router-dom";
 import {SendPost} from '../../components/SendPost'
 
 
-
 const DashboardPage = () => {
+   const { getUsers, getAllPosts, loading } = useContext(DashboardContext);
 
-   const {getUsers,getAllPosts,loading} = useContext(DashboardContext)
-
-   useEffect(() => { 
-      getUsers()
-      getAllPosts()
+   useEffect(() => {
+      getUsers();
+      getAllPosts();
    }, []);
 
    const location = useLocation()
@@ -25,32 +29,40 @@ const DashboardPage = () => {
    // console.log(location.pathname)
 
    return (
-
       <>
-         <DashboarHeader/>
-         <NavBar>
-            <div>
-               <button>Html</button>
-               <button>Css</button>
-               <button>JavaScript</button>
-               <button>React</button>
-               <button>Angular</button>
-               <button>Vue.js</button>
-               <button>TypeScript</button>
-               <button>Node.js</button>
-            </div>
-         </NavBar>
-         <main>
-            <SendPost />
+         <DashboarHeader />
 
-            {loading == false? (<SkeletonPost/>):(<Post/>)}
-            
-         </main>
-         <aside>
-            <UserSuggestion />
-         </aside>
+         <DashboarContainer>
+            <NavBar>
+               <div>
+                  <button>Html</button>
+                  <button>Css</button>
+                  <button>JavaScript</button>
+                  <button>React</button>
+                  <button>Angular</button>
+                  <button>Vue.js</button>
+                  <button>TypeScript</button>
+                  <button>Node.js</button>
+               </div>
+            </NavBar>
+
+            <BackGrondColor>
+               <MainContainer>
+                  <aside>
+                     <UserSuggestion />
+                  </aside>
+
+                  <Main>
+                     <SendPost />
+                     <ReversePost>
+                        {loading == false ? <SkeletonPost /> : <Post />}
+                     </ReversePost>
+                  </Main>
+               </MainContainer>
+            </BackGrondColor>
+         </DashboarContainer>
       </>
-
-)};
+   );
+};
 
 export default DashboardPage;

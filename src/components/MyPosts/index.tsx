@@ -52,7 +52,6 @@ export const MyPostsList = () => {
                            <>
                               <IconButton
                                  aria-label="deletar post"
-                                
                               >
                                  <DeleteForever />
                               </IconButton>
