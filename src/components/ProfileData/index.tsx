@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ProfileContext } from "../../Providers/ProfileContext";
 import { BiEditAlt } from "react-icons/Bi";
 import { UserContext } from "../../Providers/UserContext";
@@ -15,6 +15,7 @@ export const ProfileData = ({editing, setEditing}: iProfileDataProps) => {
    const { setUpdateProfileModal, setDeleteProfileModal } =
       useContext(ProfileContext);
    const { user } = useContext(UserContext);
+
 
 
    return (
