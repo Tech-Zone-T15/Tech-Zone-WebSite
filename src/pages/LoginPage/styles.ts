@@ -46,5 +46,10 @@ export const StyledLoginPage = styled.main`
 
    @media (max-width: 955px) {
       flex-direction: column;
+      min-height: 80vh;
+      section {
+         height: 500px;
+         gap: 20px;
+      }
    }
 `;
