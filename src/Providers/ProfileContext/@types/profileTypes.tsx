@@ -1,3 +1,5 @@
+import { IUser } from "../../UserContext/@types";
+
 export interface iUpdateProfile {
    email: string;
    name: string;
@@ -11,6 +13,21 @@ export interface iMyPost{
    content: string;
    id: number
 }
+
+export interface iFollowersList {
+   userId: number;
+   follows: number;
+   id: number;
+   user: IUser
+}
+
+export interface ifollowingObj {
+   userId: number;
+   follows: number;
+   id: number;
+}
+
+
 export interface iProfileContext{
    updateProfile: (formData: iUpdateProfile)=> Promise<void>
    updateProfileModal: boolean;
@@ -21,5 +38,13 @@ export interface iProfileContext{
    deleteProfileModal: boolean
    setDeleteProfileModal: React.Dispatch<React.SetStateAction<boolean>>
    unfollow: (id: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>)=> Promise<void>
+   getMyPosts: ()=> Promise<void>
+   myPosts: iMyPost[]
+   getFollowers: ()=> Promise<void>
+   followersList: iFollowersList[]
+   getUsersProfile: ()=> Promise<void>
+   followingList: ifollowingObj[]
+   editMyPost: (formData: iMyPost, postId: number)=> Promise<void>
+   deleteMyPost: (postId: number)=> Promise<void>
 
 }

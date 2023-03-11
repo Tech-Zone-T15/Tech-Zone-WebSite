@@ -1,11 +1,11 @@
 import axios from "axios";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { IDefaultProviderProps } from "../DashboardContext/@types/dashboardTypes";
 import { UserContext } from "../UserContext";
-import { iMyPost, iProfileContext, iUpdateProfile } from "./@types/profileTypes";
+import { iFollowersList, ifollowingObj, iMyPost, iProfileContext, iUpdateProfile } from "./@types/profileTypes";
 
 
 export const ProfileContext = createContext({} as iProfileContext);
@@ -18,6 +18,14 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
    const [updateProfileImage, setUpdateProfileImage] = useState(false);
    const [deleteProfileModal, setDeleteProfileModal] = useState(false)
    const { user, setUser } = useContext(UserContext);
+   const [myPosts, setMyPosts] = useState<iMyPost[]>([])
+   const [followersList, setFollowersList] = useState<iFollowersList[]>([]);
+   const [followingList, setFollowingList] = useState<ifollowingObj[]>([]);
+
+
+   useEffect(() => {
+
+   }, [followingList, myPosts, followersList])
 
    async function updateProfile(formData: iUpdateProfile) {
       try {
@@ -61,14 +69,15 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
       }
    }
 
-   async function unfollow(id: number/* , event: React.MouseEvent<HTMLButtonElement, MouseEvent> */) {
+   async function unfollow(id: number) {
       try {
          await api.delete(`/follow/${id}`,{
             headers: {
                Authorization: `Bearer ${token}`
             }
          })
-         /* event.target.parentElement.parentElement.parentElement.remove() */
+         const newList = followingList.filter(obj => obj.id !== id)
+         setFollowingList(newList)
       } catch (error) {
          if(axios.isAxiosError(error)){
             toast.error(error.response?.data)
@@ -76,7 +85,83 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
       }
    }
 
+   async function getMyPosts() {
+      try {
+         const response = await api.get(`users/${user?.id}/posts`, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         setMyPosts(response.data);
+      } catch (error) {
+         if (axios.isAxiosError(error)) {
+            toast.error(error.response?.data);
+         }
+      }
+   }
 
+   async function getFollowers() {
+      try {
+         const response = await api.get(`/follow?follows=${user?.id}&_expand=user`, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         setFollowersList(response.data);
+      } catch (error) {
+         if (axios.isAxiosError(error)) {
+            toast.error(error.response?.data);
+         }
+      }
+   }
+
+   async function getUsersProfile() {
+      try {
+         const response = await api.get(`/users/${user?.id}/follow`, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         setFollowingList(response.data);
+      } catch (error) {
+         if (axios.isAxiosError(error)) {
+            toast.error(error.response?.data);
+         }
+      }
+   }
+
+   async function editMyPost(formData: iMyPost, postId: number) {
+      try {
+         const response = await api.patch(`/posts/${postId}`, formData, {
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
+         const newList = myPosts.filter(post => post.id !== postId)
+         setMyPosts([...newList, response.data])
+      } catch (error) {
+         if(axios.isAxiosError(error)){
+            toast.error(error.response?.data)
+         }
+      }
+   }
+   
+   async function deleteMyPost(postId: number) {
+      try {
+         const response =await api.delete(`/posts/${postId}`,{
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
+         const newList = myPosts.filter(post => post.id !== postId)
+         setMyPosts(newList)
+         toast.success('Publicação excluída')
+      } catch (error) {
+         if(axios.isAxiosError(error)){
+            toast.error(error.response?.data)
+         }
+      }
+   }
 
    return (
       <ProfileContext.Provider
@@ -89,7 +174,15 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
             deleteProfile,
             deleteProfileModal,
             setDeleteProfileModal,
-            unfollow
+            unfollow,
+            getMyPosts,
+            myPosts,
+            getFollowers,
+            followersList,
+            getUsersProfile,
+            followingList,
+            editMyPost,
+            deleteMyPost
          }}
       >
          {children}

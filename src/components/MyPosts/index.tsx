@@ -16,20 +16,18 @@ import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import ModalOpemComment from "../ModalComment/ModalOpemComment";
-import { DashboardContext } from "../../Providers/DashboardContext";
-import FormDialog from "../ModalPostEdit";
-import { iMyPost } from "../../pages/PerfilPage";
+import ProfileModalEditPost from "./ProfileModalEditPost";
+import ProfileDeletePostModal from "./ModalPostDelete/index";
+import { iMyPost } from "../../Providers/ProfileContext/@types/profileTypes";
 
 
-export const MyPostsList = ({myPosts}: iMyPost[]) => {
 
-   
+export const MyPostsList = ({ myPosts }: iMyPost) => {
    const { user } = useContext(UserContext);
    const [openModalEdit, setOpenModalEdit] = useState(false);
    const [openModalComment, setopenModalComment] = useState(false);
+   const [openModalDelete, setOpenModalDelete] = useState(false);
 
-   
    return (
       <MyPostsStyle>
          <Typography variant="h5">Minhas publicações</Typography>
@@ -56,6 +54,7 @@ export const MyPostsList = ({myPosts}: iMyPost[]) => {
                            <>
                               <IconButton
                                  aria-label="deletar post"
+                                 onClick={() => setOpenModalDelete(!openModalDelete)}
                               >
                                  <DeleteForever />
                               </IconButton>
@@ -97,15 +96,22 @@ export const MyPostsList = ({myPosts}: iMyPost[]) => {
                            <AddComment />
                         </IconButton>
                      </CardActions>
+                     {openModalDelete && (
+                        <ProfileDeletePostModal
+                           opemModal={openModalDelete}
+                           setOpemModal={setOpenModalDelete}
+                           postId={post.id}
+                        />
+                     )}
                      {openModalEdit && (
-                        <FormDialog
+                        <ProfileModalEditPost
                            opemModalEdit={openModalEdit}
                            setOpemModalEdit={setOpenModalEdit}
                            post={post}
                         />
                      )}
- {/*                     {openModalComment && (
-                        <ModalOpemComment
+                     {/*                       {openModalComment && (
+                        <FullScreenDialog
                            opemModalComment={openModalComment}
                            setopemModalComment={setopenModalComment}
                            post={post}
