@@ -18,7 +18,6 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
    const [updateProfileImage, setUpdateProfileImage] = useState(false);
    const [deleteProfileModal, setDeleteProfileModal] = useState(false)
    const { user, setUser } = useContext(UserContext);
-   const [myPosts, setMyPosts] = useState<iMyPost[]>([])
 
    async function updateProfile(formData: iUpdateProfile) {
       try {
@@ -62,14 +61,14 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
       }
    }
 
-   async function unfollow(id: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+   async function unfollow(id: number/* , event: React.MouseEvent<HTMLButtonElement, MouseEvent> */) {
       try {
          await api.delete(`/follow/${id}`,{
             headers: {
                Authorization: `Bearer ${token}`
             }
          })
-         event.target.parentElement.parentElement.parentElement.remove()
+         /* event.target.parentElement.parentElement.parentElement.remove() */
       } catch (error) {
          if(axios.isAxiosError(error)){
             toast.error(error.response?.data)
@@ -90,8 +89,6 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
             deleteProfile,
             deleteProfileModal,
             setDeleteProfileModal,
-            myPosts,
-            setMyPosts,
             unfollow
          }}
       >

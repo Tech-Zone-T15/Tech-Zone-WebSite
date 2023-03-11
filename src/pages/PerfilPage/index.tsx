@@ -17,7 +17,7 @@ import { Typography } from "@mui/material";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { IUser } from "../../Providers/UserContext/@types";
 
-interface ifollowObject {
+export interface ifollowingObj {
    userId: number;
    follows: number;
    id: number;
@@ -28,13 +28,21 @@ interface iFollowersList {
    id: number;
    user: IUser;
 }
+
+export interface iMyPost{
+   userId: number;
+   img: string;
+   content: string;
+   id: number
+}
+
 function PerfilPage() {
    const { updateProfileModal, updateProfileImage, deleteProfileModal } =
       useContext(ProfileContext);
    const { user } = useContext(UserContext);
    const token = localStorage.getItem("@TOKEN");
-   const { setMyPosts, myPosts } = useContext(ProfileContext);
-   const [followingList, setFollowingList] = useState<ifollowObject[]>([]);
+   const [myPosts, setMyPosts] = useState<iMyPost[]>([])
+   const [followingList, setFollowingList] = useState<ifollowingObj[]>([]);
    const [followersList, setFollowersList] = useState<iFollowersList[]>([]);
    const [editing, setEditing] = useState(false);
 
@@ -46,38 +54,15 @@ function PerfilPage() {
                   Authorization: `Bearer ${token}`,
                },
             });
-            response.data === myPosts ? null : setMyPosts(response.data);
+            setMyPosts(response.data);
          } catch (error) {
             if (axios.isAxiosError(error)) {
                toast.error(error.response?.data);
             }
          }
       }
-
       getMyPosts();
-   }, []);
 
-   useEffect(() => {
-      async function getUsers() {
-         try {
-            const response = await api.get(`/users/${user?.id}/follow`, {
-               headers: {
-                  Authorization: `Bearer ${token}`,
-               },
-            });
-            response.data === followingList
-               ? null
-               : setFollowingList(response.data);
-         } catch (error) {
-            if (axios.isAxiosError(error)) {
-               toast.error(error.response?.data);
-            }
-         }
-      }
-      getUsers();
-   }, []);
-
-   useEffect(() => {
       async function getFollowers() {
          try {
             const response = await api.get(`/follow?follows=${user?.id}&_expand=user`, {
@@ -93,7 +78,25 @@ function PerfilPage() {
          }
       }
       getFollowers();
-   }, []);
+
+      async function getUsers() {
+         try {
+            const response = await api.get(`/users/${user?.id}/follow`, {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            });
+            setFollowingList(response.data);
+         } catch (error) {
+            if (axios.isAxiosError(error)) {
+               toast.error(error.response?.data);
+            }
+         }
+      }
+      getUsers();
+   }, [followingList, followersList, myPosts]);
+
+
 
    return (
       <>
@@ -120,13 +123,13 @@ function PerfilPage() {
             ) : (
                <ProfileData editing={editing} setEditing={setEditing} />
             )}
-            <div className="following-box">
+            <div className="followers-box">
                <Typography variant="h6">Seguidores</Typography>
-               <div className="following-lista">
+               <div className="followers-list">
                   {followersList.length > 0 ? (
                      <ul>
                         {followersList.map(follower => (
-                           <UserFollowing key={follower.id} userObj={follower.user}/>
+                           <UserFollowing key={follower.id} userObj={follower.user} followingList={followingList}/>
                         ))}
                      </ul>
                   ): (
@@ -140,10 +143,10 @@ function PerfilPage() {
             </div>
             <div className="following-box">
                <Typography variant="h6">Seguindo</Typography>
-               <div className="following-lista">
+               <div className="following-list">
                   {followingList.length > 0 ? (
                      <ul>
-                        {followingList.map((followObject: ifollowObject) => (
+                        {followingList.map((followObject) => (
                            <UserFollowing
                               key={followObject.id}
                               id={followObject.follows}
@@ -160,7 +163,7 @@ function PerfilPage() {
                   )}
                </div>
             </div>
-            <MyPostsList />
+            <MyPostsList myPosts={myPosts}/>
          </StyledMain>
       </>
    );

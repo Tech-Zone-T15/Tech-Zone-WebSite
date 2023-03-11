@@ -8,6 +8,7 @@ import Card from "@mui/material/Card";
 import { Typography } from "@mui/material";
 import { ProfileContext } from "../../Providers/ProfileContext";
 import { IUser } from "../../Providers/UserContext/@types";
+import { UnfollowButtonStyled } from "./style";
 
 interface iUser {
    email: string;
@@ -19,22 +20,18 @@ interface iUser {
    bio: string;
    id: number;
 }
-interface iUserFollowing{
+interface iUserFollowing {
    id?: number;
    followId?: number;
-   userObj?: IUser
+   userObj?: IUser;
 }
 
-
-export const UserFollowing = ({ id, followId, userObj }: iUserFollowing) => {
-   
+export const UserFollowing = ({ id, followId, userObj}: iUserFollowing) => {
    const token = localStorage.getItem("@TOKEN");
    const [user, setUser] = useState<Omit<iUser, "password">>();
-   const {unfollow} = useContext(ProfileContext)
-   
+   const { unfollow } = useContext(ProfileContext);
 
    useEffect(() => {
-      
       async function getUser(id: number) {
          try {
             const response = await api.get(`/users/${id}`, {
@@ -49,14 +46,12 @@ export const UserFollowing = ({ id, followId, userObj }: iUserFollowing) => {
             }
          }
       }
-      id && (getUser(id))
+      id && getUser(id);
    }, []);
 
 
-
-   return (
-      userObj ? (
-         <li>
+   return userObj ? (
+      <li>
          <Card sx={{ maxWidth: 200, minWidth: 150 }}>
             <CardHeader
                avatar={
@@ -68,8 +63,8 @@ export const UserFollowing = ({ id, followId, userObj }: iUserFollowing) => {
             />
          </Card>
       </li>
-      ) : (
-         <li>
+   ) : (
+      <li>
          <Card sx={{ maxWidth: 200, minWidth: 150 }}>
             <CardHeader
                avatar={
@@ -79,11 +74,13 @@ export const UserFollowing = ({ id, followId, userObj }: iUserFollowing) => {
                }
                title={user?.name}
             />
-            <button type="button" onClick={(event) => unfollow(followId, event)}>
+            <UnfollowButtonStyled
+               type="button"
+               onClick={(event) => unfollow(followId)}
+            >
                <Typography variant="caption">Deixar de seguir</Typography>
-            </button>
+            </UnfollowButtonStyled>
          </Card>
       </li>
-      )
    );
 };

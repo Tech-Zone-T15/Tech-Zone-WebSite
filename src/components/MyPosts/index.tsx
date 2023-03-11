@@ -17,15 +17,19 @@ import Avatar from "@mui/material/Avatar";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import ModalOpemComment from "../ModalComment/ModalOpemComment";
+import { DashboardContext } from "../../Providers/DashboardContext";
+import FormDialog from "../ModalPostEdit";
+import { iMyPost } from "../../pages/PerfilPage";
 
 
-export const MyPostsList = () => {
+export const MyPostsList = ({myPosts}: iMyPost[]) => {
 
-   const { myPosts } = useContext(ProfileContext);
+   
    const { user } = useContext(UserContext);
    const [openModalEdit, setOpenModalEdit] = useState(false);
    const [openModalComment, setopenModalComment] = useState(false);
 
+   
    return (
       <MyPostsStyle>
          <Typography variant="h5">Minhas publicações</Typography>
@@ -40,7 +44,7 @@ export const MyPostsList = () => {
             </>
          ) : (
             <ul>
-               {myPosts.map((post) => (
+               {myPosts.map((post: iMyPost) => (
                   <li key={crypto.randomUUID()}>
                      <CardHeader
                         avatar={
@@ -95,7 +99,7 @@ export const MyPostsList = () => {
                         </IconButton>
                      </CardActions>
                      {openModalEdit && (
-                        <ModalPostEdit
+                        <FormDialog
                            opemModalEdit={openModalEdit}
                            setOpemModalEdit={setOpenModalEdit}
                            post={post}

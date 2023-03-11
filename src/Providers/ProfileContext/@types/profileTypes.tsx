@@ -20,8 +20,6 @@ export interface iProfileContext{
    deleteProfile: ()=> Promise<void>
    deleteProfileModal: boolean
    setDeleteProfileModal: React.Dispatch<React.SetStateAction<boolean>>
-   myPosts: iMyPost[]
-   setMyPosts: React.Dispatch<React.SetStateAction<iMyPost[]>>
    unfollow: (id: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>)=> Promise<void>
 
 }
