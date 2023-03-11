@@ -35,9 +35,9 @@ function PerfilPage() {
          {deleteProfileModal && <ModalConfirm />}
          <DynamicHeader
             text1="Voltar"
-            text2="Início"
+            text2="LogOut"
             location1="/dashboard"
-            location2="/dashboard"
+            location2="/out"
          />
          <StyledMain>
             <CapaPerfil />
@@ -58,16 +58,18 @@ function PerfilPage() {
                <div className="followers-list">
                   {followersList.length > 0 ? (
                      <ul>
+
                         {followersList.map(follower => (
                            <UserFollowing key={follower.id} userObj={follower.user} followingList={followingList}/>
+
                         ))}
                      </ul>
-                  ): (
+                  ) : (
                      <li key={crypto.randomUUID()}>
-                     <Typography variant="subtitle1">
-                        Ninguém te segue
-                     </Typography>
-                  </li>
+                        <Typography variant="subtitle1">
+                           Ninguém te segue
+                        </Typography>
+                     </li>
                   )}
                </div>
             </div>

@@ -6,6 +6,7 @@ export const StyledCubeContainer = styled.div`
    padding: 0;
    box-sizing: border-box;
    margin-bottom: 100px;
+   margin-left: 50px;
 
    body {
       display: flex;
@@ -93,5 +94,9 @@ export const StyledCubeContainer = styled.div`
       box-shadow: 0 0 120px rgba(10, 102, 194, 0.2),
          0 0 200px rgba(10, 102, 194, 0.4), 0 0 300px rgba(10, 102, 194, 0.6),
          0 0 400px rgba(10, 102, 194, 0.8), 0 0 500px rgba(10, 102, 194, 1);
+   }
+
+   @media ((max-width: 1020px)) {
+      margin-top: 35px;
    }
 `;
