@@ -12,7 +12,6 @@ import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import CardHeader from "@mui/material/CardHeader";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -23,7 +22,10 @@ import Edit from "@mui/icons-material/Edit";
 import { DashboardContext } from "../../../Providers/DashboardContext";
 import jwt_decode from "jwt-decode";
 import { StyledlikeAnimationContainer } from "./style";
-import { CardContainer, Img } from "./styled";
+import { Img } from "./styled";
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 const ListPosts = ({ post }: IpostsProps) => {
    const { users } = useContext(DashboardContext);
 
@@ -32,6 +34,10 @@ const ListPosts = ({ post }: IpostsProps) => {
    const token = localStorage.getItem("@TOKEN");
 
    const idUserLogin = jwt_decode<IidUserLogin>(token);
+
+   const theme = useTheme();
+   const mdUp = useMediaQuery(theme.breakpoints.up('sm'));
+
 
    const [opemModal, setOpemModal] = useState(false);
    const [opemModalEdit, setOpemModalEdit] = useState(false);
@@ -52,9 +58,8 @@ const ListPosts = ({ post }: IpostsProps) => {
 
    return (
       <>
-         <CardContainer>
-         <Card sx={{ minWidth: 300, maxWidth:600}}>
-            <CardActions >
+         <Card sx={{ width:mdUp ? 600 : 300 }}>
+
             <CardHeader
                avatar={
                   <Avatar aria-label="Avatar do usuario" sx={{ width: 50, height: 50,}}>
@@ -94,13 +99,12 @@ const ListPosts = ({ post }: IpostsProps) => {
                   ):(null)
                }
 
-            <CardContent >
-               <Typography variant="body2" color="text.secondary">
+            <CardContent  sx={{bgcolor: '#e9ecef' }}>
+               <Typography  paragraph color="text.secondary" sx={{ fontSize:"1rem",}} >
                   {content}
                </Typography>
             </CardContent>
 
-            </CardActions>
             
             <CardActions disableSpacing>
                <StyledlikeAnimationContainer
@@ -125,13 +129,12 @@ const ListPosts = ({ post }: IpostsProps) => {
 
                <IconButton
                   aria-label="Abri comentarios "
-                  onClick={() => setopemModalComment(!opemModalComment)}
-               >
+                  onClick={() => setopemModalComment(!opemModalComment)}>
                   <AddComment />
                </IconButton>
+
             </CardActions>
          </Card>
-         </CardContainer>
 
          {opemModal && (
             <ModalPostDelete
@@ -159,3 +162,5 @@ const ListPosts = ({ post }: IpostsProps) => {
 };
 
 export default ListPosts;
+
+

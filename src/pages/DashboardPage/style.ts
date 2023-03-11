@@ -3,12 +3,9 @@ import styled from "styled-components";
 
 export const DashboarContainer = styled.div`
 background-color: #e9ecef;
-position: absolute;
-top: 15.5rem;
-width: 100%;
 height: 100vh;
 @media (min-width: 769px) {
-   top: 6.1rem;
+   
 }
 `
 
@@ -69,9 +66,8 @@ padding: 1rem;
 `
 
 export const Main = styled.main`
-   position: relative;
    display: flex;
-   flex-direction: column-reverse;
+   flex-direction: column;
    align-items: center;
    gap: 1rem;
 
@@ -80,7 +76,11 @@ export const BackGrondColor = styled.div`
 height: fit-content;
 background-color: #e9ecef;
 `
-export const InputContainer = styled.div`
 
-
+export const ReversePost = styled.div`
+display: flex;
+flex-direction: column-reverse;
+align-items: center;
+gap: 1rem;
 `
+

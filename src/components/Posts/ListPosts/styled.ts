@@ -7,7 +7,3 @@ export const Img = styled.img`
    border-radius: 100%;
    `
 
-   
-export const CardContainer = styled.div`
-   width: 100%;
-`
