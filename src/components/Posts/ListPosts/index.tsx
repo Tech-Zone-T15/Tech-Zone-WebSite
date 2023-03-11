@@ -86,7 +86,13 @@ const ListPosts = ({ post }: IpostsProps) => {
                      ):(null)
                   }
                   
-                  title={users.map(user => user.id == post.userId ?  user.name : null)}
+                  title={
+                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",}} >
+                        {users.map(user => user.id == post.userId ?  user.name : null)}
+                     </Typography>
+                  }
+
+                  sx={{ borderBottom: 2,borderColor: '#004182',fontSize:"1.5rem" }}
                   />
             {
                img.length !== 0 ?(
@@ -106,7 +112,7 @@ const ListPosts = ({ post }: IpostsProps) => {
             </CardContent>
 
             
-            <CardActions disableSpacing>
+            <CardActions disableSpacing sx={{borderTop: 2,borderColor: '#004182', justifyContent: 'space-around' }}>
                <StyledlikeAnimationContainer
                   onClick={() => {
                      setAnimationState({
