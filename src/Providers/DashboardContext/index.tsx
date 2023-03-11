@@ -10,8 +10,11 @@ import {
    Iposts,
    IUpdateComments,
    IComments,
+   IlikesPostProps,
    Ifollows,
-   IUserID
+   IUserID,
+   ILikingPost,
+   IPostLikes
 } from "./@types/dashboardTypes";
 
 import jwt_decode from "jwt-decode";
@@ -35,6 +38,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const [searchValue, setSearchValue] = useState("");
 
    const [filteredPosts, setFilteredPosts] = useState("");
+
+   const [postLikes, setPostLikes] = useState<IPostLikes[]>([])
 
    //-------------------------------------------------------//
 
@@ -272,8 +277,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          console.error(error);
       }
    };
-
-
+   
    const followedsUsers = async (data: Ifollows) => {
       let loggedId = "";
       if (token) {
@@ -286,14 +290,57 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         console.log(response);
+         setAllUsersFollowed(response.data)
       } catch (error) {
-         console.error;
+         toast.error('Erro ao curtir Post')
       }
-   };
+   }
 
+   //----------------------- VITOR ------------------------ 
 
+   const getPostLikes = async (postID: string | number) => {
+      try {
+         const response = await api.get(`posts/${postID}/likes`,{
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+            // console.log(response.data);
+            setPostLikes(response.data)
+         } catch (error) {
+            console.error;
+         }
+   }
+   
+   const likingPost = async (data: ILikingPost) => {
+      try {
+         const response = await api.post('likes', data, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         setPostLikes([...postLikes, response.data])
+         toast.success("Post curtido com sucesso.")
+      } catch (error) {
+         
+      }
+   }
 
+   const unLinkingPost = async (likeID: number) => {
+      try {
+         const response = await api.delete(`likes${likeID}`, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         })
+      } catch (error) {
+         
+      }
+   }
+
+//----------------------------------------------------------------
+
+   
    return (
       <DashboardContext.Provider
          value={{
@@ -316,6 +363,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             setFilteredPosts,
             searchPostsList,
             loading,
+            getPostLikes,
+            postLikes,
             followedsUsers,
             setModalSendPost,
             modalSendPost,
@@ -324,10 +373,12 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             setText3,
             text1,
             text2,
-            text3
+            text3,
+            likingPost,
+            unLinkingPost
          }}
       >
          {children}
       </DashboardContext.Provider>
    );
-};
+}

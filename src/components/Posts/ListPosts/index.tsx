@@ -1,6 +1,7 @@
+import { useContext, useEffect, useState } from "react";
 import Lottie from "react-lottie";
 import animationData from "./heartAnimation.json";
-import { useContext, useState } from "react";
+
 import ModalPostDelete from "../../ModalPostDelete";
 import ModalPostEdit from "../../ModalPostEdit";
 import {
@@ -20,19 +21,59 @@ import AddComment from "@mui/icons-material/AddComment";
 import DeleteForever from "@mui/icons-material/DeleteForever";
 import Edit from "@mui/icons-material/Edit";
 import { DashboardContext } from "../../../Providers/DashboardContext";
-import jwt_decode from "jwt-decode";
+import jwt_decode from 'jwt-decode';
+import { UserContext } from "../../../Providers/UserContext";
 import { StyledlikeAnimationContainer } from "./style";
 import { Img } from "./styled";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { toast } from "react-toastify";
 
 const ListPosts = ({ post }: IpostsProps) => {
-   const { users } = useContext(DashboardContext);
 
-   const { img, content, userId } = post;
+   const {users, getPostLikes, postLikes, likingPost, unLinkingPost } = useContext(DashboardContext);
+
+   const {user} = useContext(UserContext);
+
+   const { img, content,userId } = post;
 
    const token = localStorage.getItem("@TOKEN");
 
+   //------------------------------------
+
+   // console.log(post.id)
+   useEffect(() => {
+
+      if(user !== null){
+         getPostLikes(post.id)
+      }
+      console.log(post.id)
+   },[])
+
+   // console.log(postLikes)
+   
+   //    postLikes.map(likeObj => {
+         
+   //    } )
+   // console.log()
+
+      // const data = { `postId:${post.id}, `userId:${user?.id}` } 
+
+      // const handleClick = () => {
+      //    if(user !== null){
+      //       postLikes.map(likeObj => {
+      //          likeObj.userId !== user.id
+      //          ?
+      //          likingPost(`postId:${post.id}` , `userId:${user.id}`)
+      //          :
+      //          unLinkingPost(likeObj.id)
+      //       })
+      //    }
+      // }
+   
+
+   //--------------------------------------
+      
    const idUserLogin = jwt_decode<IidUserLogin>(token);
 
    const theme = useTheme();
@@ -130,7 +171,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                         isStopped={animationState.isStopped}
                         isPaused={animationState.isPaused}
                      />
-                  </div>
+                  </div> {postLikes.length}
                </StyledlikeAnimationContainer>
 
                <IconButton
@@ -165,8 +206,7 @@ const ListPosts = ({ post }: IpostsProps) => {
          )}
       </>
    );
-};
-
-export default ListPosts;
+}
 
 
+export default ListPosts
