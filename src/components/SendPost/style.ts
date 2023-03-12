@@ -1,34 +1,41 @@
 import styled from "styled-components";
-import {mainTheme} from '../../styles/theme'
+
 
 export const DivContainer = styled.div`
 
-border: 1px solid ${mainTheme.colors.gray2};
-min-height: 15vh;
-width: 100%;
 display: flex;
-justify-content: center;
+justify-content: flex-start;
 align-items: center;
-gap: 20px;
-
+background-color: #EEF3F8;
+border-radius: 5rem;
+border: solid 2px #868E96;
+max-width: 600px;
+width:100%;
+gap: 1rem;
 
 img{
-   width: 40px;
-   height: 49px;
-   border-radius: 50%;
+   width: 50px;
+   height: 50px;
+   border-radius: 100%;
+   object-fit: cover;
 }
 
 button{
-   height: 50px;
-   width: 60%;
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: flex-start;
    background-color: transparent;
-   border-radius: 8px;
-   border: 1px solid ${mainTheme.colors.gray2};
+
+   p{
+      font-size: 1.3rem;
+      background-color: transparent;
+      color: #868E96;
+   }
 }
 
-
-
-@media(min-width: 800px){
-   width: 50%;
+:hover{
+   background-color: #E9ECEF;
 }
+
 `

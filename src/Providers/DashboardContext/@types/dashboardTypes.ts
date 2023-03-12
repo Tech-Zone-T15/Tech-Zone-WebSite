@@ -5,8 +5,8 @@ export interface IDefaultProviderProps {
    children: React.ReactNode;
 }
 export interface IidUserLogin{
+   token: string | number;
    sub: string | number;
-   idUserLogin: string | number
 } 
 export interface Iposts{
    userId:number | string
@@ -20,8 +20,8 @@ export interface Iposts{
 export interface IComments {
    id?: Key | null | undefined;
    map?: any;
-   postId: number;
-   userId: number;
+   postId: number | string;
+   userId: number | string;
    name?: string;
    profile_img?: string;
    comment:string;
@@ -36,7 +36,7 @@ export interface ICommentsProps {
 }
 
 export interface IsendPost {
-   userId: number;
+   userId: number | string;
    img: string;
    content: string;
 }
@@ -51,8 +51,8 @@ export interface IUpdatePost{
 export interface IUpdateComments{
    id?: Key | null | undefined;
    map?: any;
-   postId: number;
-   userId: number;
+   postId: number | number;
+   userId: number | number;
    name?: string;
    profile_img?: string;
    comment:string;
@@ -96,11 +96,11 @@ export interface IUserID {
 }
 
 export interface IDashboardContext {
-   sendComments: (data: IComments[]) => Promise<void>
+   sendComments: (data: IComments) => Promise<void>
    sendPost: (data: IsendPost) => Promise<void>
    getUsers : () => Promise<void>
    users: Iusers[]
-   deletePost: (postId: Iusers) => Promise<void>
+   deletePost: (postId: Iposts) => Promise<void>
    editPost: (data: IUpdatePost) => Promise<void>
    setGetPost: React.Dispatch<React.SetStateAction<Iposts[]>>
    followUsers: Iusers[]
@@ -109,15 +109,13 @@ export interface IDashboardContext {
    getAllPosts: () => Promise<void>
    setGetComments: React.Dispatch<React.SetStateAction<IComments[]>>
    getComments: IComments[]
-   deleteComments: (CommentId: IUpdateComments) => Promise<void>
+   deleteComments: (CommentId: IComments) => Promise<void>
    searchValue: string
    setSearchValue: React.Dispatch<React.SetStateAction<string>>
    setFilteredPosts: React.Dispatch<React.SetStateAction<string>>
    searchPostsList: Iposts[]
    loading: boolean
    followedsUsers: (data: Ifollows) => Promise<void>
-   setModalSendPost:React.Dispatch<React.SetStateAction<boolean>>
-   modalSendPost: boolean
    setText1: React.Dispatch<React.SetStateAction<string>>
    setText2: React.Dispatch<React.SetStateAction<string>>
    setText3: React.Dispatch<React.SetStateAction<string>>

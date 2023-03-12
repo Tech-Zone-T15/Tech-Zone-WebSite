@@ -9,6 +9,7 @@ import { TransitionProps } from "@mui/material/transitions";
 import { useContext } from "react";
 import { DashboardContext } from "../../../../Providers/DashboardContext";
 import { IComments } from "../../../../Providers/DashboardContext/@types/dashboardTypes";
+import DeleteIcon from '@mui/icons-material/Delete'
 
 
 
@@ -45,13 +46,13 @@ export default function ModalCommentDelete({opemModalDelete,setOpemModalDelete,c
             aria-describedby="alert-dialog-slide-description"
          >
             <DialogContent>
-               <DialogContentText id="alert-dialog-slide-description">
-                  Deseja mesmo deletar esse post ? 
+               <DialogContentText id="alert-dialog-slide-description" sx={{ fontWeight: 'bold',fontSize:"1.2rem",color: '#004182',}}>
+                  Deseja mesmo deletar esse Comentario ? 
                </DialogContentText>
             </DialogContent>
             <DialogActions>
-               <Button onClick={handleClose}>Disagree</Button>
-               <Button onClick={() => deleteComments(comments)}>Agree</Button>
+               <Button onClick={handleClose} size="medium" variant="contained">Cancelar</Button>
+               <Button onClick={() => deleteComments(comments)} color="error" startIcon={<DeleteIcon/>} size="medium" variant="contained">Deletar</Button>
             </DialogActions>
          </Dialog>
       </div>

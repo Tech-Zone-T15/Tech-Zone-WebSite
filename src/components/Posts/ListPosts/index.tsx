@@ -3,10 +3,7 @@ import animationData from "./heartAnimation.json";
 import { useContext, useState } from "react";
 import ModalPostDelete from "../../ModalPostDelete";
 import ModalPostEdit from "../../ModalPostEdit";
-import {
-   IpostsProps,
-   IidUserLogin,
-} from "../../../Providers/DashboardContext/@types/dashboardTypes";
+import {IpostsProps} from "../../../Providers/DashboardContext/@types/dashboardTypes";
 import ModalOpemComment from "../../ModalComment/ModalOpemComment";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
@@ -20,20 +17,18 @@ import AddComment from "@mui/icons-material/AddComment";
 import DeleteForever from "@mui/icons-material/DeleteForever";
 import Edit from "@mui/icons-material/Edit";
 import { DashboardContext } from "../../../Providers/DashboardContext";
-import jwt_decode from "jwt-decode";
 import { StyledlikeAnimationContainer } from "./style";
 import { Img } from "./styled";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { UserContext } from "../../../Providers/UserContext";
 
 const ListPosts = ({ post }: IpostsProps) => {
    const { users } = useContext(DashboardContext);
 
    const { img, content, userId } = post;
 
-   const token = localStorage.getItem("@TOKEN");
-
-   const idUserLogin = jwt_decode<IidUserLogin>(token);
+   const { user } = useContext(UserContext);
 
    const theme = useTheme();
    const mdUp = useMediaQuery(theme.breakpoints.up('sm'));
@@ -56,6 +51,7 @@ const ListPosts = ({ post }: IpostsProps) => {
       },
    };
 
+
    return (
       <>
          <Card sx={{ width:mdUp ? 600 : 300 }}>
@@ -68,7 +64,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                }
                action={
                   
-                  idUserLogin.sub == userId ? (
+                  user?.id== userId ? (
                      <>
                         <IconButton
                            aria-label="deletar post"
@@ -87,12 +83,15 @@ const ListPosts = ({ post }: IpostsProps) => {
                   }
                   
                   title={
-                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",}} >
+                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",}}>
                         {users.map(user => user.id == post.userId ?  user.name : null)}
                      </Typography>
                   }
 
-                  sx={{ borderBottom: 2,borderColor: '#004182',fontSize:"1.5rem" }}
+                  sx={{ borderBottom: 2,borderColor: '#004182' }}
+
+                  
+                  
                   />
             {
                img.length !== 0 ?(
@@ -105,8 +104,9 @@ const ListPosts = ({ post }: IpostsProps) => {
                   ):(null)
                }
 
-            <CardContent  sx={{bgcolor: '#e9ecef' }}>
-               <Typography  paragraph color="text.secondary" sx={{ fontSize:"1rem",}} >
+            <CardContent  sx={{bgcolor: '#e9ecef',wordWrap:'break-word' }}>
+               <Typography color="text.secondary" sx={{ fontSize:"1rem"}}>
+
                   {content}
                </Typography>
             </CardContent>
