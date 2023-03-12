@@ -11,14 +11,14 @@ export const ModalCreatePost = () => {
    const [postContent, setPostContent] = useState("");
 
    const onSubmit = () => {
-      const newPost:IsendPost = {
+      const newPost: IsendPost = {
          userId: user!.id,
          img: user!.profile_img,
          content: postContent,
       };
-      
-      sendPost(newPost)
-      setModalSendPost(false)
+
+      sendPost(newPost);
+      setModalSendPost(false);
    };
    return (
       <ModalContainer>
@@ -26,14 +26,7 @@ export const ModalCreatePost = () => {
             <HeaderModal>
                <h2>Criar Publicação</h2>
 
-               <div className="tagsAndBtn">
-                  <select name="" id="">
-                     <option value="" hidden>
-                        Tags
-                     </option>
-                  </select>
-                  <button onClick={() => setModalSendPost(false)}>X</button>
-               </div>
+               <button onClick={() => setModalSendPost(false)}>X</button>
             </HeaderModal>
 
             <ModalContent>
@@ -46,9 +39,12 @@ export const ModalCreatePost = () => {
                   onChange={(event) => setPostContent(event.target.value)}
                ></textarea>
             </ModalContent>
-            <button type="submit" onClick={onSubmit}>
-               Enviar
-            </button>
+
+            <div className="div-btn">
+               <button type="submit" onClick={onSubmit}>
+                  Enviar
+               </button>
+            </div>
          </Modal>
       </ModalContainer>
    );
