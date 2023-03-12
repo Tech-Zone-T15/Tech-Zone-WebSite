@@ -1,11 +1,10 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { ProfileContext } from "../../Providers/ProfileContext";
-import { BiEditAlt } from "react-icons/Bi";
 import { UserContext } from "../../Providers/UserContext";
 import { ProfileDataStyle } from "./style";
-import { StyledButton } from "../../styles/button";
 import { TextField, Typography } from "@mui/material";
-import {IoIosArrowDropupCircle} from 'react-icons/io'
+import {TiArrowBack} from 'react-icons/ti'
+import {CiEdit} from 'react-icons/ci'
 
 interface iProfileDataProps{
    editing: boolean;
@@ -21,11 +20,12 @@ export const ProfileData = ({editing, setEditing}: iProfileDataProps) => {
    return (
       <ProfileDataStyle>
          <div>
-            <Typography variant="h6">Cancelar <IoIosArrowDropupCircle onClick={() => setEditing(!editing)}/></Typography>
+            <Typography id='cancel-edit' onClick={() => setEditing(!editing)} variant="h6">Cancelar<TiArrowBack/></Typography>
          </div>
          <div>
             <Typography variant="h4">Informações pessoais </Typography>
-            <BiEditAlt
+            <CiEdit
+               id='open-edit-modal-icon'
                onClick={() => setUpdateProfileModal(true)}
                size="35px"
             />
