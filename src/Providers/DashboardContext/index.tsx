@@ -16,6 +16,7 @@ import {
 
 import jwt_decode from "jwt-decode";
 import { UserContext } from "../UserContext";
+import { useNavigate } from "react-router-dom";
 
 export const DashboardContext = createContext({} as IDashboardContext);
 
@@ -28,6 +29,11 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [getComments, setGetComments] = useState<IComments[]>([]);
 
+   const [ProfilePost,setProfilePost] = useState<Iposts[]>([])
+
+   console.log(ProfilePost)
+   const navigate = useNavigate();
+   
    const [loading, setLoading] = useState(false);
 
    //-------------------------- Vitor -----------------------------//
@@ -119,7 +125,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    };
 
    const AllUsers = async () => {
-      const id = user!.id;
+      const id = user?.id;
 
       try {
          const response = await api.get("/users", {
@@ -290,6 +296,28 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    };
 
 
+   const getProfilePosts = async (post:Iposts) => {
+      const {userId} = post
+      
+      try {
+         const response = await api.get(`/users/${userId}/posts?_embed=comments`, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+
+         setLoading(true)
+
+         setProfilePost(response.data);
+
+         navigate("/SelectPerfilPage")
+
+      } catch (error) {
+         console.error(error);
+      }
+
+   };
+
 
    return (
       <DashboardContext.Provider
@@ -319,7 +347,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             setText3,
             text1,
             text2,
-            text3
+            text3,
+            ProfilePost,
+            getProfilePosts
          }}
       >
          {children}

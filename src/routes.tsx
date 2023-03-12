@@ -7,6 +7,7 @@ import PerfilPage from "./pages/PerfilPage";
 import { LogOut } from "./pages/PerfilPage/OutPage";
 import ProtectedRotes from "./pages/ProtectedRotes";
 import RegisterPage from "./pages/RegisterPage";
+import SelectPerfilPage from "./pages/SelectPerfilPage";
 import { DashboardProvider } from "./Providers/DashboardContext";
 
 const Router = () => (
@@ -19,15 +20,9 @@ const Router = () => (
       </Route>
 
       <Route element={<ProtectedRotes />}>
-         <Route
-            path="/dashboard"
-            element={
-               <DashboardProvider>
-                  <DashboardPage />
-               </DashboardProvider>
-            }
-         />
-         <Route path="/perfil" element={<PerfilPage />} />
+            <Route path="/dashboard" element={ <DashboardProvider> <DashboardPage /> </DashboardProvider>} />
+            <Route path="/SelectPerfilPage" element={ <DashboardProvider><SelectPerfilPage /></DashboardProvider>} />
+            <Route path="/perfil" element={<PerfilPage />} />
       </Route>
    </Routes>
 );

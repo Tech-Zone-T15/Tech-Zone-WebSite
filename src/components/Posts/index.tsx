@@ -9,9 +9,9 @@ const Post = () => {
    const {searchPostsList} = useContext(DashboardContext)
 
    return ( 
-      <>
+      <ul>
          {searchPostsList.map(post => <ListPosts key={post.id} post={post} />)}
-      </>
+      </ul>
    );
 };
 

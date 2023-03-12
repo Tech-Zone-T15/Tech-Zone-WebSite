@@ -122,4 +122,6 @@ export interface IDashboardContext {
    text1: string
    text2: string
    text3:string
+   getProfilePosts: (post: Iposts) => Promise<void>
+   ProfilePost: Iposts[]
 }
