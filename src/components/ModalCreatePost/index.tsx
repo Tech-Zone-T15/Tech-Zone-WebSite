@@ -12,8 +12,6 @@ export const ModalCreatePost = () => {
 
    const onSubmit = () => {
       const newPost:IsendPost = {
-         userId: user!.id,
-         img: user!.profile_img,
          content: postContent,
       };
       
