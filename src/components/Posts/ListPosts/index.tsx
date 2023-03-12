@@ -4,10 +4,7 @@ import animationData from "./heartAnimation.json";
 
 import ModalPostDelete from "../../ModalPostDelete";
 import ModalPostEdit from "../../ModalPostEdit";
-import {
-   IpostsProps,
-   IidUserLogin,
-} from "../../../Providers/DashboardContext/@types/dashboardTypes";
+import {IPostLikes, IpostsProps} from "../../../Providers/DashboardContext/@types/dashboardTypes";
 import ModalOpemComment from "../../ModalComment/ModalOpemComment";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
@@ -31,48 +28,35 @@ import { toast } from "react-toastify";
 
 const ListPosts = ({ post }: IpostsProps) => {
 
-   const {users, getPostLikes, postLikes, likingPost, unLinkingPost } = useContext(DashboardContext);
+   const {users, getPostLikes, postLikes, likingPost, unLinkingPost, likesPosts } = useContext(DashboardContext);
 
-   const {user} = useContext(UserContext);
+   const { user } = useContext(UserContext);
 
    const { img, content,userId } = post;
 
    const token = localStorage.getItem("@TOKEN");
 
+   
    //------------------------------------
 
-   // console.log(post.id)
-   // useEffect(() => {
-
-   //    if(user !== null){
-   //       getPostLikes(post.id)
-   //    }
-   //    console.log(post.id)
-   // },[])
-
-   // console.log(postLikes)
+   const data  = {
+      postId: post.id,
+      userId: user?.id
+   }
    
-   //    postLikes.map(likeObj => {
-         
-   //    } )
-   // console.log()
-
-      // const data = { `postId:${post.id}, `userId:${user?.id}` } 
-
-      // const handleClick = () => {
-      //    if(user !== null){
-      //       postLikes.map(likeObj => {
-      //          likeObj.userId !== user.id
-      //          ?
-      //          likingPost(`postId:${post.id}` , `userId:${user.id}`)
-      //          :
-      //          unLinkingPost(likeObj.id)
-      //       })
-      //    }
-      // }
-
-      console.log(post.likes)
-   
+   const handleClick = () => {
+      if(user !== null){
+         likesPosts.map(like => {
+            // console.log(likeObj)
+            like.userId !== user.id
+            ?
+            likingPost(data)
+            :
+            unLinkingPost(like.id)
+         })
+      }
+   }
+      // console.log(post.likes)
 
    //--------------------------------------
       
@@ -99,6 +83,7 @@ const ListPosts = ({ post }: IpostsProps) => {
       },
    };
 
+
    return (
       <>
          <Card sx={{ width:mdUp ? 600 : 300 }}>
@@ -111,7 +96,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                }
                action={
                   
-                  idUserLogin.sub == userId ? (
+                  user?.id== userId ? (
                      <>
                         <IconButton
                            aria-label="deletar post"
@@ -130,12 +115,15 @@ const ListPosts = ({ post }: IpostsProps) => {
                   }
                   
                   title={
-                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",}} >
+                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",}}>
                         {users.map(user => user.id == post.userId ?  user.name : null)}
                      </Typography>
                   }
 
-                  sx={{ borderBottom: 2,borderColor: '#004182',fontSize:"1.5rem" }}
+                  sx={{ borderBottom: 2,borderColor: '#004182' }}
+
+                  
+                  
                   />
             {
                img.length !== 0 ?(
@@ -148,8 +136,9 @@ const ListPosts = ({ post }: IpostsProps) => {
                   ):(null)
                }
 
-            <CardContent  sx={{bgcolor: '#e9ecef' }}>
-               <Typography  paragraph color="text.secondary" sx={{ fontSize:"1rem",}} >
+            <CardContent  sx={{bgcolor: '#e9ecef',wordWrap:'break-word' }}>
+               <Typography color="text.secondary" sx={{ fontSize:"1rem"}}>
+
                   {content}
                </Typography>
             </CardContent>
@@ -163,6 +152,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                         isStopped: !animationState.isStopped,
                      });
                      setLikeState(!likeState);
+                     handleClick();
                   }}
                >
                   <div className="animation">
@@ -173,7 +163,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                         isStopped={animationState.isStopped}
                         isPaused={animationState.isPaused}
                      />
-                  </div> {post.likes.length}
+                  </div> {likesPosts.length}
                </StyledlikeAnimationContainer>
 
                <IconButton

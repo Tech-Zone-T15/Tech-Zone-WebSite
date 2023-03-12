@@ -292,7 +292,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          });
          setAllUsersFollowed(response.data)
       } catch (error) {
-         toast.error('Erro ao curtir Seguir')
+         toast.error('Erro ao seguir usuário')
       }
    }
 
@@ -319,8 +319,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         setPostLikes([...postLikes, response.data])
+         setLikesPosts([...likesPosts, response.data])
          toast.success("Post curtido com sucesso.")
+         console.log(response.data)
       } catch (error) {
          
       }
@@ -332,7 +333,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             headers: {
                Authorization: `Bearer ${token}`,
             },
-         })
+         });
+         const newArrayLikesPost = likesPosts.filter((like) => like.id !== likeID);
+         setLikesPosts(newArrayLikesPost)
       } catch (error) {
          
       }

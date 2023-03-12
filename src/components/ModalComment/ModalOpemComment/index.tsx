@@ -6,24 +6,28 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { IComments, IidUserLogin, Iposts} from "../../../Providers/DashboardContext/@types/dashboardTypes";
-import Box from '@mui/material/Box';
+import {
+   IComments,
+   IidUserLogin,
+   Iposts,
+} from "../../../Providers/DashboardContext/@types/dashboardTypes";
+import Box from "@mui/material/Box";
 import Comments from "../../Comments";
 import { DashboardContext } from "../../../Providers/DashboardContext";
 import { useContext, useEffect } from "react";
 import TextField from "@mui/material/TextField";
-import Avatar from "@mui/material/Avatar";
-import jwt_decode from 'jwt-decode';
+import jwt_decode from "jwt-decode";
 import Button from "@mui/material/Button";
-import DialogActions from "@mui/material/DialogActions";
 import { useForm } from "react-hook-form";
-import { MdOutlinePostAdd } from "react-icons/md";
+import { ModalContainer, NotCommentsContainer } from "./styled";
+import { Typography } from "@mui/material";
+import SendIcon from '@mui/icons-material/Send'
+import imagem from "../../../assets/no-data-icon-29.png";
 
-interface IopemModalComment{
+interface IopemModalComment {
    opemModalComment: true;
    setopemModalComment: React.Dispatch<React.SetStateAction<boolean>>;
-   post:Iposts
-
+   post: Iposts;
 }
 interface IdataForm {
    dataForm: string;
@@ -35,28 +39,30 @@ const Transition = React.forwardRef(function Transition(
       children: React.ReactElement;
    },
    ref: React.Ref<unknown>
-   ) {
-      return <Slide direction="up" ref={ref} {...props} />;
-   });
-   
-   export default function FullScreenDialog({opemModalComment,setopemModalComment,post}:IopemModalComment) {
-      
-      const {getComments,setGetComments,getAllPosts,users,sendComments} = useContext(DashboardContext)
+) {
+   return <Slide direction="up" ref={ref} {...props} />;
+});
 
-      const token = localStorage.getItem("@TOKEN");
+export default function FullScreenDialog({
+   opemModalComment,
+   setopemModalComment,
+   post,
+}: IopemModalComment) {
+   const { getComments, setGetComments, getAllPosts, users, sendComments } =
+      useContext(DashboardContext);
 
-      const idUserLogin = jwt_decode<IidUserLogin>(token);
+   const token = localStorage.getItem("@TOKEN");
 
-      const {comments,id} = post 
+   const idUserLogin = jwt_decode<IidUserLogin>(token);
 
+   const { comments, id } = post;
 
-   useEffect(() => { 
+   useEffect(() => {
+      setGetComments(comments);
 
-      setGetComments(comments)
-
-      return ()=> {
-         getAllPosts()
-      }
+      return () => {
+         getAllPosts();
+      };
    }, []);
 
    const {
@@ -65,26 +71,23 @@ const Transition = React.forwardRef(function Transition(
       formState: { errors },
    } = useForm<IdataForm>();
 
-
-   const submit = (dataForm:IdataForm) => {
-
+   const submit = (dataForm: IdataForm) => {
       const dataObj = {
-         postId:id,
-         userId:idUserLogin.sub
-      }
-      
-      const data = {...dataObj, ...dataForm}
+         postId: id,
+         userId: idUserLogin.sub,
+      };
 
-      sendComments(data)
+      const data = { ...dataObj, ...dataForm };
+
+      sendComments(data);
    };
-
 
    const handleClose = () => {
       setopemModalComment(!opemModalComment);
    };
 
    return (
-      <div>
+      <>
          <Dialog
             fullScreen
             open={opemModalComment}
@@ -92,49 +95,67 @@ const Transition = React.forwardRef(function Transition(
             TransitionComponent={Transition}
          >
             <AppBar sx={{ position: "relative" }}>
-               <Toolbar>
+               <Toolbar sx={{ display:"flex",alignItems:"center",justifyContent:"space-evenly" }}>
+                  <Typography sx={{ fontSize:"1.5rem" }}> Comentarios </Typography>
                   <IconButton
                      edge="start"
                      color="inherit"
                      onClick={handleClose}
                      aria-label="close"
+         
                   >
                      <CloseIcon />
                   </IconButton>
                </Toolbar>
             </AppBar>
-            <Box>
-               {getComments.map((comment: IComments) => <Comments key={comment.id} comments={comment} comment={""} />)}
+
+            <Box sx={{ bgcolor: "#e9ecef", height: "100vh" }}>
+               <ModalContainer>
+                  <Box
+                     sx={{
+                        flexDirection: "column",
+                        maxHeight: 600,
+                        overflow: "auto",
+                        justifyContent:"center",
+                        m:'auto'
+                     }}
+                  >  
+                     {
+                        getComments.length == 0 ? (
+                           <NotCommentsContainer>
+                              <Typography sx={{ fontSize:"1.7rem",fontWeight:'bold' }}> Seja o primeiro a comentar</Typography>
+                              <img src={imagem} alt="" />
+                           </NotCommentsContainer>
+                        ):(
+                           getComments.map((comment: IComments) => (
+                              <Comments
+                                 key={comment.id}
+                                 comments={comment}
+                                 comment={""}
+                              />
+                           ))
+                        )
+                     }
+                  </Box>
+
+                  <form onSubmit={handleSubmit(submit)}>
+                     <Box sx={{ flexDirection: "row",display:"flex",alignItems:"center",justifyContent:"center" }}>
+                        <TextField
+                           type="textarea"
+                           id="textarea"
+                           label="Comentario"
+                           margin="dense"
+                           multiline
+                           variant="filled"
+                           sx={{ width:400 }}
+                           {...register("comment")}
+                     />
+                     <Button type="submit" variant="text" endIcon={<SendIcon sx={{p:0,m:0,width:"2rem",height:"3.3rem"}} type="button-submit" />} sx={{width:"1rem",height:"3.3rem",p:0,m:0 }}></Button>
+                     </Box>
+                  </form>
+               </ModalContainer>                                                               
             </Box>
-
-            <Box>
-               <Avatar aria-label="recipe">
-                  {users.map(user => user.id == idUserLogin.sub ? <img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
-               </Avatar>
-
-            <form onSubmit={handleSubmit(submit)}>
-
-                  <TextField
-                     type="textarea"
-                     id="textarea"
-                     label="Comentario"
-                     margin="dense"
-                     multiline
-                     fullWidth
-                     variant="filled"
-                     {...register("comment")}
-                  />
-            
-                  <DialogActions>
-                     <Button type="submit">Adicionar comentario</Button>
-                  </DialogActions>
-            
-               </form>
-
-            </Box>
-
          </Dialog>
-         
-      </div>
+      </>
    );
 }
