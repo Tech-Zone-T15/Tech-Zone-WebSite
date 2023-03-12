@@ -40,7 +40,10 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
                   },
                });
                setUser(response.data);
-               navigate("/dashboard");
+
+               // navigate("/dashboard");
+               
+
             } catch (error) {
                console.error(error);
                localStorage.removeItem("TOKEN")
