@@ -1,44 +1,41 @@
 import styled from "styled-components";
-import { mainTheme } from "../../styles/theme";
+
 
 export const DivContainer = styled.div`
-   border: 1px solid ${mainTheme.colors.gray2};
-   min-height: 10vh;
-   min-width: 300px;
+
+display: flex;
+justify-content: flex-start;
+align-items: center;
+background-color: #EEF3F8;
+border-radius: 5rem;
+border: solid 2px #868E96;
+max-width: 600px;
+width:100%;
+gap: 1rem;
+
+img{
+   width: 50px;
+   height: 50px;
+   border-radius: 100%;
+   object-fit: cover;
+}
+
+button{
+   width: 100%;
    display: flex;
-   justify-content: center;
    align-items: center;
-   gap: 20px;
-   border-radius: 4px;
-   background-color: #fff;
+   justify-content: flex-start;
+   background-color: transparent;
 
-   img {
-      object-fit: cover;
-      width: 55px;
-      height: 55px;
-      border-radius: 100%;
-      overflow: clip;
-      margin: 10px;
-      background-repeat: no-repeat;
-        background-position: center center;
-   }
-    
-
-   button {
-      height: 50px;
-      width: 60%;
+   p{
+      font-size: 1.3rem;
       background-color: transparent;
-      border-radius: 8px;
-      border: 1px solid ${mainTheme.colors.gray2};
-      color: ${mainTheme.colors.gray3};
-      font-size: 1rem;
+      color: #868E96;
    }
+}
 
-   @media (min-width: 600px) {
-      min-width: 600px;
-   }
+:hover{
+   background-color: #E9ECEF;
+}
 
-   @media (min-width: 800px) {
-      min-width: 100%;
-   }
-`;
+`
