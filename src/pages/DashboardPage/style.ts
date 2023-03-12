@@ -50,8 +50,6 @@ display: flex;
 flex-direction: column;
 top: 20rem;
 gap: 2rem;
-max-width: 1200px;
-width: 100%;
 padding: 1rem;
 
 
