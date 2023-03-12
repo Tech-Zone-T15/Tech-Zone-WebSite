@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { IDefaultProviderProps } from "../DashboardContext/@types/dashboardTypes";
 import { UserContext } from "../UserContext";
-import { iFollowersList, ifollowingObj, iMyPost, iProfileContext, iUpdateProfile } from "./@types/profileTypes";
+import { iFollowersList, ifollowingObj, iMyPost, iPost, iProfileContext, iUpdateProfile } from "./@types/profileTypes";
 
 
 export const ProfileContext = createContext({} as iProfileContext);
@@ -81,6 +81,7 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
       } catch (error) {
          if(axios.isAxiosError(error)){
             toast.error(error.response?.data)
+            console.log(`falha ao deletar /follow/${id}`)
          }
       }
    }
@@ -177,6 +178,22 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
          }
       }
    }
+
+   async function publishAPost(dataForm: iPost) {
+      try {
+         const response = await api.post('/posts', dataForm, {
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
+         setMyPosts([...myPosts, response.data])
+      } catch (error) {
+         if(axios.isAxiosError(error)){
+            toast.error(error.response?.data)
+         }
+      }
+   }
+
    return (
       <ProfileContext.Provider
          value={{
@@ -197,7 +214,8 @@ export const ProfileProvider = ({ children }: IDefaultProviderProps) => {
             followingList,
             editMyPost,
             deleteMyPost,
-            follow
+            follow,
+            publishAPost
          }}
       >
          {children}

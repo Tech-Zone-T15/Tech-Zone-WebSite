@@ -10,8 +10,7 @@ import { ModalConfirm } from "../../components/ModalConfirm";
 import { MyPostsList } from "../../components/MyPosts";
 import { UserFollowing } from "../../components/UserFollowing";
 import { Typography } from "@mui/material";
-import { IoIosArrowDropdownCircle } from "react-icons/io";
-import { UserContext } from "../../Providers/UserContext";
+import {FaUserEdit} from 'react-icons/fa'
 
 function PerfilPage() {
    const { updateProfileModal, updateProfileImage, deleteProfileModal } =
@@ -25,7 +24,7 @@ function PerfilPage() {
       followersList,
       followingList,
    } = useContext(ProfileContext);
-   const {user} = useContext(UserContext)
+   
 
    useEffect(() => {
       getMyPosts();
@@ -33,6 +32,7 @@ function PerfilPage() {
       getUsersProfile();
    }, []);
 
+   
    return (
       <>
          {updateProfileModal && <ProfileModal />}
@@ -50,7 +50,7 @@ function PerfilPage() {
                <div className="open-edit">
                   <Typography variant="h6">
                      Editar Perfil{" "}
-                     <IoIosArrowDropdownCircle
+                     <FaUserEdit
                         onClick={() => setEditing(!editing)}
                      />
                   </Typography>
