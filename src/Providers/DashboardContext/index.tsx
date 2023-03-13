@@ -14,13 +14,12 @@ import {
    Ifollows,
    IUserID,
    ILikingPost,
-   IPostLikes
+   IPostLikes,
 } from "./@types/dashboardTypes";
 
 import jwt_decode from "jwt-decode";
 import { UserContext } from "../UserContext";
 import { useNavigate } from "react-router-dom";
-
 
 export const DashboardContext = createContext({} as IDashboardContext);
 
@@ -33,10 +32,10 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [getComments, setGetComments] = useState<IComments[]>([]);
 
-   const [ProfilePost,setProfilePost] = useState<Iposts[]>([])
+   const [ProfilePost, setProfilePost] = useState<Iposts[]>([]);
 
    const navigate = useNavigate();
-   
+
    const [loading, setLoading] = useState(false);
 
    //-------------------------- Vitor -----------------------------//
@@ -45,14 +44,12 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [filteredPosts, setFilteredPosts] = useState("");
 
-   const [postLikes, setPostLikes] = useState<IPostLikes[]>([])
+   const [postLikes, setPostLikes] = useState<IPostLikes[]>([]);
 
    //-------------------------------------------------------//
 
-
    //---------------------------- Savio ----------------------------//
 
-   
    const { user } = useContext(UserContext);
 
    const [text1, setText1] = useState("Seguir");
@@ -65,9 +62,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [likesPosts, setLikesPosts] = useState<IPostLikes[]>([]);
 
-
    //-------------------------------------------------------//
-
 
    const token = localStorage.getItem("@TOKEN");
 
@@ -97,7 +92,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    };
 
    const getAllPosts = async () => {
-
       try {
          const response = await api.get("posts?_embed=comments&_embed=likes", {
             headers: {
@@ -105,21 +99,19 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             },
          });
 
-         setLoading(true)
+         setLoading(true);
 
          setGetPost(response.data);
-         setPostLikes(response.data.likes)
-         console.log(response.data)
+         setPostLikes(response.data.likes);
+         console.log(response.data);
       } catch (error) {
          console.error(error);
       }
-
    };
 
    const sendPost = async (data: IsendPost) => {
-
       //requisição para enviar os post
-      
+
       try {
          const response = await api.post("posts", data, {
             headers: {
@@ -127,16 +119,18 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             },
          });
 
-         setGetPost([...getPosts, response.data])
-         toast.success('Sua publicação foi enviada com sucesso')
+         setGetPost([...getPosts, response.data]);
+         toast.success("Sua publicação foi enviada com sucesso");
       } catch (error) {
          console.error(error);
       }
-
    };
 
    const AllUsers = async () => {
-      const id = user?.id;
+      let loggedId = "";
+      if (token) {
+         loggedId = jwt_decode<IUserID>(token).sub;
+      }
 
       try {
          const response = await api.get("/users", {
@@ -149,23 +143,21 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         
-         
+
          const array = response.data;
          const NewArray: Iusers[] = [];
 
          const filteredList = ListFollows.data.filter((follow: Ifollows) => {
-            return Number(follow.userId) === Number(id);
+            return Number(follow.userId) === Number(loggedId);
          });
-         
+
          const NewList = array.filter((user: Iusers) => {
             return !filteredList.some((follow: Ifollows) => {
                return user.id === follow.follows;
             });
          });
-
          const FinalList = NewList.filter((users: Iusers) => {
-            return users.id !== id;
+            return users.id !== Number(loggedId);
          });
 
          const length = FinalList.length;
@@ -199,7 +191,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
          setGetPost(newPostList);
 
-         toast.success("Post Deletado com sucesso")
+         toast.success("Post Deletado com sucesso");
       } catch (error) {
          console.error;
       }
@@ -224,7 +216,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
       setGetPost(newPostList);
 
-      toast.success("Post Editado com sucesso")
+      toast.success("Post Editado com sucesso");
    };
 
    const editcomments = async (data: IUpdateComments) => {
@@ -246,7 +238,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
       setGetComments(newCommentsList);
 
-      toast.success("Comentario Editado com sucesso")
+      toast.success("Comentario Editado com sucesso");
    };
 
    const deleteComments = async (CommentId: IUpdateComments) => {
@@ -263,8 +255,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
          setGetComments(newPostList);
 
-         toast.success("Comentario Deletado com sucesso")
-
+         toast.success("Comentario Deletado com sucesso");
       } catch (error) {
          console.error;
       }
@@ -280,13 +271,12 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
          setGetComments([...getComments, response.data]);
 
-         toast.success("Comentario Enviado com sucesso")
-         
+         toast.success("Comentario Enviado com sucesso");
       } catch (error) {
          console.error(error);
       }
    };
-   
+
    const followedsUsers = async (data: Ifollows) => {
       let loggedId = "";
       if (token) {
@@ -300,50 +290,47 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             },
          });
 
-         setAllUsersFollowed([...allUsersFollowed, response.data])
+         setAllUsersFollowed([...allUsersFollowed, response.data]);
       } catch (error) {
-         toast.error('Erro ao seguir usuário')
+         toast.error("Erro ao seguir usuário");
       }
-   }
+   };
 
-
-   //----------------------- VITOR ------------------------ 
+   //----------------------- VITOR ------------------------
 
    const getPostLikes = async (postID: string | number) => {
       try {
-         const response = await api.get(`posts/${postID}/likes`,{
+         const response = await api.get(`posts/${postID}/likes`, {
             headers: {
                Authorization: `Bearer ${token}`,
             },
          });
-            // console.log(response.data);
-            setPostLikes(response.data)
-         } catch (error) {
-            console.error;
-         }
-   }
-   
+         // console.log(response.data);
+         setPostLikes(response.data);
+      } catch (error) {
+         console.error;
+      }
+   };
+
    const likingPost = async (data: ILikingPost) => {
       try {
-         const response = await api.post('likes', data, {
+         const response = await api.post("likes", data, {
             headers: {
                Authorization: `Bearer ${token}`,
             },
          });
-         toast.success("Post curtido com sucesso.")
+         toast.success("Post curtido com sucesso.");
          const newGetPosts = getPosts.map((post) => {
-            if(post.id === data.postId) {
-               const teste = ({...post, likes: [...post.likes, response.data ]})
-               return teste
+            if (post.id === data.postId) {
+               const teste = { ...post, likes: [...post.likes, response.data] };
+               return teste;
             } else {
-               return post
+               return post;
             }
-         })
-         setGetPost(newGetPosts)
-      } catch (error) {
-         
-      }
-   }
+         });
+         setGetPost(newGetPosts);
+      } catch (error) {}
+   };
 
    const unLinkingPost = async (likeID: number, data: ILikingPost) => {
       try {
@@ -351,26 +338,25 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             headers: {
                Authorization: `Bearer ${token}`,
             },
-         }); console.log(response.data)
+         });
+         console.log(response.data);
          const newGetPosts = getPosts.map((post) => {
-            if(post.id === data.postId) {
-               const newLikes = post.likes.filter((like) =>{
-                  return like.id !== likeID 
-               })
-               const teste = ({...post, likes: [ ...newLikes ]})
-               return teste
+            if (post.id === data.postId) {
+               const newLikes = post.likes.filter((like) => {
+                  return like.id !== likeID;
+               });
+               const teste = { ...post, likes: [...newLikes] };
+               return teste;
             } else {
-               return post
+               return post;
             }
-         })
-         setGetPost(newGetPosts)
+         });
+         setGetPost(newGetPosts);
       } catch (error) {
-         console.log(error)
+         console.log(error);
       }
-   }
+   };
 
-
-   
    return (
       <DashboardContext.Provider
          value={{
@@ -415,4 +401,4 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          {children}
       </DashboardContext.Provider>
    );
-}
+};
