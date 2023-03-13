@@ -148,15 +148,15 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         setAllUsersFollowed(ListFollows.data);
-
+         
+         
          const array = response.data;
          const NewArray: Iusers[] = [];
 
          const filteredList = ListFollows.data.filter((follow: Ifollows) => {
             return Number(follow.userId) === Number(id);
          });
-
+         
          const NewList = array.filter((user: Iusers) => {
             return !filteredList.some((follow: Ifollows) => {
                return user.id === follow.follows;
@@ -298,7 +298,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         setAllUsersFollowed(response.data)
+
+         setAllUsersFollowed([...allUsersFollowed, response.data])
       } catch (error) {
          toast.error('Erro ao seguir usuário')
       }
@@ -380,7 +381,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       }
    }
 
-//----------------------------------------------------------------
 
    
 
@@ -416,6 +416,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             text1,
             text2,
             text3,
+            allUsersFollowed,
             likingPost,
             unLinkingPost,
             likesPosts,

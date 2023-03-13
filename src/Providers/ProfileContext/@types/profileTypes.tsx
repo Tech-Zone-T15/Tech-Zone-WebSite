@@ -14,6 +14,10 @@ export interface iMyPost{
    id: number
 }
 
+export interface iMyPostProps{
+   myPosts: iMyPost[]
+}
+
 export interface iFollowersList {
    userId: number;
    follows: number;
