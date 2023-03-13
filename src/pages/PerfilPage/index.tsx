@@ -10,6 +10,10 @@ import { ModalConfirm } from "../../components/ModalConfirm";
 import { MyPostsList } from "../../components/MyPosts";
 import { UserFollowing } from "../../components/UserFollowing";
 import { Typography } from "@mui/material";
+import { IoIosArrowDropdownCircle } from "react-icons/io";
+import { IUser } from "../../Providers/UserContext/@types";
+import { useLocation } from "react-router-dom";
+import { UserContext } from "../../Providers/UserContext";
 import { FaUserEdit } from "react-icons/fa";
 
 function PerfilPage() {
@@ -24,6 +28,9 @@ function PerfilPage() {
       followersList,
       followingList,
    } = useContext(ProfileContext);
+
+   const location = useLocation()
+   localStorage.setItem('@location', location.pathname)
 
    useEffect(() => {
       getMyPosts();
