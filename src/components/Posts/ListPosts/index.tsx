@@ -27,9 +27,7 @@ import { UserContext } from "../../../Providers/UserContext";
 
 const ListPosts = ({ post }: IpostsProps) => {
 
-   const {users, 
-      // getProfilePosts, 
-      likingPost, unLinkingPost } = useContext(DashboardContext);
+   const {users,likingPost, unLinkingPost,getProfilePosts } = useContext(DashboardContext);
 
    const { user } = useContext(UserContext);
 
@@ -96,12 +94,12 @@ const ListPosts = ({ post }: IpostsProps) => {
 
    return (
       <li>
-         <Card sx={{ width:mdUp ? 600 : 300 }}>
+         <Card sx={{ width:mdUp ? 600 : 300, }}>
 
             <CardHeader
                avatar={
                   <Avatar aria-label="Avatar do usuario" sx={{ width: 50, height: 50, cursor:'pointer'}} 
-                     // onClick={() => getProfilePosts(post)}
+                     onClick={() => getProfilePosts(post)}
                   >
                         {users.map(user => user.id == userId ? <Img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
                   </Avatar>
@@ -128,7 +126,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                   
                   title={
                      <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",cursor:'pointer',width:'9rem'}} 
-                     //  onClick={() => getProfilePosts(post)}
+                     onClick={() => getProfilePosts(post)}
                      >
                         {users.map(user => user.id == post.userId ?  user.name : null)}
                      </Typography>
@@ -143,7 +141,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                img.length !== 0 ?(
                   <CardMedia
                   component="img"
-                  height="194"
+                  height="300"
                   src={img} 
                   alt="Imagem do post" 
                   />
