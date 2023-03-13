@@ -120,13 +120,15 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       //requisição para enviar os post
       
       try {
+         // const newData = {...data, likes:[]}
          const response = await api.post("posts", data, {
             headers: {
                Authorization: `Bearer ${token}`,
             },
          });
-
-         setGetPost([...getPosts, response.data])
+         console.log(response.data)
+         const newPost = {...response.data, likes:[]}
+         setGetPost([...getPosts, newPost])
          toast.success('Sua publicação foi enviada com sucesso')
       } catch (error) {
          console.error(error);

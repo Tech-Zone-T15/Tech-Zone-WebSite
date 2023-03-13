@@ -43,7 +43,7 @@ const ListPosts = ({ post }: IpostsProps) => {
    useEffect(() => {
       setLikesPosts(post.likes)
    })
-
+   // console.log(typeof likesPosts)
    
 
    const data  = {
@@ -51,14 +51,14 @@ const ListPosts = ({ post }: IpostsProps) => {
       userId: user?.id
    }
    
-   // const buttonToggleValidate = likesPosts.find((like) => 
-   //     like.userId === user!.id
-   //    ) ? true : false
+   const buttonToggleValidate = likesPosts?.find((like) => 
+       like.userId === user!.id
+      ) ? true : false
 
 
    const handleClick = () => {
       if(user !== null){
-         const findLikes = likesPosts.find((like) => {
+         const findLikes = likesPosts?.find((like) => {
             return like.userId === user.id
          }) 
          // console.log(findLikes)
@@ -176,11 +176,11 @@ const ListPosts = ({ post }: IpostsProps) => {
                            options={defaultOptions}
                            height={40}
                            width={200}
-                           // isStopped={buttonToggleValidate ? false : true}
+                           isStopped={buttonToggleValidate ? false : true}
                            isPaused={animationState.isPaused}
                            />
                      </div> 
-                  {/* <span>{likesPosts.length}</span> */}
+                  <span>{likesPosts?.length}</span>
 
                   </StyledlikeAnimationContainer>
 
