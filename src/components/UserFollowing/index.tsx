@@ -31,8 +31,7 @@ interface iUserFollowing {
 export const UserFollowing = ({ id, followId, userObj }: iUserFollowing) => {
    const token = localStorage.getItem("@TOKEN");
    const [user, setUser] = useState<Omit<iUser, "password">>();
-   const { unfollow } = useContext(ProfileContext);
-   const {followersList, followingList, follow} = useContext(ProfileContext)
+   const { followingList, follow, unfollow} = useContext(ProfileContext)
 
    useEffect(() => {
       async function getUser(id: number) {
@@ -73,7 +72,7 @@ export const UserFollowing = ({ id, followId, userObj }: iUserFollowing) => {
                   </UnfollowButtonStyled>
                ): (
                   <UnfollowButtonStyled onClick={() => follow(userObj.id)}>
-                     <Typography variant="caption">Siga de volta</Typography>
+                     <Typography variant="caption">Seguir de volta</Typography>
                   </UnfollowButtonStyled>
                )
             }

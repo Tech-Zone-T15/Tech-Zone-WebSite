@@ -1,14 +1,6 @@
-import { useContext, useEffect, useState } from "react";
 import Lottie from "react-lottie";
-import animationData from "./heartAnimation.json";
-
-import ModalPostDelete from "../../ModalPostDelete";
-import ModalPostEdit from "../../ModalPostEdit";
-import {
-   IPostLikes,
-   IpostsProps,
-} from "../../../Providers/DashboardContext/@types/dashboardTypes";
-import ModalOpemComment from "../../ModalComment/ModalOpemComment";
+import animationData from "../Posts/ListPosts/heartAnimation.json";
+import { useContext, useState } from "react";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
@@ -18,73 +10,23 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import AddComment from "@mui/icons-material/AddComment";
-import DeleteForever from "@mui/icons-material/DeleteForever";
-import Edit from "@mui/icons-material/Edit";
-import { DashboardContext } from "../../../Providers/DashboardContext";
-import jwt_decode from "jwt-decode";
-import { UserContext } from "../../../Providers/UserContext";
-import { StyledlikeAnimationContainer } from "./style";
-import { Img } from "./styled";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { toast } from "react-toastify";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { StyledlikeAnimationContainer } from "../Posts/ListPosts/style";
+import ModalOpemComment from "../ModalComment/ModalOpemComment";
+import { IpostsProps } from "../../Providers/DashboardContext/@types/dashboardTypes";
+import { Img } from "../Posts/ListPosts/styled";
+import { DashboardContext } from "../../Providers/DashboardContext";
 
-const ListPosts = ({ post }: IpostsProps) => {
-   const { users, getPostLikes, postLikes, likingPost, unLinkingPost } =
-      useContext(DashboardContext);
-
-   const { user } = useContext(UserContext);
-
+const PostsSelectPerfil = ({ post }: IpostsProps) => {
    const { img, content, userId } = post;
 
-   const token = localStorage.getItem("@TOKEN");
-
-   // console.log(post)
-
-   //------------------------------------
-   const [likesPosts, setLikesPosts] = useState<IPostLikes[]>([]);
-
-   useEffect(() => {
-      setLikesPosts(post.likes);
-   });
-
-   const data = {
-      postId: post.id,
-      userId: user?.id,
-   };
-
-   const buttonToggleValidate = likesPosts.find(
-      (like) => like.userId === user!.id
-   )
-      ? true
-      : false;
-   // console.log(buttonToggleValidate)
-
-   const handleClick = () => {
-      if (user !== null) {
-         const findLikes = likesPosts.find((like) => {
-            return like.userId === user.id;
-         });
-         // console.log(findLikes)
-         if (findLikes) {
-            console.log(findLikes);
-            unLinkingPost(findLikes.id, data);
-         } else {
-            likingPost(data);
-         }
-      }
-   };
-   //--------------------------------------
-
-   // const idUserLogin = jwt_decode<IidUserLogin>(token);
-
+   const { users } = useContext(DashboardContext);
+   
    const theme = useTheme();
    const mdUp = useMediaQuery(theme.breakpoints.up("sm"));
 
-   const [opemModal, setOpemModal] = useState(false);
-   const [opemModalEdit, setOpemModalEdit] = useState(false);
+
    const [opemModalComment, setopemModalComment] = useState(false);
    const [likeState, setLikeState] = useState(false);
    const [animationState, setAnimationState] = useState({
@@ -107,8 +49,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                avatar={
                   <Avatar
                      aria-label="Avatar do usuario"
-                     sx={{ width: 50, height: 50, cursor: "pointer" }}
-                     // onClick={() => getProfilePosts(post)}
+                     sx={{ width: 50, height: 50 }}
                   >
                      {users.map((user) =>
                         user.id == userId ? (
@@ -121,33 +62,10 @@ const ListPosts = ({ post }: IpostsProps) => {
                      )}
                   </Avatar>
                }
-               action={
-                  user?.id == userId ? (
-                     <>
-                        <IconButton
-                           aria-label="deletar post"
-                           onClick={() => setOpemModal(!opemModal)}
-                        >
-                           <DeleteForever />
-                        </IconButton>
-                        <IconButton
-                           aria-label="editar post"
-                           onClick={() => setOpemModalEdit(!opemModalEdit)}
-                        >
-                           <Edit />
-                        </IconButton>
-                     </>
-                  ) : null
-               }
                title={
                   <Typography
                      color="text.secondary"
-                     sx={{
-                        fontSize: "1.2rem",
-                        cursor: "pointer",
-                        width: "9rem",
-                     }}
-                     //  onClick={() => getProfilePosts(post)}
+                     sx={{ fontSize: "1.2rem" }}
                   >
                      {users.map((user) =>
                         user.id == post.userId ? user.name : null
@@ -186,8 +104,6 @@ const ListPosts = ({ post }: IpostsProps) => {
                         isStopped: !animationState.isStopped,
                      });
                      setLikeState(!likeState);
-                     console.log(likeState);
-                     handleClick();
                   }}
                >
                   <div className="animation">
@@ -195,11 +111,10 @@ const ListPosts = ({ post }: IpostsProps) => {
                         options={defaultOptions}
                         height={40}
                         width={200}
-                        isStopped={buttonToggleValidate ? false : true}
+                        isStopped={animationState.isStopped}
                         isPaused={animationState.isPaused}
                      />
                   </div>
-                  {post.likes.length}
                </StyledlikeAnimationContainer>
 
                <IconButton
@@ -211,20 +126,6 @@ const ListPosts = ({ post }: IpostsProps) => {
             </CardActions>
          </Card>
 
-         {opemModal && (
-            <ModalPostDelete
-               opemModal={opemModal}
-               setOpemModal={setOpemModal}
-               post={post}
-            />
-         )}
-         {opemModalEdit && (
-            <ModalPostEdit
-               opemModalEdit={opemModalEdit}
-               setOpemModalEdit={setOpemModalEdit}
-               post={post}
-            />
-         )}
          {opemModalComment && (
             <ModalOpemComment
                opemModalComment={opemModalComment}
@@ -236,4 +137,4 @@ const ListPosts = ({ post }: IpostsProps) => {
    );
 };
 
-export default ListPosts;
+export default PostsSelectPerfil

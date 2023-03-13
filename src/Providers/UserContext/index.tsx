@@ -60,6 +60,10 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
                   navigate(page);
                }
                // console.log("qualqueer coisa")
+
+               // navigate("/dashboard");
+               
+
             } catch (error) {
                console.error(error);
                localStorage.removeItem("TOKEN")
