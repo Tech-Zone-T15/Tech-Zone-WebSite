@@ -11,7 +11,7 @@ export const StyledMain = styled.main`
       border-radius: 8px;
       padding: 16px;
    }
-   .following-box {
+   .following-box, .followers-box {
       display: flex;
       flex-direction: column;
       margin: 6px;

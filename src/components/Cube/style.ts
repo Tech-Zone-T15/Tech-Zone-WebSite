@@ -37,13 +37,25 @@ export const StyledCubeContainer = styled.div`
       0% {
          transform: rotateY(calc(90deg * var(--i))) translateZ(150px);
       }
-      50% {
-         transform: rotateY(calc(80deg * var(--i))) translateZ(400px)
+      25% {
+         transform: rotateY(calc(90deg * var(--i))) translateZ(400px)
             rotateZ(90deg);
+         background: linear-gradient(#151515, red);
+      }
+      50% {
+         transform: rotateY(calc(90deg * var(--i))) translateZ(150px)
+            rotateZ(180deg);
+         background: linear-gradient(#151515, green);
+      }
+      75% {
+         transform: rotateY(calc(90deg * var(--i))) translateZ(400px)
+            rotateZ(270deg);
+         background: linear-gradient(#151515, yellow);
       }
       100% {
          transform: rotateY(calc(90deg * var(--i))) translateZ(150px)
-            rotateZ(0deg);
+            rotateZ(360deg);
+         background: linear-gradient(#151515, ${mainTheme.colors.primary});
       }
    }
 

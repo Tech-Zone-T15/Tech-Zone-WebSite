@@ -53,8 +53,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const [text2, setText2] = useState("Seguir");
    const [text3, setText3] = useState("Seguir");
 
-   const [modalSendPost, setModalSendPost] = useState(false);
-
    const [allUsersFollowed, setAllUsersFollowed] = useState<Ifollows[]>([]);
 
 
@@ -109,7 +107,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const sendPost = async (data: IsendPost) => {
 
-      //requisição para enviar os post
       
       try {
          const response = await api.post("posts", data, {
@@ -177,7 +174,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       AllUsers();
    }, [token]);
 
-   const deletePost = async (postId: Iusers) => {
+   const deletePost = async (postId:Iposts) => {
       const id = postId.id;
       try {
          const response = await api.delete(`posts/${id}`, {
@@ -240,7 +237,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       toast.success("Comentario Editado com sucesso")
    };
 
-   const deleteComments = async (CommentId: IUpdateComments) => {
+   const deleteComments = async (CommentId: IComments) => {
       const { id } = CommentId;
 
       try {
@@ -261,7 +258,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       }
    };
 
-   const sendComments = async (data: IComments[]) => {
+   const sendComments = async (data:IComments ) => {
       try {
          const response = await api.post("comments", data, {
             headers: {
@@ -366,8 +363,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             getPostLikes,
             postLikes,
             followedsUsers,
-            setModalSendPost,
-            modalSendPost,
             setText1,
             setText2,
             setText3,

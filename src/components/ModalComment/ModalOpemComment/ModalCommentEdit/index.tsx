@@ -3,13 +3,14 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { IComments } from "../../../../Providers/DashboardContext/@types/dashboardTypes";
 import { DashboardContext } from "../../../../Providers/DashboardContext";
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import SendIcon from '@mui/icons-material/Send'
 
 
 interface IModalCommentEdit {
@@ -18,13 +19,21 @@ interface IModalCommentEdit {
    comments: IComments
 }
 interface IdataForm {
-   dataForm: string;
-   comment: string;
+   id?: React.Key | null | undefined;
+   map?: any;
+   postId: number;
+   userId: number;
+   name?: string;
+   profile_img?: string;
+   comment:string;
 }
 
 export default function ModalCommentEdit({opemModalEdit,setOpemModalEdit,comments}: IModalCommentEdit) {
 
    const {comment} = comments
+
+   const theme = useTheme();
+   const mdUp = useMediaQuery(theme.breakpoints.up('sm'));
 
    
    const {editcomments} = useContext(DashboardContext)
@@ -48,15 +57,9 @@ export default function ModalCommentEdit({opemModalEdit,setOpemModalEdit,comment
    };
 
    return (
-      <Dialog open={opemModalEdit} onClose={handleClose}>
+      <Dialog open={opemModalEdit} onClose={handleClose} sx={{ margin:0, }}>
          <form onSubmit={handleSubmit(submit)}>
-            <DialogTitle>Subscribe</DialogTitle>
-            <DialogContent>
-               <DialogContentText>
-                  To subscribe to this website, please enter your email address
-                  here. We will send updates occasionally.
-               </DialogContentText>
-            </DialogContent>
+            <DialogTitle sx={{ borderBottom: 2,borderColor: '#004182',fontSize:"1.5rem" }}>Editar Comentario</DialogTitle>
 
             <TextField
                type="textarea"
@@ -66,13 +69,14 @@ export default function ModalCommentEdit({opemModalEdit,setOpemModalEdit,comment
                multiline
                fullWidth
                defaultValue={comment}
+               sx={{ width:mdUp ? 600 : 300}}
                variant="filled"
                {...register("comment")}
             />
 
             <DialogActions>
-               <Button onClick={handleClose}>Cancel</Button>
-               <Button type="submit">Subscribe</Button>
+               <Button onClick={handleClose}>Cancelar</Button>
+               <Button type="submit" variant="contained" endIcon={<SendIcon />}>Enviar</Button>
             </DialogActions>
          </form>
       </Dialog>

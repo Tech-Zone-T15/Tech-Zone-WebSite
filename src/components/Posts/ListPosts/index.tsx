@@ -4,10 +4,7 @@ import animationData from "./heartAnimation.json";
 
 import ModalPostDelete from "../../ModalPostDelete";
 import ModalPostEdit from "../../ModalPostEdit";
-import {
-   IpostsProps,
-   IidUserLogin,
-} from "../../../Providers/DashboardContext/@types/dashboardTypes";
+import { IpostsProps } from "../../../Providers/DashboardContext/@types/dashboardTypes";
 import ModalOpemComment from "../../ModalComment/ModalOpemComment";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
@@ -21,64 +18,22 @@ import AddComment from "@mui/icons-material/AddComment";
 import DeleteForever from "@mui/icons-material/DeleteForever";
 import Edit from "@mui/icons-material/Edit";
 import { DashboardContext } from "../../../Providers/DashboardContext";
-import jwt_decode from 'jwt-decode';
-import { UserContext } from "../../../Providers/UserContext";
 import { StyledlikeAnimationContainer } from "./style";
 import { Img } from "./styled";
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { toast } from "react-toastify";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { UserContext } from "../../../Providers/UserContext";
 
 const ListPosts = ({ post }: IpostsProps) => {
+   const { users, getPostLikes, postLikes, likingPost, unLinkingPost } =
+      useContext(DashboardContext);
 
-   const {users, getPostLikes, postLikes, likingPost, unLinkingPost } = useContext(DashboardContext);
+   const { img, content, userId } = post;
 
-   const {user} = useContext(UserContext);
-
-   const { img, content,userId } = post;
-
-   const token = localStorage.getItem("@TOKEN");
-
-   //------------------------------------
-
-   // console.log(post.id)
-   useEffect(() => {
-
-      if(user !== null){
-         getPostLikes(post.id)
-      }
-      console.log(post.id)
-   },[])
-
-   // console.log(postLikes)
-   
-   //    postLikes.map(likeObj => {
-         
-   //    } )
-   // console.log()
-
-      // const data = { `postId:${post.id}, `userId:${user?.id}` } 
-
-      // const handleClick = () => {
-      //    if(user !== null){
-      //       postLikes.map(likeObj => {
-      //          likeObj.userId !== user.id
-      //          ?
-      //          likingPost(`postId:${post.id}` , `userId:${user.id}`)
-      //          :
-      //          unLinkingPost(likeObj.id)
-      //       })
-      //    }
-      // }
-   
-
-   //--------------------------------------
-      
-   const idUserLogin = jwt_decode<IidUserLogin>(token);
+   const { user } = useContext(UserContext);
 
    const theme = useTheme();
-   const mdUp = useMediaQuery(theme.breakpoints.up('sm'));
-
+   const mdUp = useMediaQuery(theme.breakpoints.up("sm"));
 
    const [opemModal, setOpemModal] = useState(false);
    const [opemModalEdit, setOpemModalEdit] = useState(false);
@@ -99,17 +54,26 @@ const ListPosts = ({ post }: IpostsProps) => {
 
    return (
       <>
-         <Card sx={{ width:mdUp ? 600 : 300 }}>
-
+         <Card sx={{ width: mdUp ? 600 : 300 }}>
             <CardHeader
                avatar={
-                  <Avatar aria-label="Avatar do usuario" sx={{ width: 50, height: 50,}}>
-                        {users.map(user => user.id == userId ? <Img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
+                  <Avatar
+                     aria-label="Avatar do usuario"
+                     sx={{ width: 50, height: 50 }}
+                  >
+                     {users.map((user) =>
+                        user.id == userId ? (
+                           <Img
+                              src={user.profile_img}
+                              alt={user.name}
+                              key={user.id}
+                           />
+                        ) : null
+                     )}
                   </Avatar>
                }
                action={
-                  
-                  idUserLogin.sub == userId ? (
+                  user?.id == userId ? (
                      <>
                         <IconButton
                            aria-label="deletar post"
@@ -124,36 +88,43 @@ const ListPosts = ({ post }: IpostsProps) => {
                            <Edit />
                         </IconButton>
                      </>
-                     ):(null)
-                  }
-                  
-                  title={
-                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",}} >
-                        {users.map(user => user.id == post.userId ?  user.name : null)}
-                     </Typography>
-                  }
-
-                  sx={{ borderBottom: 2,borderColor: '#004182',fontSize:"1.5rem" }}
-                  />
-            {
-               img.length !== 0 ?(
-                  <CardMedia
+                  ) : null
+               }
+               title={
+                  <Typography
+                     color="text.secondary"
+                     sx={{ fontSize: "1.2rem" }}
+                  >
+                     {users.map((user) =>
+                        user.id == post.userId ? user.name : null
+                     )}
+                  </Typography>
+               }
+               sx={{ borderBottom: 2, borderColor: "#004182" }}
+            />
+            {img.length !== 0 ? (
+               <CardMedia
                   component="img"
                   height="194"
-                  src={img} 
-                  alt="Imagem do post" 
-                  />
-                  ):(null)
-               }
+                  src={img}
+                  alt="Imagem do post"
+               />
+            ) : null}
 
-            <CardContent  sx={{bgcolor: '#e9ecef' }}>
-               <Typography  paragraph color="text.secondary" sx={{ fontSize:"1rem",}} >
+            <CardContent sx={{ bgcolor: "#e9ecef", wordWrap: "break-word" }}>
+               <Typography color="text.secondary" sx={{ fontSize: "1rem" }}>
                   {content}
                </Typography>
             </CardContent>
 
-            
-            <CardActions disableSpacing sx={{borderTop: 2,borderColor: '#004182', justifyContent: 'space-around' }}>
+            <CardActions
+               disableSpacing
+               sx={{
+                  borderTop: 2,
+                  borderColor: "#004182",
+                  justifyContent: "space-around",
+               }}
+            >
                <StyledlikeAnimationContainer
                   onClick={() => {
                      setAnimationState({
@@ -161,6 +132,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                         isStopped: !animationState.isStopped,
                      });
                      setLikeState(!likeState);
+                     console.log(likeState);
                   }}
                >
                   <div className="animation">
@@ -171,23 +143,24 @@ const ListPosts = ({ post }: IpostsProps) => {
                         isStopped={animationState.isStopped}
                         isPaused={animationState.isPaused}
                      />
-                  </div> {postLikes.length}
+                  </div>{" "}
+                  {postLikes.length}
                </StyledlikeAnimationContainer>
 
                <IconButton
                   aria-label="Abri comentarios "
-                  onClick={() => setopemModalComment(!opemModalComment)}>
+                  onClick={() => setopemModalComment(!opemModalComment)}
+               >
                   <AddComment />
                </IconButton>
-
             </CardActions>
          </Card>
 
          {opemModal && (
             <ModalPostDelete
-            opemModal={opemModal}
-            setOpemModal={setOpemModal}
-            post={post}
+               opemModal={opemModal}
+               setOpemModal={setOpemModal}
+               post={post}
             />
          )}
          {opemModalEdit && (
@@ -196,17 +169,16 @@ const ListPosts = ({ post }: IpostsProps) => {
                setOpemModalEdit={setOpemModalEdit}
                post={post}
             />
-            )}
+         )}
          {opemModalComment && (
             <ModalOpemComment
-            opemModalComment={opemModalComment}
-            setopemModalComment={setopemModalComment}
-            post={post}
+               opemModalComment={opemModalComment}
+               setopemModalComment={setopemModalComment}
+               post={post}
             />
          )}
       </>
    );
-}
+};
 
-
-export default ListPosts
+export default ListPosts;

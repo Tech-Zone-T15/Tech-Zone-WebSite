@@ -6,17 +6,17 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
+import { DashboardContext } from "../../../Providers/DashboardContext";
 import { useContext } from "react";
-import { DashboardContext } from "../../../../Providers/DashboardContext";
-import { IComments } from "../../../../Providers/DashboardContext/@types/dashboardTypes";
-import DeleteIcon from '@mui/icons-material/Delete'
+import { Iposts } from "../../../Providers/DashboardContext/@types/dashboardTypes";
+import { ProfileContext } from "../../../Providers/ProfileContext";
 
 
 
 interface IopemModal{
-   opemModalDelete: true
-   setOpemModalDelete: React.Dispatch<React.SetStateAction<boolean>>
-   comments:IComments
+   opemModal: true
+   setOpemModal: React.Dispatch<React.SetStateAction<boolean>>
+   postId: number
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -28,31 +28,35 @@ const Transition = React.forwardRef(function Transition(
    return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ModalCommentDelete({opemModalDelete,setOpemModalDelete,comments}:IopemModal) {
+export default function ProfileDeletePostModal({opemModal,setOpemModal,postId}:IopemModal) {
 
-   const {deleteComments} = useContext(DashboardContext)
+   const {deleteMyPost} = useContext(ProfileContext)
 
    const handleClose = () => {
-      setOpemModalDelete(!opemModalDelete);
+      setOpemModal(!opemModal);
    };
 
+   function deleteAndClose(){
+      deleteMyPost(postId)
+      setOpemModal(!opemModal)
+   }
    return (
       <div>
          <Dialog
-            open={opemModalDelete}
+            open={opemModal}
             TransitionComponent={Transition}
             keepMounted
             onClose={handleClose}
             aria-describedby="alert-dialog-slide-description"
          >
             <DialogContent>
-               <DialogContentText id="alert-dialog-slide-description" sx={{ fontWeight: 'bold',fontSize:"1.2rem",color: '#004182',}}>
-                  Deseja mesmo deletar esse Comentario ? 
+               <DialogContentText id="alert-dialog-slide-description">
+                  Deseja mesmo excluir permanentemente essa publicação? 
                </DialogContentText>
             </DialogContent>
             <DialogActions>
-               <Button onClick={handleClose} size="medium" variant="contained">Cancelar</Button>
-               <Button onClick={() => deleteComments(comments)} color="error" startIcon={<DeleteIcon/>} size="medium" variant="contained">Deletar</Button>
+               <Button onClick={handleClose}>Cancelar</Button>
+               <Button onClick={() => deleteAndClose()}>Excluir</Button>
             </DialogActions>
          </Dialog>
       </div>
