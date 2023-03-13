@@ -1,10 +1,7 @@
 import { useContext, useState } from "react";
-import { ProfileContext } from "../../Providers/ProfileContext";
 import { UserContext } from "../../Providers/UserContext";
 import { Typography } from "@mui/material";
 import { MyPostsStyle } from "./style";
-import ModalPostDelete from "../ModalPostDelete";
-import ModalPostEdit from "../ModalPostEdit";
 import imagem from "../../assets/no-data-icon-29.png";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -19,8 +16,7 @@ import CardContent from "@mui/material/CardContent";
 import ProfileModalEditPost from "./ProfileModalEditPost";
 import ProfileDeletePostModal from "./ModalPostDelete/index";
 import { iMyPost } from "../../Providers/ProfileContext/@types/profileTypes";
-
-
+import { ProfileSendPost } from "./SendPost";
 
 export const MyPostsList = ({ myPosts }: iMyPost) => {
    const { user } = useContext(UserContext);
@@ -34,11 +30,11 @@ export const MyPostsList = ({ myPosts }: iMyPost) => {
          {myPosts.length === 0 ? (
             <>
                <img src={imagem} alt="" />
-               <Typography variant="subtitle2">
+               <Typography variant="h6">
                   Ops, parece que você ainda não publicou nada, que tal fazer
-                  sua primeira publicação?
+                  uma publicação?
                </Typography>
-               <h1>O input de postar quando estiver pronto</h1>
+               <ProfileSendPost />
             </>
          ) : (
             <ul>
@@ -54,7 +50,9 @@ export const MyPostsList = ({ myPosts }: iMyPost) => {
                            <>
                               <IconButton
                                  aria-label="deletar post"
-                                 onClick={() => setOpenModalDelete(!openModalDelete)}
+                                 onClick={() =>
+                                    setOpenModalDelete(!openModalDelete)
+                                 }
                               >
                                  <DeleteForever />
                               </IconButton>

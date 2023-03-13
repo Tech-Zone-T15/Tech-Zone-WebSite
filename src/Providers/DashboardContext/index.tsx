@@ -19,6 +19,7 @@ import {
 
 import jwt_decode from "jwt-decode";
 import { UserContext } from "../UserContext";
+import { useNavigate } from "react-router-dom";
 
 
 export const DashboardContext = createContext({} as IDashboardContext);
@@ -32,6 +33,10 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [getComments, setGetComments] = useState<IComments[]>([]);
 
+   const [ProfilePost,setProfilePost] = useState<Iposts[]>([])
+
+   const navigate = useNavigate();
+   
    const [loading, setLoading] = useState(false);
 
    //-------------------------- Vitor -----------------------------//
@@ -131,7 +136,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    };
 
    const AllUsers = async () => {
-      const id = user!.id;
+      const id = user?.id;
 
       try {
          const response = await api.get("/users", {
@@ -299,6 +304,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          toast.error('Erro ao seguir usuário')
       }
    }
+   
 
    //----------------------- VITOR ------------------------ 
 
@@ -315,20 +321,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             console.error;
          }
    }
-
-   // const getAllPostLikes = async () => {
-   //    try {
-   //       const response = await api.get("posts?_embed=comments&_embed=likes", {
-   //          headers: {
-   //             Authorization: `Bearer ${token}`,
-   //          },
-   //       });
-   //          // console.log(response.data);
-   //          setPostLikes(response.data)
-   //       } catch (error) {
-   //          console.error;
-   //       }
-   // }
    
    const likingPost = async (data: ILikingPost) => {
       try {
@@ -414,7 +406,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             text3,
             likingPost,
             unLinkingPost,
-            likesPosts
+            likesPosts,
+            ProfilePost,
+            getProfilePosts
          }}
       >
          {children}

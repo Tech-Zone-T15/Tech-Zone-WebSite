@@ -10,7 +10,7 @@ const ProtectedRotes = () => {
    const token = localStorage.getItem('@TOKEN')
    
    return(
-    user
+   token
     ?
     <Outlet/>
     :

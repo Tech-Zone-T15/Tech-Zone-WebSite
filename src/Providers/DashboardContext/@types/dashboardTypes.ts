@@ -79,6 +79,14 @@ export interface IpostsProps{
    name?:string
    user?:Iusers
 }
+export interface ProfilePostProps{
+   ProfilePost:Iposts
+   profile_img?:string
+   name?:string
+   user?:Iusers
+}
+
+
 export interface IUserProps{
    user:Iusers
    comments?:IComments
@@ -142,4 +150,6 @@ export interface IDashboardContext {
    likingPost: (data: ILikingPost) => Promise<void>
    unLinkingPost: (likeID: number, data: ILikingPost) => Promise<void>
    likesPosts: IPostLikes[]
+   getProfilePosts: (post: Iposts) => Promise<void>
+   ProfilePost: Iposts[]
 }

@@ -12,6 +12,9 @@ import { DashboardContext } from "../../../Providers/DashboardContext";
 import { useContext } from "react";
 import { iMyPost } from "../../../Providers/ProfileContext/@types/profileTypes";
 import { ProfileContext } from "../../../Providers/ProfileContext";
+import * as yup from 'yup'
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ErrorMessage } from "@hookform/error-message";
 
 interface IopemModalEdit {
    opemModalEdit: true;
@@ -23,12 +26,19 @@ interface IdataForm {
    content: string;
 }
 
+const schema = yup.object({
+   img: yup.string().required('Informe uma url de imagem').matches(
+      /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/
+  )
+
+})
+
 export default function ProfileModalEditPost({opemModalEdit,setOpemModalEdit,post,}: IopemModalEdit) {
 
 
    const { editMyPost } = useContext(ProfileContext);
 
-   const {register, handleSubmit, formState: { errors }} = useForm();
+   const {register, handleSubmit, formState: { errors }} = useForm({resolver: yupResolver(schema)});
 
    const handleClose = () => {
       setOpemModalEdit(!opemModalEdit);
@@ -42,13 +52,14 @@ export default function ProfileModalEditPost({opemModalEdit,setOpemModalEdit,pos
       setOpemModalEdit(!opemModalEdit);
    }
 
+   
    return (
       <Dialog open={opemModalEdit} onClose={handleClose}>
          <form onSubmit={handleSubmit(submit)}>
             <DialogTitle>Editar publicação</DialogTitle>
             <TextField
                type="textarea"
-               id="textarea"
+               id="textarea edit-post-img-input"
                label="Link da imagem da foto"
                margin="dense"
                multiline
@@ -58,6 +69,7 @@ export default function ProfileModalEditPost({opemModalEdit,setOpemModalEdit,pos
                maxRows={5}
                {...register("img")}
             />
+
             <TextField
                type="textarea"
                id="textarea"

@@ -10,10 +10,14 @@ import { ModalConfirm } from "../../components/ModalConfirm";
 import { MyPostsList } from "../../components/MyPosts";
 import { UserFollowing } from "../../components/UserFollowing";
 import { Typography } from "@mui/material";
+<<<<<<< HEAD
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { IUser } from "../../Providers/UserContext/@types";
 import { useLocation } from "react-router-dom";
 import { UserContext } from "../../Providers/UserContext";
+=======
+import { FaUserEdit } from "react-icons/fa";
+>>>>>>> d6a519457a15f9807f0a8900a9848ee581fa523c
 
 function PerfilPage() {
    const { updateProfileModal, updateProfileImage, deleteProfileModal } =
@@ -27,7 +31,6 @@ function PerfilPage() {
       followersList,
       followingList,
    } = useContext(ProfileContext);
-   const {user} = useContext(UserContext)
 
    const location = useLocation()
    localStorage.setItem('@location', location.pathname)
@@ -53,66 +56,69 @@ function PerfilPage() {
             <CapaPerfil />
             {editing === false ? (
                <div className="open-edit">
-                  <Typography variant="h6">
-                     Editar Perfil{" "}
-                     <IoIosArrowDropdownCircle
-                        onClick={() => setEditing(!editing)}
-                     />
+                  <Typography
+                     onClick={() => setEditing(!editing)}
+                     id="edit"
+                     variant="h6"
+                  >
+                     Editar Perfil <FaUserEdit />
                   </Typography>
                </div>
             ) : (
                <ProfileData editing={editing} setEditing={setEditing} />
             )}
-            <div className="followers-box">
-               <Typography variant="h6">
-                  Seguidores ({followersList.length})
-               </Typography>
-               <div className="followers-list">
-                  {followersList.length > 0 ? (
-                     <ul>
-                        {followersList.map((follower) => (
-                           <UserFollowing
-                              key={follower.id}
-                              userObj={follower.user}
-                              
-                           />
-                           
-                        ))}
-                     </ul>
-                  ) : (
-                     <li key={crypto.randomUUID()}>
-                        <Typography variant="subtitle1">
-                           Ninguém te segue
-                        </Typography>
-                     </li>
-                  )}
+            <div className="main-container">
+               <div className="connections-container">
+                  <div className="followers-box">
+                     <Typography variant="h6">
+                        Seguidores ({followersList.length})
+                     </Typography>
+                     <div className="followers-list">
+                        {followersList.length > 0 ? (
+                           <ul>
+                              {followersList.map((follower) => (
+                                 <UserFollowing
+                                    key={follower.id}
+                                    userObj={follower.user}
+                                 />
+                              ))}
+                           </ul>
+                        ) : (
+                           <li key={crypto.randomUUID()}>
+                              <Typography variant="subtitle1">
+                                 Ninguém te segue
+                              </Typography>
+                           </li>
+                        )}
+                     </div>
+                  </div>
+                  <div className="following-box">
+                     <Typography variant="h6">
+                        Seguindo ({followingList.length})
+                     </Typography>
+                     <div className="following-list">
+                        {followingList.length > 0 ? (
+                           <ul>
+                              {followingList.map((followObject) => (
+                                 <UserFollowing
+                                    key={followObject.id}
+                                    id={followObject.follows}
+                                    followId={followObject.id}
+                                 />
+                              ))}
+                           </ul>
+                        ) : (
+                           <li key={crypto.randomUUID()}>
+                              <Typography variant="subtitle1">
+                                 Você não está seguindo ninguém
+                              </Typography>
+                           </li>
+                        )}
+                     </div>
+                  </div>
                </div>
+               <MyPostsList myPosts={myPosts} />
             </div>
-            <div className="following-box">
-               <Typography variant="h6">
-                  Seguindo ({followingList.length})
-               </Typography>
-               <div className="following-list">
-                  {followingList.length > 0 ? (
-                     <ul>
-                        {followingList.map((followObject) => (
-                           <UserFollowing
-                              key={followObject.id}
-                              id={followObject.follows}
-                              followId={followObject.id}
-                           />
-                        ))}
-                     </ul>
-                  ) : (
-                     <li key={crypto.randomUUID()}>
-                        <Typography variant="subtitle1">
-                           Você não está seguindo ninguém
-                        </Typography>
-                     </li>
-                  )}
-               </div>
-            </div>
-            <MyPostsList myPosts={myPosts} />
          </StyledMain>
       </>
    );

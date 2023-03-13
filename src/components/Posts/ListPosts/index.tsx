@@ -28,9 +28,10 @@ import { toast } from "react-toastify";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
+
 const ListPosts = ({ post }: IpostsProps) => {
 
-   const {users, getPostLikes, postLikes, likingPost, unLinkingPost } = useContext(DashboardContext);
+   const {users, getProfilePosts, likingPost, unLinkingPost } = useContext(DashboardContext);
 
    const { user } = useContext(UserContext);
 
@@ -80,7 +81,6 @@ const ListPosts = ({ post }: IpostsProps) => {
    const theme = useTheme();
    const mdUp = useMediaQuery(theme.breakpoints.up('sm'));
 
-
    const [opemModal, setOpemModal] = useState(false);
    const [opemModalEdit, setOpemModalEdit] = useState(false);
    const [opemModalComment, setopemModalComment] = useState(false);
@@ -100,12 +100,12 @@ const ListPosts = ({ post }: IpostsProps) => {
 
 
    return (
-      <>
+      <li>
          <Card sx={{ width:mdUp ? 600 : 300 }}>
 
             <CardHeader
                avatar={
-                  <Avatar aria-label="Avatar do usuario" sx={{ width: 50, height: 50,}}>
+                  <Avatar aria-label="Avatar do usuario" sx={{ width: 50, height: 50, cursor:'pointer'}} onClick={() => getProfilePosts(post)}>
                         {users.map(user => user.id == userId ? <Img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
                   </Avatar>
                }
@@ -113,7 +113,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                   
                   user?.id== userId ? (
                      <>
-                        <IconButton
+                        <IconButton 
                            aria-label="deletar post"
                            onClick={() => setOpemModal(!opemModal)}
                         >
@@ -130,7 +130,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                   }
                   
                   title={
-                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",}}>
+                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",cursor:'pointer',width:'9rem'}} onClick={() => getProfilePosts(post)}>
                         {users.map(user => user.id == post.userId ?  user.name : null)}
                      </Typography>
                   }
@@ -218,7 +218,7 @@ const ListPosts = ({ post }: IpostsProps) => {
             post={post}
             />
          )}
-      </>
+      </li>
    );
 }
 

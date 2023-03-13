@@ -54,12 +54,19 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
                   },
                });
                setUser(response.data);
+<<<<<<< HEAD
                if(page === null) {
                   navigate("/dashboard");
                } else {
                   navigate(page);
                }
                // console.log("qualqueer coisa")
+=======
+
+               // navigate("/dashboard");
+               
+
+>>>>>>> d6a519457a15f9807f0a8900a9848ee581fa523c
             } catch (error) {
                console.error(error);
                localStorage.removeItem("TOKEN")

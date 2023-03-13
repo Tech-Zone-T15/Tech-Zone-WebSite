@@ -16,5 +16,14 @@ export const ProfileDataStyle = styled.div`
    button{
       align-self: flex-end;
    }
-   
+   #cancel-edit:hover{
+      cursor: pointer;
+      color: red;
+      transform: scale(1.1, 1.1);
+   }
+   #open-edit-modal-icon:hover{
+      cursor: pointer;
+      color: blue;
+      transform: scale(1.2, 1.2);
+   }
 `
