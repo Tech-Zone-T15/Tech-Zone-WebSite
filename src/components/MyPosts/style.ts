@@ -8,34 +8,34 @@ export const MyPostsStyle = styled.div`
    margin-top: 32px;
    padding: 16px;
    border: 1px solid gray;
-   h5{
+   h5 {
       margin-bottom: 16px;
    }
-   img{
+   img {
       max-width: 100%;
    }
-   ul{
+   ul {
       display: flex;
-   flex-direction: column;
-      li{
+      flex-direction: column;
+      li {
          margin-bottom: 16px;
          border: 1px solid gray;
          border-radius: 6px;
       }
    }
-   @media(min-width: 769px){
+   @media (min-width: 769px) {
       min-width: 70vw;
-      justify-content: center;
-      ul{
-         min-width: 70%;
+      align-items: center;
+      ul {
+         min-width: 75%;
          overflow-x: initial;
          padding: 5%;
       }
-      h5{
+      h5 {
          font-size: 64px;
-         text-align: center
+         text-align: center;
       }
-      img{
+      img {
          width: 70%;
       }
    }

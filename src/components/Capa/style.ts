@@ -22,4 +22,16 @@ export const CapaStyle = styled.div`
       object-fit: cover;
       margin-top: -50%;
    }
+   @media(min-width: 769px){
+      .foto-perfil{
+         width: 250px;
+         height: 250px
+      }
+   }
+   @media(min-width: 1920px){
+      .foto-perfil{
+         width: 350px;
+         height: 350px
+      }
+   }
 `;

@@ -8,7 +8,7 @@ import Card from "@mui/material/Card";
 import { Typography } from "@mui/material";
 import { ProfileContext } from "../../Providers/ProfileContext";
 import { IUser } from "../../Providers/UserContext/@types";
-import { UnfollowButtonStyled } from "./style";
+import { StyledLi, UnfollowButtonStyled } from "./style";
 import { Img } from "../../components/Posts/ListPosts/styled";
 
 
@@ -52,8 +52,8 @@ export const UserFollowing = ({ id, followId, userObj }: iUserFollowing) => {
    }, []);
 
    return userObj ? (
-      <li>
-         <Card sx={{ maxWidth: 200, minWidth: 150 }}>
+      <StyledLi>
+         <Card sx={{ maxWidth: 200, minWidth: 150 }} id='div-li'>
             <CardHeader
                avatar={
                   <Avatar
@@ -71,16 +71,16 @@ export const UserFollowing = ({ id, followId, userObj }: iUserFollowing) => {
                      <Typography variant="caption">Seguindo</Typography>
                   </UnfollowButtonStyled>
                ): (
-                  <UnfollowButtonStyled onClick={() => follow(userObj.id)}>
+                  <UnfollowButtonStyled onClick={() => follow(userObj.id)} id='follow-btn'>
                      <Typography variant="caption">Seguir de volta</Typography>
                   </UnfollowButtonStyled>
                )
             }
          </Card>
-      </li>
+      </StyledLi>
    ) : (
-      <li>
-         <Card sx={{ maxWidth: 200, minWidth: 150 }}>
+      <StyledLi>
+         <Card sx={{ maxWidth: 200, minWidth: 150 }} id='div-li'>
             <CardHeader
                avatar={
                   <Avatar>
@@ -92,10 +92,11 @@ export const UserFollowing = ({ id, followId, userObj }: iUserFollowing) => {
             <UnfollowButtonStyled
                type="button"
                onClick={() => unfollow(followId)}
+               id='unfollow-btn'
             >
                <Typography variant="caption">Deixar de seguir</Typography>
             </UnfollowButtonStyled>
          </Card>
-      </li>
+      </StyledLi>
    );
 };

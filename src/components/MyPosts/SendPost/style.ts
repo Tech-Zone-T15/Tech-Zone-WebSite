@@ -10,11 +10,15 @@ export const DivContainer = styled.div`
    max-width: 600px;
    width: 100%;
    gap: 1rem;
-
+   padding: 6px;
+   @media(min-width: 769px){
+      height: 75px;
+      padding: 32px;
+   }
    img {
       width: 50px;
       height: 50px;
-      border-radius: 100%;
+      border-radius: 50%;
       object-fit: cover;
    }
 

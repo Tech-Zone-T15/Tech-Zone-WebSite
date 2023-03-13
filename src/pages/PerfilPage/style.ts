@@ -42,6 +42,7 @@ export const StyledMain = styled.main`
       .followers-list > ul, .following-list > ul{
          display: block;
          max-height: 40vh;
+         width: 20vw;;
       }
    }
 `;
