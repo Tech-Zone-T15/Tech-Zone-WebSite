@@ -10,7 +10,6 @@ import {
    Iposts,
    IUpdateComments,
    IComments,
-   IlikesPostProps,
    Ifollows,
    IUserID,
    ILikingPost,
@@ -109,7 +108,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
          setGetPost(response.data);
          setPostLikes(response.data.likes)
-         console.log(response.data)
+         
       } catch (error) {
          console.error(error);
       }
@@ -149,15 +148,15 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         setAllUsersFollowed(ListFollows.data);
-
+         
+         
          const array = response.data;
          const NewArray: Iusers[] = [];
 
          const filteredList = ListFollows.data.filter((follow: Ifollows) => {
             return Number(follow.userId) === Number(id);
          });
-
+         
          const NewList = array.filter((user: Iusers) => {
             return !filteredList.some((follow: Ifollows) => {
                return user.id === follow.follows;
@@ -186,7 +185,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       AllUsers();
    }, [token]);
 
-   const deletePost = async (postId: Iusers) => {
+   const deletePost = async (postId:Iposts) => {
       const id = postId.id;
       try {
          const response = await api.delete(`posts/${id}`, {
@@ -249,7 +248,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       toast.success("Comentario Editado com sucesso")
    };
 
-   const deleteComments = async (CommentId: IUpdateComments) => {
+   const deleteComments = async (CommentId: IComments) => {
       const { id } = CommentId;
 
       try {
@@ -270,7 +269,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       }
    };
 
-   const sendComments = async (data: IComments[]) => {
+   const sendComments = async (data: IComments) => {
       try {
          const response = await api.post("comments", data, {
             headers: {
@@ -299,29 +298,43 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         setAllUsersFollowed(response.data)
+
+         setAllUsersFollowed([...allUsersFollowed, response.data])
       } catch (error) {
          toast.error('Erro ao seguir usuário')
       }
    }
 
 
-   //----------------------- VITOR ------------------------ 
+   const getProfilePosts = async (post:Iposts) => {
 
-   const getPostLikes = async (postID: string | number) => {
+      const {userId} = post
+      
       try {
-         const response = await api.get(`posts/${postID}/likes`,{
+         const response = await api.get(`/users/${userId}/posts?_embed=comments`, {
             headers: {
                Authorization: `Bearer ${token}`,
             },
          });
-            // console.log(response.data);
-            setPostLikes(response.data)
-         } catch (error) {
-            console.error;
-         }
-   }
+
+         setProfilePost(response.data);
+
+         navigate("/SelectPerfilPage")
+
+      } catch (error) {
+         console.error(error);
+      }
+
+   };
+
+
+   useEffect(() => {
+      localStorage.setItem('@kenzieTech:ProfilePost',JSON.stringify(ProfilePost));
+   }, [ProfilePost]);
    
+   //----------------------- VITOR ------------------------ 
+
+
    const likingPost = async (data: ILikingPost) => {
       try {
          const response = await api.post('likes', data, {
@@ -368,9 +381,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       }
    }
 
-//----------------------------------------------------------------
 
    
+
    return (
       <DashboardContext.Provider
          value={{
@@ -393,7 +406,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             setFilteredPosts,
             searchPostsList,
             loading,
-            getPostLikes,
             postLikes,
             followedsUsers,
             setModalSendPost,
@@ -404,11 +416,12 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             text1,
             text2,
             text3,
+            allUsersFollowed,
             likingPost,
             unLinkingPost,
             likesPosts,
             ProfilePost,
-            // getProfilePosts
+            getProfilePosts
          }}
       >
          {children}

@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Lottie from "react-lottie";
 import animationData from "./heartAnimation.json";
-
 import ModalPostDelete from "../../ModalPostDelete";
 import ModalPostEdit from "../../ModalPostEdit";
 import {IPostLikes, IpostsProps} from "../../../Providers/DashboardContext/@types/dashboardTypes";
@@ -18,15 +17,12 @@ import AddComment from "@mui/icons-material/AddComment";
 import DeleteForever from "@mui/icons-material/DeleteForever";
 import Edit from "@mui/icons-material/Edit";
 import { DashboardContext } from "../../../Providers/DashboardContext";
-import jwt_decode from 'jwt-decode';
-import { UserContext } from "../../../Providers/UserContext";
 import { StyledlikeAnimationContainer } from "./style";
 import { Img } from "./styled";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { toast } from "react-toastify";
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { UserContext } from "../../../Providers/UserContext";
+
 
 
 const ListPosts = ({ post }: IpostsProps) => {
@@ -39,9 +35,6 @@ const ListPosts = ({ post }: IpostsProps) => {
 
    const { img, content,userId } = post;
 
-   const token = localStorage.getItem("@TOKEN");
-
-   // console.log(post)
 
    
    //------------------------------------
@@ -58,10 +51,10 @@ const ListPosts = ({ post }: IpostsProps) => {
       userId: user?.id
    }
    
-   const buttonToggleValidate = likesPosts.find((like) => 
-       like.userId === user!.id
-      ) ? true : false
-   // console.log(buttonToggleValidate)
+   // const buttonToggleValidate = likesPosts.find((like) => 
+   //     like.userId === user!.id
+   //    ) ? true : false
+
 
    const handleClick = () => {
       if(user !== null){
@@ -183,15 +176,15 @@ const ListPosts = ({ post }: IpostsProps) => {
                            options={defaultOptions}
                            height={40}
                            width={200}
-                           isStopped={buttonToggleValidate ? false : true}
+                           // isStopped={buttonToggleValidate ? false : true}
                            isPaused={animationState.isPaused}
                            />
                      </div> 
-                     {likesPosts.length}
+                  {/* <span>{likesPosts.length}</span> */}
+
                   </StyledlikeAnimationContainer>
 
-                  {/* {buttonToggleValidate ? <FavoriteIcon cursor="pointer" aria-label="button" onClick={() => handleClick()}/> : <FavoriteBorderIcon  cursor="pointer" onClick={() => handleClick()}/> }
-                  <span>{post.likes.length}</span> */}
+
                
 
                <IconButton
