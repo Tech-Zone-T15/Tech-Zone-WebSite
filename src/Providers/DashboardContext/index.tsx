@@ -304,7 +304,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          toast.error('Erro ao seguir usuário')
       }
    }
-   
+
 
    //----------------------- VITOR ------------------------ 
 
@@ -408,7 +408,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             unLinkingPost,
             likesPosts,
             ProfilePost,
-            getProfilePosts
+            // getProfilePosts
          }}
       >
          {children}

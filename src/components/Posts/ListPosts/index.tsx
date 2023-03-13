@@ -58,7 +58,7 @@ const ListPosts = ({ post }: IpostsProps) => {
    
    const buttonToggleValidate = likesPosts.find((like) => 
        like.userId === user!.id
-   ) ? true : false
+      ) ? true : false
    // console.log(buttonToggleValidate)
 
    const handleClick = () => {
