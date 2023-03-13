@@ -9,6 +9,8 @@ const Post = () => {
 
    const {searchPostsList} = useContext(DashboardContext)
 
+   
+
    return ( 
       <Ul>
          {searchPostsList.map(post => <ListPosts key={post.id} post={post} />)}

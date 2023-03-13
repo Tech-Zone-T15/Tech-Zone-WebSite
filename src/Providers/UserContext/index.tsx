@@ -21,6 +21,18 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
    const navigate = useNavigate();
    const token = localStorage.getItem("@TOKEN");
 
+   const [load, setLoad] = useState(false);
+
+   
+   
+ 
+   let loggedId = "";
+   if(token) {
+      loggedId = jwt_decode(token)
+   }
+  
+   // console.log(loggedId)
+
    //   const userLoad = () =>{
    //     if(!token){
    //        navigate('/')
@@ -28,18 +40,26 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
    //          navigate('/dashboard')
    //       }
    //    }
-
+   
    useEffect(() => {
+      const page = localStorage.getItem('@location')
       if (token) {
+         const userID = jwt_decode<IUserID>(token);
          const autoLogin = async () => {
-            const userID = jwt_decode<IUserID>(token);
             try {
+               setLoad(true);
                const response = await api.get(`users/${userID.sub}`, {
                   headers: {
                      Authorization: `Bearer ${token}`,
                   },
                });
                setUser(response.data);
+               if(page === null) {
+                  navigate("/dashboard");
+               } else {
+                  navigate(page);
+               }
+               // console.log("qualqueer coisa")
 
                // navigate("/dashboard");
                
@@ -49,6 +69,8 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
                localStorage.removeItem("TOKEN")
                navigate("/");
 
+            } finally{
+               setLoad(false);
             }
          };
          autoLogin();
@@ -129,7 +151,8 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
             userLogin,
             userRegister,
             typeWritter,
-            setUser
+            setUser,
+            load
          }}
       >
          {children}

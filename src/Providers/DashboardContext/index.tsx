@@ -11,12 +11,15 @@ import {
    IUpdateComments,
    IComments,
    Ifollows,
-   IUserID
+   IUserID,
+   ILikingPost,
+   IPostLikes
 } from "./@types/dashboardTypes";
 
 import jwt_decode from "jwt-decode";
 import { UserContext } from "../UserContext";
 import { useNavigate } from "react-router-dom";
+
 
 export const DashboardContext = createContext({} as IDashboardContext);
 
@@ -41,6 +44,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [filteredPosts, setFilteredPosts] = useState("");
 
+   const [postLikes, setPostLikes] = useState<IPostLikes[]>([])
+
    //-------------------------------------------------------//
 
 
@@ -53,7 +58,11 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const [text2, setText2] = useState("Seguir");
    const [text3, setText3] = useState("Seguir");
 
+   const [modalSendPost, setModalSendPost] = useState(false);
+
    const [allUsersFollowed, setAllUsersFollowed] = useState<Ifollows[]>([]);
+
+   const [likesPosts, setLikesPosts] = useState<IPostLikes[]>([]);
 
 
    //-------------------------------------------------------//
@@ -89,7 +98,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const getAllPosts = async () => {
 
       try {
-         const response = await api.get("posts?_embed=users&_embed=comments", {
+         const response = await api.get("posts?_embed=comments&_embed=likes", {
             headers: {
                Authorization: `Bearer ${token}`,
             },
@@ -98,7 +107,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          setLoading(true)
 
          setGetPost(response.data);
-
+         setPostLikes(response.data.likes)
+         
       } catch (error) {
          console.error(error);
       }
@@ -107,6 +117,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const sendPost = async (data: IsendPost) => {
 
+      //requisição para enviar os post
       
       try {
          const response = await api.post("posts", data, {
@@ -258,7 +269,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
       }
    };
 
-   const sendComments = async (data:IComments ) => {
+   const sendComments = async (data: IComments) => {
       try {
          const response = await api.post("comments", data, {
             headers: {
@@ -274,8 +285,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          console.error(error);
       }
    };
-
-
+   
    const followedsUsers = async (data: Ifollows) => {
       let loggedId = "";
       if (token) {
@@ -288,11 +298,11 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         console.log(response);
+         setAllUsersFollowed(response.data)
       } catch (error) {
-         console.error;
+         toast.error('Erro ao seguir usuário')
       }
-   };
+   }
 
 
    const getProfilePosts = async (post:Iposts) => {
@@ -316,9 +326,63 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    };
 
+
    useEffect(() => {
       localStorage.setItem('@kenzieTech:ProfilePost',JSON.stringify(ProfilePost));
    }, [ProfilePost]);
+   
+   //----------------------- VITOR ------------------------ 
+
+
+   const likingPost = async (data: ILikingPost) => {
+      try {
+         const response = await api.post('likes', data, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         toast.success("Post curtido com sucesso.")
+         const newGetPosts = getPosts.map((post) => {
+            if(post.id === data.postId) {
+               const teste = ({...post, likes: [...post.likes, response.data ]})
+               return teste
+            } else {
+               return post
+            }
+         })
+         setGetPost(newGetPosts)
+      } catch (error) {
+         
+      }
+   }
+
+   const unLinkingPost = async (likeID: number, data: ILikingPost) => {
+      try {
+         const response = await api.delete(`likes/${likeID}`, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         }); console.log(response.data)
+         const newGetPosts = getPosts.map((post) => {
+            if(post.id === data.postId) {
+               const newLikes = post.likes.filter((like) =>{
+                  return like.id !== likeID 
+               })
+               const teste = ({...post, likes: [ ...newLikes ]})
+               return teste
+            } else {
+               return post
+            }
+         })
+         setGetPost(newGetPosts)
+      } catch (error) {
+         console.log(error)
+      }
+   }
+
+//----------------------------------------------------------------
+
+   
 
    return (
       <DashboardContext.Provider
@@ -342,13 +406,19 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             setFilteredPosts,
             searchPostsList,
             loading,
+            postLikes,
             followedsUsers,
+            setModalSendPost,
+            modalSendPost,
             setText1,
             setText2,
             setText3,
             text1,
             text2,
             text3,
+            likingPost,
+            unLinkingPost,
+            likesPosts,
             ProfilePost,
             getProfilePosts
          }}
@@ -356,4 +426,4 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          {children}
       </DashboardContext.Provider>
    );
-};
+}
