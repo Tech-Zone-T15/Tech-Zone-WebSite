@@ -14,6 +14,10 @@ export interface iMyPost{
    id: number
 }
 
+export interface iMyPostProps{
+   myPosts: iMyPost[]
+}
+
 export interface iFollowersList {
    userId: number;
    follows: number;
@@ -27,6 +31,11 @@ export interface ifollowingObj {
    id: number;
 }
 
+export interface iPost{
+   userId: string | number;
+   img: string;
+   content: string;
+}
 
 export interface iProfileContext{
    updateProfile: (formData: iUpdateProfile)=> Promise<void>
@@ -47,4 +56,5 @@ export interface iProfileContext{
    editMyPost: (formData: iMyPost, postId: number)=> Promise<void>
    deleteMyPost: (postId: number)=> Promise<void>
    follow: (userIdToFollow: number)=> Promise<void>
+   publishAPost: (dataForm: iPost)=> Promise<void>
 }

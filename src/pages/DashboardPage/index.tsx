@@ -12,7 +12,9 @@ import Post from "../../components/Posts";
 import { useContext, useEffect } from "react";
 import { DashboardContext } from "../../Providers/DashboardContext";
 import SkeletonPost from "../../components/SkeletonPost";
-import { SendPost } from "../../components/SendPost";
+import { useLocation } from "react-router-dom";
+import {SendPost} from '../../components/SendPost'
+
 
 const DashboardPage = () => {
    const { getUsers, getAllPosts, loading } = useContext(DashboardContext);
@@ -21,6 +23,10 @@ const DashboardPage = () => {
       getUsers();
       getAllPosts();
    }, []);
+
+   const location = useLocation()
+   localStorage.setItem('@location', location.pathname)
+   // console.log(location.pathname)
 
    return (
       <>
@@ -48,9 +54,7 @@ const DashboardPage = () => {
 
                   <Main>
                      <SendPost />
-                     <ReversePost>
                         {loading == false ? <SkeletonPost /> : <Post />}
-                     </ReversePost>
                   </Main>
                </MainContainer>
             </BackGrondColor>

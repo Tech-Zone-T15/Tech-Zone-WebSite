@@ -13,8 +13,8 @@ export interface Iposts{
    img:string
    content:string
    id:number | string
-   comments:[] 
-   comment: [] | string | number
+   comments?:any[] 
+   likes:any[]
 }
 
 export interface IComments {
@@ -79,10 +79,32 @@ export interface IpostsProps{
    name?:string
    user?:Iusers
 }
+export interface ProfilePostProps{
+   ProfilePost:Iposts
+   profile_img?:string
+   name?:string
+   user?:Iusers
+}
+
+
 export interface IUserProps{
    user:Iusers
    comments?:IComments
+}  
+//---------------------
+export interface IPostLikes{
+   postId: number
+   userId: number
+   id: number
 }
+export interface IlikesPostProps{
+   postLikes: IPostLikes
+}
+export interface ILikingPost{
+   postId: string | number,
+   userId: number | undefined
+}
+//-------------------
 
 export interface Ifollows{
    userId: number;
@@ -96,11 +118,11 @@ export interface IUserID {
 }
 
 export interface IDashboardContext {
-   sendComments: (data: IComments) => Promise<void>
+   sendComments: (data: IComments[]) => Promise<void>
    sendPost: (data: IsendPost) => Promise<void>
    getUsers : () => Promise<void>
    users: Iusers[]
-   deletePost: (postId: Iposts) => Promise<void>
+   deletePost: (postId: Iusers) => Promise<void>
    editPost: (data: IUpdatePost) => Promise<void>
    setGetPost: React.Dispatch<React.SetStateAction<Iposts[]>>
    followUsers: Iusers[]
@@ -109,12 +131,16 @@ export interface IDashboardContext {
    getAllPosts: () => Promise<void>
    setGetComments: React.Dispatch<React.SetStateAction<IComments[]>>
    getComments: IComments[]
-   deleteComments: (CommentId: IComments) => Promise<void>
+   deleteComments: (CommentId: IUpdateComments) => Promise<void>
    searchValue: string
    setSearchValue: React.Dispatch<React.SetStateAction<string>>
    setFilteredPosts: React.Dispatch<React.SetStateAction<string>>
    searchPostsList: Iposts[]
    loading: boolean
+   getPostLikes: (postID: string | number) => Promise<void>
+   postLikes: IPostLikes[]
+   setModalSendPost: React.Dispatch<React.SetStateAction<boolean>>
+   modalSendPost: boolean
    followedsUsers: (data: Ifollows) => Promise<void>
    setText1: React.Dispatch<React.SetStateAction<string>>
    setText2: React.Dispatch<React.SetStateAction<string>>
@@ -123,4 +149,9 @@ export interface IDashboardContext {
    text2: string
    text3:string
    allUsersFollowed: Ifollows[]
+   likingPost: (data: ILikingPost) => Promise<void>
+   unLinkingPost: (likeID: number, data: ILikingPost) => Promise<void>
+   likesPosts: IPostLikes[]
+   // getProfilePosts: (post: Iposts) => Promise<void>
+   ProfilePost: Iposts[]
 }

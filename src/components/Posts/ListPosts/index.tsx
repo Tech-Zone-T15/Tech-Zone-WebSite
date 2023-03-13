@@ -1,9 +1,10 @@
+import { useContext, useEffect, useState } from "react";
 import Lottie from "react-lottie";
 import animationData from "./heartAnimation.json";
-import { useContext, useState } from "react";
+
 import ModalPostDelete from "../../ModalPostDelete";
 import ModalPostEdit from "../../ModalPostEdit";
-import {IpostsProps} from "../../../Providers/DashboardContext/@types/dashboardTypes";
+import {IPostLikes, IpostsProps} from "../../../Providers/DashboardContext/@types/dashboardTypes";
 import ModalOpemComment from "../../ModalComment/ModalOpemComment";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
@@ -17,22 +18,70 @@ import AddComment from "@mui/icons-material/AddComment";
 import DeleteForever from "@mui/icons-material/DeleteForever";
 import Edit from "@mui/icons-material/Edit";
 import { DashboardContext } from "../../../Providers/DashboardContext";
+import jwt_decode from 'jwt-decode';
+import { UserContext } from "../../../Providers/UserContext";
 import { StyledlikeAnimationContainer } from "./style";
 import { Img } from "./styled";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { UserContext } from "../../../Providers/UserContext";
+import { toast } from "react-toastify";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 
 const ListPosts = ({ post }: IpostsProps) => {
-   const { users } = useContext(DashboardContext);
 
-   const { img, content, userId } = post;
+   const {users, 
+      // getProfilePosts, 
+      likingPost, unLinkingPost } = useContext(DashboardContext);
 
    const { user } = useContext(UserContext);
 
+   const { img, content,userId } = post;
+
+   const token = localStorage.getItem("@TOKEN");
+
+   // console.log(post)
+
+   
+   //------------------------------------
+   const [likesPosts, setLikesPosts] = useState<IPostLikes[]>([]);
+
+   useEffect(() => {
+      setLikesPosts(post.likes)
+   })
+
+   
+
+   const data  = {
+      postId: post.id,
+      userId: user?.id
+   }
+   
+   const buttonToggleValidate = likesPosts.find((like) => 
+       like.userId === user!.id
+      ) ? true : false
+   // console.log(buttonToggleValidate)
+
+   const handleClick = () => {
+      if(user !== null){
+         const findLikes = likesPosts.find((like) => {
+            return like.userId === user.id
+         }) 
+         // console.log(findLikes)
+         if(findLikes){ console.log(findLikes)
+            unLinkingPost(findLikes.id, data)
+         } else {
+            likingPost(data)
+         }
+      }
+   }
+   //--------------------------------------
+      
+   // const idUserLogin = jwt_decode<IidUserLogin>(token);
+
    const theme = useTheme();
    const mdUp = useMediaQuery(theme.breakpoints.up('sm'));
-
 
    const [opemModal, setOpemModal] = useState(false);
    const [opemModalEdit, setOpemModalEdit] = useState(false);
@@ -53,12 +102,14 @@ const ListPosts = ({ post }: IpostsProps) => {
 
 
    return (
-      <>
+      <li>
          <Card sx={{ width:mdUp ? 600 : 300 }}>
 
             <CardHeader
                avatar={
-                  <Avatar aria-label="Avatar do usuario" sx={{ width: 50, height: 50,}}>
+                  <Avatar aria-label="Avatar do usuario" sx={{ width: 50, height: 50, cursor:'pointer'}} 
+                     // onClick={() => getProfilePosts(post)}
+                  >
                         {users.map(user => user.id == userId ? <Img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
                   </Avatar>
                }
@@ -66,7 +117,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                   
                   user?.id== userId ? (
                      <>
-                        <IconButton
+                        <IconButton 
                            aria-label="deletar post"
                            onClick={() => setOpemModal(!opemModal)}
                         >
@@ -83,7 +134,9 @@ const ListPosts = ({ post }: IpostsProps) => {
                   }
                   
                   title={
-                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",}}>
+                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",cursor:'pointer',width:'9rem'}} 
+                     //  onClick={() => getProfilePosts(post)}
+                     >
                         {users.map(user => user.id == post.userId ?  user.name : null)}
                      </Typography>
                   }
@@ -113,25 +166,33 @@ const ListPosts = ({ post }: IpostsProps) => {
 
             
             <CardActions disableSpacing sx={{borderTop: 2,borderColor: '#004182', justifyContent: 'space-around' }}>
-               <StyledlikeAnimationContainer
+
+               
+                  <StyledlikeAnimationContainer
                   onClick={() => {
                      setAnimationState({
                         ...animationState,
                         isStopped: !animationState.isStopped,
                      });
                      setLikeState(!likeState);
+                     handleClick();
                   }}
-               >
-                  <div className="animation">
-                     <Lottie
-                        options={defaultOptions}
-                        height={40}
-                        width={200}
-                        isStopped={animationState.isStopped}
-                        isPaused={animationState.isPaused}
-                     />
-                  </div>
-               </StyledlikeAnimationContainer>
+                  >
+                     <div className="animation">
+                        <Lottie
+                           options={defaultOptions}
+                           height={40}
+                           width={200}
+                           isStopped={buttonToggleValidate ? false : true}
+                           isPaused={animationState.isPaused}
+                           />
+                     </div> 
+                     {post.likes.length}
+                  </StyledlikeAnimationContainer>
+
+                  {/* {buttonToggleValidate ? <FavoriteIcon cursor="pointer" aria-label="button" onClick={() => handleClick()}/> : <FavoriteBorderIcon  cursor="pointer" onClick={() => handleClick()}/> }
+                  <span>{post.likes.length}</span> */}
+               
 
                <IconButton
                   aria-label="Abri comentarios "
@@ -163,10 +224,9 @@ const ListPosts = ({ post }: IpostsProps) => {
             post={post}
             />
          )}
-      </>
+      </li>
    );
-};
-
-export default ListPosts;
+}
 
 
+export default ListPosts

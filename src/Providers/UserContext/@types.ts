@@ -7,7 +7,8 @@ export interface IUserContext {
    userLogOut: () => void;
    userLogin: (formData: ILoginFormValues) => Promise<void>;
    typeWritter: (title: HTMLElement, content: string) => void;
-   setUser: React.Dispatch<React.SetStateAction<IUser | null>>
+   setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
+   load: boolean
 }
 
 export interface IDefaultProviderProps {
