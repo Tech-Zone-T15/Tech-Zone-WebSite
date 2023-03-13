@@ -1,7 +1,6 @@
 import { useContext, useState} from "react";
 import { UserContext } from "../../Providers/UserContext";
 import { DivContainer } from "./style";
-import { DashboardContext } from "../../Providers/DashboardContext";
 import ModalCreatePost from "../ModalCreatePost";
 
 export const SendPost = () => {

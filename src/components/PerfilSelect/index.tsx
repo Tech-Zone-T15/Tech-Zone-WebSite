@@ -6,12 +6,18 @@ import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useContext } from "react";
+import { useLocation } from "react-router-dom";
 import { DashboardContext } from "../../Providers/DashboardContext";
 import {  Iusers, ProfilePostProps } from "../../Providers/DashboardContext/@types/dashboardTypes";
 import { ImgProfile } from "./styled";
 
 
 const PerfilSelect = ({ProfilePost}:ProfilePostProps) => {
+
+   
+   const location = useLocation()
+   localStorage.setItem('@location', location.pathname)
+
 
    const {users} = useContext(DashboardContext)
 
@@ -20,8 +26,11 @@ const PerfilSelect = ({ProfilePost}:ProfilePostProps) => {
 
    const {userId} = ProfilePost
 
-
    const userData = users.find((user:Iusers) => user.id == userId)
+
+   const NewArrayPost = JSON.parse(
+      localStorage.getItem("@kenzieTech:ProfilePost") || []
+   );
 
    return (
       <>

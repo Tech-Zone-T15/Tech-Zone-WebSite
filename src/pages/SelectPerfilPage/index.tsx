@@ -7,7 +7,7 @@ import { Iposts } from "../../Providers/DashboardContext/@types/dashboardTypes";
 import {  Main, Ul } from "./styled";
 
 const SelectPerfilPage = () => {
-   const { ProfilePost, getUsers } = useContext(DashboardContext);
+   const { ProfilePost, getUsers,users } = useContext(DashboardContext);
 
    const NewArrayPost = JSON.parse(
       localStorage.getItem("@kenzieTech:ProfilePost") || []

@@ -6,4 +6,4 @@ export const CommentSchema = yup
          .string()
          .required("Conteudo Obrigatorio")
    })
-   .required();
+

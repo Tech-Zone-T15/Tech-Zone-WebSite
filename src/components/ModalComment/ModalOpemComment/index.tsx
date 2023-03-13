@@ -24,8 +24,9 @@ import { Typography } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send'
 import imagem from "../../../assets/no-data-icon-29.png";
 import { ErrorMessage } from "@hookform/error-message";
-import { PostSchema } from "../../ModalCreatePost/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { CommentSchema } from "./schema";
+import { toast } from "react-toastify";
 
 interface IopemModalComment {
    opemModalComment: true;
@@ -71,8 +72,9 @@ export default function FullScreenDialog({
    const {
       register,
       handleSubmit,
+      
       formState: { errors },
-   } = useForm<IdataForm>({resolver: yupResolver(PostSchema)});
+   } = useForm<IdataForm>({resolver: yupResolver( CommentSchema)});
 
    const submit = (dataForm: IdataForm) => {
       const dataObj = {
@@ -82,7 +84,11 @@ export default function FullScreenDialog({
 
       const data = { ...dataObj, ...dataForm };
 
+      console.log(data)
+
       sendComments(data);
+
+      
    };
 
    const handleClose = () => {
@@ -155,8 +161,6 @@ export default function FullScreenDialog({
                            
                      />
                      <Button type="submit" variant="text" endIcon={<SendIcon sx={{p:0,m:0,width:"2rem",height:"3.3rem"}} type="button-submit" />} sx={{width:"1rem",height:"3.3rem",p:0,m:0 }}></Button>
-                     <ErrorMessage errors={errors} name="comment" as="p" />
-                     
                      </Box>
                   </form>
                </ModalContainer>                                                               

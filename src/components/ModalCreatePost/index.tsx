@@ -41,7 +41,7 @@ export default function ModalCreatePost({
       register,
       handleSubmit,
       formState: { errors },
-   } = useForm<IdataForm>({resolver: yupResolver(CommentSchema)});
+   } = useForm<IdataForm>({resolver: yupResolver(PostSchema)});
 
    const handleClose = () => {
       setModalSendPost(!modalSendPost);
