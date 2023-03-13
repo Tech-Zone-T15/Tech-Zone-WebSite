@@ -187,7 +187,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                            isPaused={animationState.isPaused}
                            />
                      </div> 
-                     {post.likes.length}
+                     {likesPosts.length}
                   </StyledlikeAnimationContainer>
 
                   {/* {buttonToggleValidate ? <FavoriteIcon cursor="pointer" aria-label="button" onClick={() => handleClick()}/> : <FavoriteBorderIcon  cursor="pointer" onClick={() => handleClick()}/> }
