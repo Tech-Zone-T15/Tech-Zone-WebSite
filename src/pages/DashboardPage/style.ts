@@ -8,8 +8,6 @@ height: 100vh;
    
 }
 `
-
-
 export const NavBar = styled.nav`
    background-color: ${mainTheme.colors.primary};
    height: auto;
@@ -75,10 +73,4 @@ height: fit-content;
 background-color: #e9ecef;
 `
 
-export const ReversePost = styled.div`
-display: flex;
-flex-direction: column-reverse;
-align-items: center;
-gap: 1rem;
-`
 

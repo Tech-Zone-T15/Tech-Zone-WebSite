@@ -6,7 +6,7 @@ import { DashboardContext } from "../../Providers/DashboardContext"
 
 
 const SelectPerfilPage= () => {
-   const {ProfilePost,getUsers} = useContext(DashboardContext)
+   const {ProfilePost,getUsers,getProfilePosts} = useContext(DashboardContext)
 
    useEffect(() => {
       getUsers();
@@ -29,7 +29,7 @@ const SelectPerfilPage= () => {
          </figure>
       <main>
          <section>
-               <PerfilSelect/>
+               <PerfilSelect ProfilePost={ProfilePost[0]}/>
          </section>
 
          <section>
