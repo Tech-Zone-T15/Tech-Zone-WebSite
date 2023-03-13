@@ -132,15 +132,15 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         setAllUsersFollowed(ListFollows.data);
-
+         
+         
          const array = response.data;
          const NewArray: Iusers[] = [];
 
          const filteredList = ListFollows.data.filter((follow: Ifollows) => {
             return Number(follow.userId) === Number(id);
          });
-
+         
          const NewList = array.filter((user: Iusers) => {
             return !filteredList.some((follow: Ifollows) => {
                return user.id === follow.follows;
@@ -168,6 +168,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    useEffect(() => {
       AllUsers();
    }, [token]);
+
 
    const deletePost = async (postId:Iposts) => {
       const id = postId.id;
@@ -283,7 +284,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         console.log(response);
+         setAllUsersFollowed([...allUsersFollowed, response.data])
       } catch (error) {
          console.error;
       }
@@ -319,7 +320,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             setText3,
             text1,
             text2,
-            text3
+            text3,
+            allUsersFollowed,
          }}
       >
          {children}

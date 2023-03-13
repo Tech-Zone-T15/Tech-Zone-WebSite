@@ -19,24 +19,28 @@ const UserSuggestion = () => {
       setText3,
       text2,
       text3,
+      allUsersFollowed,
    } = useContext(DashboardContext);
 
    const { user } = useContext(UserContext);
    const { unfollow } = useContext(ProfileContext);
 
    const onFollowUser = (id: number, event: any) => {
-      const idUser = user?.id;
+      const idUser = user!.id;
 
       const newFollow = {
          userId: Number(idUser),
          follows: id,
       };
 
-      console.log(Number(idUser));
       if (event.target.innerText === "Seguir") {
          followedsUsers(newFollow);
       } else {
-         unfollow(Number(idUser));
+         const idFound = allUsersFollowed.find((user) => {
+            return user.follows === id;
+         });
+
+         idFound && unfollow(idFound!.id!);
       }
 
       if (event.target.id == 0) {
@@ -60,7 +64,7 @@ const UserSuggestion = () => {
          }
       }
    };
-
+   console.log(allUsersFollowed);
    return (
       <UserSuggestionContainer>
          <div className="container">
@@ -77,7 +81,7 @@ const UserSuggestion = () => {
                            <StyledButton
                               $buttonSize="small"
                               $buttonStyle="blue"
-                              id={index}
+                              id={index.toString()}
                               onClick={(event) => onFollowUser(user.id, event)}
                            >
                               {index === 0 && text1}
