@@ -60,7 +60,7 @@ export const ListSuggestions = styled.ul`
 
    @media (min-width: 800px) {
       flex-direction: column;
-      min-height: 30vh;
+      min-height: 35vh;
       gap: 30px;
       overflow-y: hidden;
    }
