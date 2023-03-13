@@ -118,11 +118,10 @@ export interface IUserID {
 }
 
 export interface IDashboardContext {
-   sendComments: (data: IComments[]) => Promise<void>
+   sendComments: (data: IComments) => Promise<void>
    sendPost: (data: IsendPost) => Promise<void>
    getUsers : () => Promise<void>
    users: Iusers[]
-   deletePost: (postId: Iusers) => Promise<void>
    editPost: (data: IUpdatePost) => Promise<void>
    setGetPost: React.Dispatch<React.SetStateAction<Iposts[]>>
    followUsers: Iusers[]
@@ -137,7 +136,6 @@ export interface IDashboardContext {
    setFilteredPosts: React.Dispatch<React.SetStateAction<string>>
    searchPostsList: Iposts[]
    loading: boolean
-   getPostLikes: (postID: string | number) => Promise<void>
    postLikes: IPostLikes[]
    setModalSendPost: React.Dispatch<React.SetStateAction<boolean>>
    modalSendPost: boolean
@@ -152,6 +150,8 @@ export interface IDashboardContext {
    likingPost: (data: ILikingPost) => Promise<void>
    unLinkingPost: (likeID: number, data: ILikingPost) => Promise<void>
    likesPosts: IPostLikes[]
-   // getProfilePosts: (post: Iposts) => Promise<void>
+   getProfilePosts: (post: Iposts) => Promise<void>
    ProfilePost: Iposts[]
+   deletePost: (postId: Iposts) => Promise<void>
+
 }
