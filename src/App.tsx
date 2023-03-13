@@ -1,20 +1,18 @@
 import Router from "./routes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { DashboardProvider } from "./Providers/DashboardContext";
 import { ProfileProvider } from "./Providers/ProfileContext";
 import { UserProvider } from "./Providers/UserContext";
 import { GlobalStyles } from "./styles/global";
 
 const App =() => (
    <UserProvider>
-      <DashboardProvider>
          <ProfileProvider>
             <GlobalStyles />
             <Router />
             <ToastContainer
             position="top-right"
-            autoClose={5000}
+            autoClose={2000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -25,7 +23,6 @@ const App =() => (
             theme="light"
             />
          </ProfileProvider>
-      </DashboardProvider>
    </UserProvider>
 );
 

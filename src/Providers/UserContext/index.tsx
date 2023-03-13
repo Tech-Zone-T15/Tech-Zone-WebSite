@@ -21,6 +21,18 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
    const navigate = useNavigate();
    const token = localStorage.getItem("@TOKEN");
 
+   const [load, setLoad] = useState(false);
+
+   
+   
+ 
+   let loggedId = "";
+   if(token) {
+      loggedId = jwt_decode(token)
+   }
+  
+   // console.log(loggedId)
+
    //   const userLoad = () =>{
    //     if(!token){
    //        navigate('/')
@@ -28,31 +40,45 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
    //          navigate('/dashboard')
    //       }
    //    }
-
+   
    useEffect(() => {
+      const page = localStorage.getItem('@location')
       if (token) {
+         const userID = jwt_decode<IUserID>(token);
          const autoLogin = async () => {
-            const userID = jwt_decode<IUserID>(token);
             try {
+               setLoad(true);
                const response = await api.get(`users/${userID.sub}`, {
                   headers: {
                      Authorization: `Bearer ${token}`,
                   },
                });
                setUser(response.data);
-               navigate("/dashboard");
+<<<<<<< HEAD
+               if(page === null) {
+                  navigate("/dashboard");
+               } else {
+                  navigate(page);
+               }
+               // console.log("qualqueer coisa")
+=======
+
+               // navigate("/dashboard");
+               
+
+>>>>>>> d6a519457a15f9807f0a8900a9848ee581fa523c
             } catch (error) {
                console.error(error);
                localStorage.removeItem("TOKEN")
                navigate("/");
 
+            } finally{
+               setLoad(false);
             }
          };
          autoLogin();
       }
    }, [token]);
-
-     console.log(user)
 
    const userRegister = async (formData: IRegisterFormValues) => {
       try {
@@ -65,7 +91,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
          // }, 2000);
          // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-         // setLoading(false);
+         // setLoading(false);´´
          {
             error.response.data === "Email already exists"
                ? toast.error("Email já cadastrado!")
@@ -80,10 +106,10 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
          setLoading(true);
          const response = await api.post("/login", formData);
          localStorage.setItem("@TOKEN", response.data.accessToken);
-         // console.log(localStorage);
+         console.log(localStorage);
          toast.success("Usuário Logado!");
          // setTimeout(() => {
-            navigate("/dashboard");
+         navigate("/dashboard");
          // }, 2000);
       } catch (error) {
          toast.error("Verifique os dados e tente novamente");
@@ -97,6 +123,26 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
       localStorage.removeItem("@TOKEN");
       navigate("/");
    };
+
+   const typeWritter = (title: HTMLElement, content: string) => {
+      let currentText = "";
+      const charArray = content.split("");
+      const h1Element = document.querySelector(".main-title") as HTMLElement;
+
+      charArray.forEach((letra: string, i: number) => {
+         setTimeout(() => {
+            currentText += letra;
+            title.textContent = currentText;
+
+            // adiciona a barra logo após a letra atual
+            const bar = document.createElement("span");
+            bar.textContent = "|";
+            bar.classList.add("blink");
+            h1Element.appendChild(bar);
+         }, 40 * i);
+      });
+   };
+   
    return (
       <UserContext.Provider
          value={{
@@ -107,6 +153,9 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
             userLogOut,
             userLogin,
             userRegister,
+            typeWritter,
+            setUser,
+            load
          }}
       >
          {children}

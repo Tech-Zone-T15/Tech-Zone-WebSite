@@ -8,8 +8,9 @@ const ProtectedRotes = () => {
    const {user} = useContext(UserContext)
 
    const token = localStorage.getItem('@TOKEN')
+   
    return(
-    user
+   token
     ?
     <Outlet/>
     :

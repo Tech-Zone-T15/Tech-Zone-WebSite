@@ -1,20 +1,24 @@
-import { ListPost } from "./ListPosts";
-import { useContext} from "react";
+import { useContext, useEffect, useState} from "react";
 import { DashboardContext } from "../../Providers/DashboardContext";
+import ListPosts from "./ListPosts";
+import { Ul } from "./styled";
+
 
 
 const Post = () => {
 
-   const {posts} = useContext(DashboardContext)
+   const {searchPostsList} = useContext(DashboardContext)
 
-   return (
-      <>
-         {
-            posts.map(post => <ListPost key={post.id} post={post}/>)
-         }
-      </>
+   
 
+   return ( 
+      <Ul>
+         {searchPostsList.map(post => <ListPosts key={post.id} post={post} />)}
+      </Ul>
    );
 };
 
 export default Post;
+
+
+

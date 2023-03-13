@@ -68,11 +68,13 @@ export const StyledMainLanding = styled.main`
       display: flex;
       flex-direction: column;
       gap: 65px;
-      max-width: 290px;
       text-align: center;
+      min-width: 80%;
 
+      
       @media (min-width: 769px){
          flex-direction: row;
+         max-width: 290px;
          /* margin-top: 40px; */
          gap: 40px;
          align-items: center;

@@ -8,14 +8,14 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { DashboardContext } from "../../Providers/DashboardContext";
 import { useContext } from "react";
-import { Ipost } from "../../Providers/DashboardContext/@types/dashboardTypes";
-
+import { Iposts } from "../../Providers/DashboardContext/@types/dashboardTypes";
+import DeleteIcon from '@mui/icons-material/Delete'
 
 
 interface IopemModal{
    opemModal: true
    setOpemModal: React.Dispatch<React.SetStateAction<boolean>>
-   post: Ipost
+   post: Iposts
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -44,14 +44,14 @@ export default function AlertDialogSlide({opemModal,setOpemModal,post}:IopemModa
             onClose={handleClose}
             aria-describedby="alert-dialog-slide-description"
          >
-            <DialogContent>
-               <DialogContentText id="alert-dialog-slide-description">
+            <DialogContent >
+               <DialogContentText id="alert-dialog-slide-description" sx={{ fontWeight: 'bold',fontSize:"1.2rem",color: '#004182',}}>
                   Deseja mesmo deletar esse post ? 
                </DialogContentText>
             </DialogContent>
             <DialogActions>
-               <Button onClick={handleClose}>Disagree</Button>
-               <Button onClick={() => deletePost(post)}>Agree</Button>
+               <Button onClick={handleClose} size="medium" variant="contained">Voltar</Button>
+               <Button onClick={() => deletePost(post)} color="error" startIcon={<DeleteIcon/>} size="medium" variant="contained">Deletar</Button>
             </DialogActions>
          </Dialog>
       </div>
