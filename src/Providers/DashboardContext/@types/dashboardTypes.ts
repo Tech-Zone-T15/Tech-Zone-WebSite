@@ -148,6 +148,7 @@ export interface IDashboardContext {
    text1: string
    text2: string
    text3:string
+   allUsersFollowed: Ifollows[]
    likingPost: (data: ILikingPost) => Promise<void>
    unLinkingPost: (likeID: number, data: ILikingPost) => Promise<void>
    likesPosts: IPostLikes[]
