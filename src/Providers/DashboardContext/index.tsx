@@ -38,6 +38,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    
    const [loading, setLoading] = useState(false);
 
+
    //-------------------------- Vitor -----------------------------//
 
    const [searchValue, setSearchValue] = useState("");
@@ -108,7 +109,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
          setGetPost(response.data);
          setPostLikes(response.data.likes)
-         
+
       } catch (error) {
          console.error(error);
       }
@@ -117,7 +118,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const sendPost = async (data: IsendPost) => {
 
-      //requisição para enviar os post
+   
       
       try {
          const response = await api.post("posts", data, {

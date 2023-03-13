@@ -24,8 +24,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
    const [load, setLoad] = useState(false);
 
    
-   
- 
+
    let loggedId = "";
    if(token) {
       loggedId = jwt_decode(token)

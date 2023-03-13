@@ -23,6 +23,9 @@ import { ModalContainer, NotCommentsContainer } from "./styled";
 import { Typography } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send'
 import imagem from "../../../assets/no-data-icon-29.png";
+import { ErrorMessage } from "@hookform/error-message";
+import { PostSchema } from "../../ModalCreatePost/schema";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 interface IopemModalComment {
    opemModalComment: true;
@@ -48,7 +51,7 @@ export default function FullScreenDialog({
    setopemModalComment,
    post,
 }: IopemModalComment) {
-   const { getComments, setGetComments, getAllPosts, users, sendComments } =
+   const { getComments, setGetComments, getAllPosts, sendComments } =
       useContext(DashboardContext);
 
    const token = localStorage.getItem("@TOKEN");
@@ -69,7 +72,7 @@ export default function FullScreenDialog({
       register,
       handleSubmit,
       formState: { errors },
-   } = useForm<IdataForm>();
+   } = useForm<IdataForm>({resolver: yupResolver(PostSchema)});
 
    const submit = (dataForm: IdataForm) => {
       const dataObj = {
@@ -142,15 +145,18 @@ export default function FullScreenDialog({
                      <Box sx={{ flexDirection: "row",display:"flex",alignItems:"center",justifyContent:"center" }}>
                         <TextField
                            type="textarea"
-                           id="textarea"
+                           id="comment"
                            label="Comentario"
                            margin="dense"
                            multiline
                            variant="filled"
                            sx={{ width:400 }}
                            {...register("comment")}
+                           
                      />
                      <Button type="submit" variant="text" endIcon={<SendIcon sx={{p:0,m:0,width:"2rem",height:"3.3rem"}} type="button-submit" />} sx={{width:"1rem",height:"3.3rem",p:0,m:0 }}></Button>
+                     <ErrorMessage errors={errors} name="comment" as="p" />
+                     
                      </Box>
                   </form>
                </ModalContainer>                                                               

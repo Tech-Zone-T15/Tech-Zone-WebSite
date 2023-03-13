@@ -64,7 +64,7 @@ const UserSuggestion = () => {
          }
       }
    };
-   console.log(allUsersFollowed);
+
    return (
       <UserSuggestionContainer>
          <div className="container">
