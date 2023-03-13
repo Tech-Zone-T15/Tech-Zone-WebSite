@@ -48,9 +48,7 @@ const DashboardPage = () => {
 
                   <Main>
                      <SendPost />
-                     <ReversePost>
                         {loading == false ? <SkeletonPost /> : <Post />}
-                     </ReversePost>
                   </Main>
                </MainContainer>
             </BackGrondColor>

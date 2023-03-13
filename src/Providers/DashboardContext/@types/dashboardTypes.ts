@@ -79,6 +79,14 @@ export interface IpostsProps{
    name?:string
    user?:Iusers
 }
+export interface ProfilePostProps{
+   ProfilePost:Iposts
+   profile_img?:string
+   name?:string
+   user?:Iusers
+}
+
+
 export interface IUserProps{
    user:Iusers
    comments?:IComments

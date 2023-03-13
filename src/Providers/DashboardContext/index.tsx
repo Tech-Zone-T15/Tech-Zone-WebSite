@@ -31,7 +31,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [ProfilePost,setProfilePost] = useState<Iposts[]>([])
 
-   console.log(ProfilePost)
    const navigate = useNavigate();
    
    const [loading, setLoading] = useState(false);
