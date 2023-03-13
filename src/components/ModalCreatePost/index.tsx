@@ -11,6 +11,10 @@ import SendIcon from "@mui/icons-material/Send";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { UserContext } from "../../Providers/UserContext";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { PostSchema } from "./schema";
+import { ErrorMessage } from "@hookform/error-message";
+import { CommentSchema } from "../ModalComment/ModalOpemComment/schema";
 
 interface IopemModalEdit {
    modalSendPost: boolean;
@@ -37,7 +41,7 @@ export default function ModalCreatePost({
       register,
       handleSubmit,
       formState: { errors },
-   } = useForm<IdataForm>();
+   } = useForm<IdataForm>({resolver: yupResolver(PostSchema)});
 
    const handleClose = () => {
       setModalSendPost(!modalSendPost);
@@ -83,7 +87,7 @@ export default function ModalCreatePost({
 
                <TextField
                type="textarea"
-               id="textarea"
+               id="content"
                label="Conteudo"
                margin="dense"
                multiline
@@ -91,6 +95,7 @@ export default function ModalCreatePost({
                variant="filled"
                {...register("content")}
             />
+            <ErrorMessage errors={errors} name="content" as="p" />
 
                <DialogActions>
                   <Button onClick={handleClose}>Cancelar</Button>
