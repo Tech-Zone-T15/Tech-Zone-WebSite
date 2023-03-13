@@ -25,10 +25,12 @@ import { Img } from "./styled";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { toast } from "react-toastify";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const ListPosts = ({ post }: IpostsProps) => {
 
-   const {users, getPostLikes, postLikes, likingPost, unLinkingPost, likesPosts } = useContext(DashboardContext);
+   const {users, getPostLikes, postLikes, likingPost, unLinkingPost } = useContext(DashboardContext);
 
    const { user } = useContext(UserContext);
 
@@ -36,31 +38,44 @@ const ListPosts = ({ post }: IpostsProps) => {
 
    const token = localStorage.getItem("@TOKEN");
 
+   // console.log(post)
+
    
    //------------------------------------
+   const [likesPosts, setLikesPosts] = useState<IPostLikes[]>([]);
+
+   useEffect(() => {
+      setLikesPosts(post.likes)
+   })
+
+   
 
    const data  = {
       postId: post.id,
       userId: user?.id
    }
    
+   const buttonToggleValidate = likesPosts.find((like) => 
+       like.userId === user!.id
+   ) ? true : false
+   // console.log(buttonToggleValidate)
+
    const handleClick = () => {
       if(user !== null){
-         likesPosts.map(like => {
-            // console.log(likeObj)
-            like.userId !== user.id
-            ?
+         const findLikes = likesPosts.find((like) => {
+            return like.userId === user.id
+         }) 
+         // console.log(findLikes)
+         if(findLikes){ console.log(findLikes)
+            unLinkingPost(findLikes.id, data)
+         } else {
             likingPost(data)
-            :
-            unLinkingPost(like.id)
-         })
+         }
       }
    }
-      // console.log(post.likes)
-
    //--------------------------------------
       
-   const idUserLogin = jwt_decode<IidUserLogin>(token);
+   // const idUserLogin = jwt_decode<IidUserLogin>(token);
 
    const theme = useTheme();
    const mdUp = useMediaQuery(theme.breakpoints.up('sm'));
@@ -145,7 +160,9 @@ const ListPosts = ({ post }: IpostsProps) => {
 
             
             <CardActions disableSpacing sx={{borderTop: 2,borderColor: '#004182', justifyContent: 'space-around' }}>
-               <StyledlikeAnimationContainer
+
+               
+                  <StyledlikeAnimationContainer
                   onClick={() => {
                      setAnimationState({
                         ...animationState,
@@ -154,17 +171,22 @@ const ListPosts = ({ post }: IpostsProps) => {
                      setLikeState(!likeState);
                      handleClick();
                   }}
-               >
-                  <div className="animation">
-                     <Lottie
-                        options={defaultOptions}
-                        height={40}
-                        width={200}
-                        isStopped={animationState.isStopped}
-                        isPaused={animationState.isPaused}
-                     />
-                  </div> {likesPosts.length}
-               </StyledlikeAnimationContainer>
+                  >
+                     <div className="animation">
+                        <Lottie
+                           options={defaultOptions}
+                           height={40}
+                           width={200}
+                           isStopped={buttonToggleValidate ? false : true}
+                           isPaused={animationState.isPaused}
+                           />
+                     </div> 
+                     {post.likes.length}
+                  </StyledlikeAnimationContainer>
+
+                  {/* {buttonToggleValidate ? <FavoriteIcon cursor="pointer" aria-label="button" onClick={() => handleClick()}/> : <FavoriteBorderIcon  cursor="pointer" onClick={() => handleClick()}/> }
+                  <span>{post.likes.length}</span> */}
+               
 
                <IconButton
                   aria-label="Abri comentarios "

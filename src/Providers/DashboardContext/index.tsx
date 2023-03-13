@@ -20,6 +20,7 @@ import {
 import jwt_decode from "jwt-decode";
 import { UserContext } from "../UserContext";
 
+
 export const DashboardContext = createContext({} as IDashboardContext);
 
 export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
@@ -56,6 +57,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const [modalSendPost, setModalSendPost] = useState(false);
 
    const [allUsersFollowed, setAllUsersFollowed] = useState<Ifollows[]>([]);
+
+   const [likesPosts, setLikesPosts] = useState<IPostLikes[]>([]);
 
 
    //-------------------------------------------------------//
@@ -100,7 +103,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          setLoading(true)
 
          setGetPost(response.data);
-
+         setPostLikes(response.data.likes)
+         console.log(response.data)
       } catch (error) {
          console.error(error);
       }
@@ -311,6 +315,20 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             console.error;
          }
    }
+
+   // const getAllPostLikes = async () => {
+   //    try {
+   //       const response = await api.get("posts?_embed=comments&_embed=likes", {
+   //          headers: {
+   //             Authorization: `Bearer ${token}`,
+   //          },
+   //       });
+   //          // console.log(response.data);
+   //          setPostLikes(response.data)
+   //       } catch (error) {
+   //          console.error;
+   //       }
+   // }
    
    const likingPost = async (data: ILikingPost) => {
       try {
@@ -319,25 +337,42 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-         setLikesPosts([...likesPosts, response.data])
          toast.success("Post curtido com sucesso.")
-         console.log(response.data)
+         const newGetPosts = getPosts.map((post) => {
+            if(post.id === data.postId) {
+               const teste = ({...post, likes: [...post.likes, response.data ]})
+               return teste
+            } else {
+               return post
+            }
+         })
+         setGetPost(newGetPosts)
       } catch (error) {
          
       }
    }
 
-   const unLinkingPost = async (likeID: number) => {
+   const unLinkingPost = async (likeID: number, data: ILikingPost) => {
       try {
-         const response = await api.delete(`likes${likeID}`, {
+         const response = await api.delete(`likes/${likeID}`, {
             headers: {
                Authorization: `Bearer ${token}`,
             },
-         });
-         const newArrayLikesPost = likesPosts.filter((like) => like.id !== likeID);
-         setLikesPosts(newArrayLikesPost)
+         }); console.log(response.data)
+         const newGetPosts = getPosts.map((post) => {
+            if(post.id === data.postId) {
+               const newLikes = post.likes.filter((like) =>{
+                  return like.id !== likeID 
+               })
+               const teste = ({...post, likes: [ ...newLikes ]})
+               return teste
+            } else {
+               return post
+            }
+         })
+         setGetPost(newGetPosts)
       } catch (error) {
-         
+         console.log(error)
       }
    }
 
@@ -378,7 +413,8 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             text2,
             text3,
             likingPost,
-            unLinkingPost
+            unLinkingPost,
+            likesPosts
          }}
       >
          {children}

@@ -13,8 +13,8 @@ export interface Iposts{
    img:string
    content:string
    id:number | string
-   comments:[] 
-   likes:[]
+   comments?:any[] 
+   likes:any[]
 }
 
 export interface IComments {
@@ -140,6 +140,6 @@ export interface IDashboardContext {
    text2: string
    text3:string
    likingPost: (data: ILikingPost) => Promise<void>
-   unLinkingPost: (likeID: number) => Promise<void>
+   unLinkingPost: (likeID: number, data: ILikingPost) => Promise<void>
    likesPosts: IPostLikes[]
 }
