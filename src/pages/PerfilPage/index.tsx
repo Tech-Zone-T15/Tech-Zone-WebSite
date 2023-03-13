@@ -76,8 +76,7 @@ function PerfilPage() {
                               {followersList.map((follower) => (
                                  <UserFollowing
                                     key={follower.id}
-                                    userObj={follower.user}
-                                 />
+                                    userObj={follower.user} followId={0}                                 />
                               ))}
                            </ul>
                         ) : (

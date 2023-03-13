@@ -31,7 +31,9 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const ListPosts = ({ post }: IpostsProps) => {
 
-   const {users, getProfilePosts, likingPost, unLinkingPost } = useContext(DashboardContext);
+   const {users, 
+      // getProfilePosts, 
+      likingPost, unLinkingPost } = useContext(DashboardContext);
 
    const { user } = useContext(UserContext);
 
@@ -105,7 +107,9 @@ const ListPosts = ({ post }: IpostsProps) => {
 
             <CardHeader
                avatar={
-                  <Avatar aria-label="Avatar do usuario" sx={{ width: 50, height: 50, cursor:'pointer'}} onClick={() => getProfilePosts(post)}>
+                  <Avatar aria-label="Avatar do usuario" sx={{ width: 50, height: 50, cursor:'pointer'}} 
+                     // onClick={() => getProfilePosts(post)}
+                  >
                         {users.map(user => user.id == userId ? <Img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
                   </Avatar>
                }
@@ -130,7 +134,9 @@ const ListPosts = ({ post }: IpostsProps) => {
                   }
                   
                   title={
-                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",cursor:'pointer',width:'9rem'}} onClick={() => getProfilePosts(post)}>
+                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",cursor:'pointer',width:'9rem'}} 
+                     //  onClick={() => getProfilePosts(post)}
+                     >
                         {users.map(user => user.id == post.userId ?  user.name : null)}
                      </Typography>
                   }

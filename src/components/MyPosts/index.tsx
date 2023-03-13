@@ -15,10 +15,10 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import ProfileModalEditPost from "./ProfileModalEditPost";
 import ProfileDeletePostModal from "./ModalPostDelete/index";
-import { iMyPost } from "../../Providers/ProfileContext/@types/profileTypes";
+import { iMyPost, iMyPostProps } from "../../Providers/ProfileContext/@types/profileTypes";
 import { ProfileSendPost } from "./SendPost";
 
-export const MyPostsList = ({ myPosts }: iMyPost) => {
+export const MyPostsList = ({ myPosts }: iMyPostProps) => {
    const { user } = useContext(UserContext);
    const [openModalEdit, setOpenModalEdit] = useState(false);
    const [openModalComment, setopenModalComment] = useState(false);

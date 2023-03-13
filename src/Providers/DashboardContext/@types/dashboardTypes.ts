@@ -118,11 +118,11 @@ export interface IUserID {
 }
 
 export interface IDashboardContext {
-   sendComments: (data: IComments) => Promise<void>
+   sendComments: (data: IComments[]) => Promise<void>
    sendPost: (data: IsendPost) => Promise<void>
    getUsers : () => Promise<void>
    users: Iusers[]
-   deletePost: (postId: Iposts) => Promise<void>
+   deletePost: (postId: Iusers) => Promise<void>
    editPost: (data: IUpdatePost) => Promise<void>
    setGetPost: React.Dispatch<React.SetStateAction<Iposts[]>>
    followUsers: Iusers[]
@@ -131,7 +131,7 @@ export interface IDashboardContext {
    getAllPosts: () => Promise<void>
    setGetComments: React.Dispatch<React.SetStateAction<IComments[]>>
    getComments: IComments[]
-   deleteComments: (CommentId: IComments) => Promise<void>
+   deleteComments: (CommentId: IUpdateComments) => Promise<void>
    searchValue: string
    setSearchValue: React.Dispatch<React.SetStateAction<string>>
    setFilteredPosts: React.Dispatch<React.SetStateAction<string>>
@@ -139,7 +139,8 @@ export interface IDashboardContext {
    loading: boolean
    getPostLikes: (postID: string | number) => Promise<void>
    postLikes: IPostLikes[]
-
+   setModalSendPost: React.Dispatch<React.SetStateAction<boolean>>
+   modalSendPost: boolean
    followedsUsers: (data: Ifollows) => Promise<void>
    setText1: React.Dispatch<React.SetStateAction<string>>
    setText2: React.Dispatch<React.SetStateAction<string>>
@@ -150,6 +151,6 @@ export interface IDashboardContext {
    likingPost: (data: ILikingPost) => Promise<void>
    unLinkingPost: (likeID: number, data: ILikingPost) => Promise<void>
    likesPosts: IPostLikes[]
-   getProfilePosts: (post: Iposts) => Promise<void>
+   // getProfilePosts: (post: Iposts) => Promise<void>
    ProfilePost: Iposts[]
 }
