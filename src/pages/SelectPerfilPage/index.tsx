@@ -3,11 +3,15 @@ import { DynamicHeader } from "../../components/DynamicHeader"
 import PerfilSelect from "../../components/PerfilSelect"
 import PostsSelectPerfil from "../../components/PostsSelectPerfil"
 import { DashboardContext } from "../../Providers/DashboardContext"
+import { Iposts } from "../../Providers/DashboardContext/@types/dashboardTypes"
 
 
 const SelectPerfilPage= () => {
-   const {ProfilePost,getUsers,getProfilePosts} = useContext(DashboardContext)
+   const {ProfilePost,getUsers} = useContext(DashboardContext)
 
+   const NewArrayPost = JSON.parse(localStorage.getItem("@kenzieTech:ProfilePost") || []);
+
+   console.log(NewArrayPost[0])
    useEffect(() => {
       getUsers();
    }, []);
@@ -34,7 +38,7 @@ const SelectPerfilPage= () => {
 
          <section>
             <ul>
-                  {ProfilePost.map(post =><PostsSelectPerfil post={post} key={post.id}/>)}
+                  {NewArrayPost.map((post: Iposts) =><PostsSelectPerfil post={post} key={post.id}/>)}
             </ul>
 
          </section>

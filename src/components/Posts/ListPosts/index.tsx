@@ -22,7 +22,7 @@ import { Img } from "./styled";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { UserContext } from "../../../Providers/UserContext";
-
+import { useNavigate } from "react-router-dom";
 
 const ListPosts = ({ post }: IpostsProps) => {
    const { users,getProfilePosts } = useContext(DashboardContext);

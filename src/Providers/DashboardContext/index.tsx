@@ -296,6 +296,7 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
 
    const getProfilePosts = async (post:Iposts) => {
+
       const {userId} = post
       
       try {
@@ -304,8 +305,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
                Authorization: `Bearer ${token}`,
             },
          });
-
-         setLoading(true)
 
          setProfilePost(response.data);
 
@@ -317,6 +316,9 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    };
 
+   useEffect(() => {
+      localStorage.setItem('@kenzieTech:ProfilePost',JSON.stringify(ProfilePost));
+   }, [ProfilePost]);
 
    return (
       <DashboardContext.Provider
