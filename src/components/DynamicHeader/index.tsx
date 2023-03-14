@@ -6,6 +6,8 @@ import {
 import { StyledHeader } from "./style";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import { StyledContainer } from "../../styles/grid";
+import TechZone from "../../assets/TechZone.png";
+
 export const DynamicHeader = ({
    text1,
    location1,
@@ -21,7 +23,7 @@ export const DynamicHeader = ({
       <StyledHeader>
          <StyledContainer>
             <div>
-               <img src="../../src/assets/TechZone.png" alt="" />
+               <img src={TechZone} alt="" />
             </div>
             <button className="menu-btn" onClick={toggleMenu}>
                <span className="menu-icon">&#8801;</span>

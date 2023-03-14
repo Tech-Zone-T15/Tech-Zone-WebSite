@@ -4,6 +4,7 @@ import { DynamicHeader } from "../../components/DynamicHeader";
 import LoginForm from "../../components/LoginPageComponents/LoginForm";
 import { UserContext } from "../../Providers/UserContext";
 import { StyledLoginPage } from "./styles";
+import ImgLoginPage from "../../assets/ImgLoginPage.png"
 
 function LoginPage() {
    const { typeWritter } = useContext(UserContext);
@@ -24,7 +25,7 @@ function LoginPage() {
             location2="/"
          />
          <section>
-            <img src="../../src/assets/ImgLoginPage.png" alt="" />
+            <img src={ImgLoginPage} alt="" />
             <h1 className="main-title"></h1>
          </section>
          <section>

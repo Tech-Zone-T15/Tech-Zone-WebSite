@@ -5,6 +5,7 @@ import { StyledButton, StyledButtonLink, StyledButtonLink2 } from '../../styles/
 import { StyledContainer } from '../../styles/grid'
 import { StyledParagraph, StyledTitle } from '../../styles/typography'
 import { StyledMainLanding } from './types'
+import ImgLandingPage from "../../assets/ImgLandingPage.svg"
 
 
 function LandingPage() {
@@ -17,7 +18,7 @@ function LandingPage() {
                <div id="contentMain_div">
                   <div id='firstHalf__main'>
                      <div>
-                        <img src= "../../src/assets/ImgLandingPage.svg" alt="Imagem de abertura"/>
+                        <img src= {ImgLandingPage} alt="Imagem de abertura"/>
                      </div>
                      <div>
                         <StyledTitle $fontSize='one' tag='h1' >Olá Dev!</StyledTitle>
