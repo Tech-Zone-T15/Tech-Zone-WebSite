@@ -23,24 +23,11 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
 
    const [load, setLoad] = useState(false);
 
-   
-   
- 
    let loggedId = "";
    if(token) {
       loggedId = jwt_decode(token)
    }
-  
-   // console.log(loggedId)
-
-   //   const userLoad = () =>{
-   //     if(!token){
-   //        navigate('/')
-   //       }else{
-   //          navigate('/dashboard')
-   //       }
-   //    }
-   
+ 
    useEffect(() => {
       const page = localStorage.getItem('@location')
       if (token) {
@@ -54,19 +41,12 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
                   },
                });
                setUser(response.data);
-<<<<<<< HEAD
                if(page === null) {
                   navigate("/dashboard");
                } else {
                   navigate(page);
                }
-               // console.log("qualqueer coisa")
-=======
-
-               // navigate("/dashboard");
                
-
->>>>>>> d6a519457a15f9807f0a8900a9848ee581fa523c
             } catch (error) {
                console.error(error);
                localStorage.removeItem("TOKEN")
@@ -86,12 +66,8 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
          const response = await api.post("/users", formData);
          localStorage.setItem("@TOKEN", response.data.accessToken);
          toast.success("Usuário registrado!");
-         // setTimeout(() => {
          navigate("/dashboard");
-         // }, 2000);
-         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-         // setLoading(false);´´
          {
             error.response.data === "Email already exists"
                ? toast.error("Email já cadastrado!")
@@ -101,6 +77,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
          setLoading(false);
       }
    };
+
    const userLogin = async (formData: ILoginFormValues) => {
       try {
          setLoading(true);
@@ -108,9 +85,7 @@ export const UserProvider = ({ children }: IDefaultProviderProps) => {
          localStorage.setItem("@TOKEN", response.data.accessToken);
          console.log(localStorage);
          toast.success("Usuário Logado!");
-         // setTimeout(() => {
          navigate("/dashboard");
-         // }, 2000);
       } catch (error) {
          toast.error("Verifique os dados e tente novamente");
       } finally {

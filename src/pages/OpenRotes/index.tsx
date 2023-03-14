@@ -9,17 +9,12 @@ const OpenRotes = () => {
   const { load } = useContext(UserContext);
 
   return(
-   //  token
-   //  ?
-   //  <Navigate to='/dashboard' />
-   //  :
    <>
    {load
    ?
    <h1>Carregando..</h1>
    :
    <Outlet/>
-   
    }
    </>
   )

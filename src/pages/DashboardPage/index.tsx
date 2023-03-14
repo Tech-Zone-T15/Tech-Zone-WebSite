@@ -1,11 +1,9 @@
 import UserSuggestion from "../../components/UserSuggestion";
 import {
-   NavBar,
    Main,
    MainContainer,
    DashboarContainer,
    BackGrondColor,
-   ReversePost,
 } from "./style";
 import { DashboarHeader } from "../../components/Header";
 import Post from "../../components/Posts";
@@ -26,25 +24,12 @@ const DashboardPage = () => {
 
    const location = useLocation()
    localStorage.setItem('@location', location.pathname)
-   // console.log(location.pathname)
 
    return (
       <>
          <DashboarHeader />
 
          <DashboarContainer>
-            <NavBar>
-               <div>
-                  <button>Html</button>
-                  <button>Css</button>
-                  <button>JavaScript</button>
-                  <button>React</button>
-                  <button>Angular</button>
-                  <button>Vue.js</button>
-                  <button>TypeScript</button>
-                  <button>Node.js</button>
-               </div>
-            </NavBar>
 
             <BackGrondColor>
                <MainContainer>

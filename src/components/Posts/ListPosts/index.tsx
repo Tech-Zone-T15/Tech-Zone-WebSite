@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Lottie from "react-lottie";
 import animationData from "./heartAnimation.json";
-
 import ModalPostDelete from "../../ModalPostDelete";
 import ModalPostEdit from "../../ModalPostEdit";
 import {IPostLikes, IpostsProps} from "../../../Providers/DashboardContext/@types/dashboardTypes";
@@ -18,28 +17,22 @@ import AddComment from "@mui/icons-material/AddComment";
 import DeleteForever from "@mui/icons-material/DeleteForever";
 import Edit from "@mui/icons-material/Edit";
 import { DashboardContext } from "../../../Providers/DashboardContext";
-import jwt_decode from 'jwt-decode';
-import { UserContext } from "../../../Providers/UserContext";
 import { StyledlikeAnimationContainer } from "./style";
 import { Img } from "./styled";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { toast } from "react-toastify";
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { UserContext } from "../../../Providers/UserContext";
+
 
 
 const ListPosts = ({ post }: IpostsProps) => {
 
-   const {users, getProfilePosts, likingPost, unLinkingPost } = useContext(DashboardContext);
+   const {users,likingPost, unLinkingPost,getProfilePosts } = useContext(DashboardContext);
 
    const { user } = useContext(UserContext);
 
    const { img, content,userId } = post;
 
-   const token = localStorage.getItem("@TOKEN");
-
-   // console.log(post)
 
    
    //------------------------------------
@@ -48,7 +41,7 @@ const ListPosts = ({ post }: IpostsProps) => {
    useEffect(() => {
       setLikesPosts(post.likes)
    })
-
+   // console.log(typeof likesPosts)
    
 
    const data  = {
@@ -56,14 +49,14 @@ const ListPosts = ({ post }: IpostsProps) => {
       userId: user?.id
    }
    
-   const buttonToggleValidate = likesPosts.find((like) => 
+   const buttonToggleValidate = likesPosts?.find((like) => 
        like.userId === user!.id
-   ) ? true : false
-   // console.log(buttonToggleValidate)
+      ) ? true : false
+
 
    const handleClick = () => {
       if(user !== null){
-         const findLikes = likesPosts.find((like) => {
+         const findLikes = likesPosts?.find((like) => {
             return like.userId === user.id
          }) 
          // console.log(findLikes)
@@ -101,11 +94,13 @@ const ListPosts = ({ post }: IpostsProps) => {
 
    return (
       <li>
-         <Card sx={{ width:mdUp ? 600 : 300 }}>
+         <Card sx={{ width:mdUp ? 600 : 300, }}>
 
             <CardHeader
                avatar={
-                  <Avatar aria-label="Avatar do usuario" sx={{ width: 50, height: 50, cursor:'pointer'}} onClick={() => getProfilePosts(post)}>
+                  <Avatar aria-label="Avatar do usuario" sx={{ width: 50, height: 50, cursor:'pointer'}} 
+                     onClick={() => getProfilePosts(post)}
+                  >
                         {users.map(user => user.id == userId ? <Img src={user.profile_img} alt={user.name}  key={user.id}/>: null)}
                   </Avatar>
                }
@@ -130,7 +125,9 @@ const ListPosts = ({ post }: IpostsProps) => {
                   }
                   
                   title={
-                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",cursor:'pointer',width:'9rem'}} onClick={() => getProfilePosts(post)}>
+                     <Typography  color="text.secondary" sx={{ fontSize:"1.2rem",cursor:'pointer',width:'9rem'}} 
+                     onClick={() => getProfilePosts(post)}
+                     >
                         {users.map(user => user.id == post.userId ?  user.name : null)}
                      </Typography>
                   }
@@ -144,7 +141,7 @@ const ListPosts = ({ post }: IpostsProps) => {
                img.length !== 0 ?(
                   <CardMedia
                   component="img"
-                  height="194"
+                  height="300"
                   src={img} 
                   alt="Imagem do post" 
                   />
@@ -181,11 +178,11 @@ const ListPosts = ({ post }: IpostsProps) => {
                            isPaused={animationState.isPaused}
                            />
                      </div> 
-                     {post.likes.length}
+                  <span>{likesPosts?.length}</span>
+
                   </StyledlikeAnimationContainer>
 
-                  {/* {buttonToggleValidate ? <FavoriteIcon cursor="pointer" aria-label="button" onClick={() => handleClick()}/> : <FavoriteBorderIcon  cursor="pointer" onClick={() => handleClick()}/> }
-                  <span>{post.likes.length}</span> */}
+
                
 
                <IconButton

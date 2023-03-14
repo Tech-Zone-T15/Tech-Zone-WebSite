@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { mainTheme } from '../../styles/theme'
+import { mainTheme } from "../../styles/theme";
 
 export const UserSuggestionContainer = styled.aside`
    display: flex;
@@ -7,9 +7,38 @@ export const UserSuggestionContainer = styled.aside`
    align-items: center;
    border: 1px solid ${mainTheme.colors.gray2};
    width: 100%;
-   padding: 10px;
-   background-color: #ffffff;
+   min-height: auto;
 
+   h2 {
+      font-size: 1.3rem;
+   }
+
+   .container {
+      display: flex;
+      width: 300px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 10px;
+      flex-direction: column;
+      align-items: center;
+
+      @media (min-width: 600px) {
+         width: 600px;
+      }
+
+      @media (min-width: 800px) {
+         width: 350px;
+      }
+   }
+
+   @media (min-width: 800px) {
+      position: sticky;
+      top: 0;
+
+      .container {
+         gap: 20px;
+      }
+   }
 `;
 
 export const ListSuggestions = styled.ul`
@@ -21,11 +50,19 @@ export const ListSuggestions = styled.ul`
    justify-content: flex-start;
    align-items: center;
 
+   ::-webkit-scrollbar {
+      height: 8px;
+   }
+   ::-webkit-scrollbar-thumb {
+      background-color: ${mainTheme.colors.primary};
+      width: 5px;
+   }
+
    @media (min-width: 800px) {
       flex-direction: column;
-      height: auto;
-      max-height: 60vh;
-      gap: 10px;
+      min-height: 35vh;
+      gap: 30px;
+      overflow-y: hidden;
    }
 `;
 
@@ -44,8 +81,11 @@ export const CardUserSuggestion = styled.li`
       gap: 10px;
 
       img {
-         width: 60px;
-         height: 69px;
+         object-fit: cover;
+         width: 3.5rem;
+         height: 3.5rem;
+         border-radius: 100%;
+         overflow: clip;
       }
    }
 

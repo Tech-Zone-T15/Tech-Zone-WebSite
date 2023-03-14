@@ -19,8 +19,6 @@ import Lottie from "react-lottie";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-
-
 export default function Comments({comments}: ICommentsProps) {
 
 
