@@ -8,9 +8,7 @@ export const StyledSearchForm = styled.form`
    display: flex;
    align-items: center;
    justify-content: space-between;
-   /* gap: 20px; */
 
-   /* padding: 8px; */
    border-radius: 8px;
    border: 2px solid ${({ theme }) => theme.colors.gray2};
    transition: 0.4s;

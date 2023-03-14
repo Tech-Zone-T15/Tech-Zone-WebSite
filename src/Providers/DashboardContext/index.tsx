@@ -37,18 +37,11 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
    const [loading, setLoading] = useState(false);
 
-
-   //-------------------------- Vitor -----------------------------//
-
    const [searchValue, setSearchValue] = useState("");
 
    const [filteredPosts, setFilteredPosts] = useState("");
 
    const [postLikes, setPostLikes] = useState<IPostLikes[]>([]);
-
-   //-------------------------------------------------------//
-
-   //---------------------------- Savio ----------------------------//
 
    const { user } = useContext(UserContext);
 
@@ -112,7 +105,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
    const sendPost = async (data: IsendPost) => {
 
       try {
-         // const newData = {...data, likes:[]}
          const response = await api.post("posts", data, {
             headers: {
                Authorization: `Bearer ${token}`,
@@ -171,7 +163,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
             }
          }
       } catch (error) {
-         console.error(error);
       }
    };
 
@@ -194,7 +185,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
          toast.success("Post Deletado com sucesso");
       } catch (error) {
-         console.error;
       }
    };
 
@@ -274,7 +264,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
 
          toast.success("Comentario Enviado com sucesso");
       } catch (error) {
-         console.error(error);
       }
    };
 
@@ -314,18 +303,13 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          navigate("/SelectPerfilPage")
 
       } catch (error) {
-         console.error(error);
       }
 
    };
 
-
    useEffect(() => {
       localStorage.setItem('@kenzieTech:ProfilePost',JSON.stringify(ProfilePost));
    }, [ProfilePost]);
-   
-   //----------------------- VITOR ------------------------ 
-
 
    const likingPost = async (data: ILikingPost) => {
       try {
@@ -371,9 +355,6 @@ export const DashboardProvider = ({ children }: IDefaultProviderProps) => {
          console.log(error);
       }
    };
-
-
-   
 
    return (
       <DashboardContext.Provider

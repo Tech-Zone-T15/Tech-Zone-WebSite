@@ -24,7 +24,6 @@ const DashboardPage = () => {
 
    const location = useLocation()
    localStorage.setItem('@location', location.pathname)
-   // console.log(location.pathname)
 
    return (
       <>

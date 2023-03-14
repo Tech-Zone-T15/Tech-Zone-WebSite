@@ -10,8 +10,7 @@ export const StyledHeaderDash = styled.header`
       align-items: center;
       justify-content: space-between;
       margin-left: 15px;
-
-      width: 82%;
+      width: 98%;;
       .menu-btn {
          background-color: transparent;
       }
@@ -93,7 +92,7 @@ export const StyledHeaderDash = styled.header`
             display: none;
          }
          #header__div {
-            flex-direction: row;
+            width: 100%;
          }
 
          #header____div-left {

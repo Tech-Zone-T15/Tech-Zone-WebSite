@@ -1,6 +1,5 @@
 import { Key } from "react";
 
-
 export interface IDefaultProviderProps {
    children: React.ReactNode;
 }
@@ -86,12 +85,11 @@ export interface ProfilePostProps{
    user?:Iusers
 }
 
-
 export interface IUserProps{
    user:Iusers
    comments?:IComments
 }  
-//---------------------
+
 export interface IPostLikes{
    postId: number
    userId: number
@@ -104,7 +102,6 @@ export interface ILikingPost{
    postId: string | number,
    userId: number | undefined
 }
-//-------------------
 
 export interface Ifollows{
    userId: number;
